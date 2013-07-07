@@ -60,6 +60,14 @@
         <configuration>
           <source>1.6</source>
           <target>1.6</target>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+          <optimize>true</optimize>
+          <!-- 16-Apr-2013, tatu: As per Nick W's suggestions, let's
+              use these to reduce jar size
+            -->
+          <debug>true</debug>
+          <debuglevel>lines,source</debuglevel>
         </configuration>
       </plugin>
         <plugin>
@@ -123,6 +131,8 @@ javax.xml.namespace
 ,javax.xml.stream.events
 ,javax.xml.stream.util
 ,javax.xml.transform
+,javax.xml.transform.dom 
+,org.w3c.dom
 </Import-Package>
               <Private-Package>
 </Private-Package>
@@ -135,6 +145,7 @@ org.codehaus.stax2
 ,org.codehaus.stax2.io
 ,org.codehaus.stax2.osgi
 ,org.codehaus.stax2.ri
+,org.codehaus.stax2.ri.dom
 ,org.codehaus.stax2.ri.evt
 ,org.codehaus.stax2.ri.typed
 ,org.codehaus.stax2.typed
