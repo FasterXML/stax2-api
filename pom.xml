@@ -56,10 +56,10 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>2.5.1</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.5</source>
+          <target>1.5</target>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
           <optimize>true</optimize>
@@ -98,8 +98,8 @@
           <!-- 06-Jul-2013, tatu: When can we switch to 1.6?
             -->
           <configuration>
-            <source>1.4</source>
-            <target>1.4</target>
+            <source>1.5</source>
+            <target>1.5</target>
             <encoding>UTF-8</encoding>
             <links>
               <link>http://java.sun.com/javase/6/docs/api/</link>

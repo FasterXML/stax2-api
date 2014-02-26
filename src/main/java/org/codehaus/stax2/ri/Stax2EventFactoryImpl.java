@@ -36,28 +36,33 @@ public abstract class Stax2EventFactoryImpl
     /////////////////////////////////////////////////////////////
      */
 
+    @Override
     public Attribute createAttribute(QName name, String value) {
         return new AttributeEventImpl(mLocation, name, value, true);
     }
 
+    @Override
     public Attribute createAttribute(String localName, String value) {
         return new AttributeEventImpl(mLocation, localName, null, null, value, true);
     }
 
-    public Attribute createAttribute(String prefix, String nsURI,
-                                     String localName, String value)
+    @Override
+    public Attribute createAttribute(String prefix, String nsURI, String localName, String value)
     {
         return new AttributeEventImpl(mLocation, localName, nsURI, prefix, value, true);
     }
 
+    @Override
     public Characters createCData(String content) {
         return new CharactersEventImpl(mLocation, content, true);
     }
 
+    @Override
     public Characters createCharacters(String content) {
         return new CharactersEventImpl(mLocation, content, false);
     }
 
+    @Override
     public Comment createComment(String text) {
         return new CommentEventImpl(mLocation, text);
     }
@@ -67,84 +72,97 @@ public abstract class Stax2EventFactoryImpl
      * internal presentation of actual DTD; no parsing is implied by
      * construction.
      */
+    @Override
     public DTD createDTD(String dtd) {
         return new DTDEventImpl(mLocation, dtd);
     }
 
+    @Override
     public EndDocument createEndDocument() {
         return new EndDocumentEventImpl(mLocation);
     }
 
+    @Override
     public EndElement createEndElement(QName name, Iterator namespaces) {
         return new EndElementEventImpl(mLocation, name, namespaces);
     }
 
-    public EndElement createEndElement(String prefix, String nsURI,
-                                       String localName)
+    @Override
+    public EndElement createEndElement(String prefix, String nsURI, String localName)
     {
-        return createEndElement(createQName(nsURI, localName), null);
+        return createEndElement(createQName(nsURI, localName, prefix), null);
     }
 
+    @Override
     public EndElement createEndElement(String prefix, String nsURI,
                                        String localName, Iterator ns)
     {
         return createEndElement(createQName(nsURI, localName, prefix), ns);
     }
 
+    @Override
     public EntityReference createEntityReference(String name, EntityDeclaration decl)
     {
         return new EntityReferenceEventImpl(mLocation, decl);
     }
 
+    @Override
     public Characters createIgnorableSpace(String content) {
         return CharactersEventImpl.createIgnorableWS(mLocation, content);
     }
 
+    @Override
     public Namespace createNamespace(String nsURI) {
         return NamespaceEventImpl.constructDefaultNamespace(mLocation, nsURI);
     }
     
+    @Override
     public Namespace createNamespace(String prefix, String nsURI) {
         return NamespaceEventImpl.constructNamespace(mLocation, prefix, nsURI);
     }
 
+    @Override
     public ProcessingInstruction createProcessingInstruction(String target, String data) {
         return new ProcInstrEventImpl(mLocation, target, data);
     }
     
+    @Override
     public Characters createSpace(String content) {
         return CharactersEventImpl.createNonIgnorableWS(mLocation, content);
     }
 
+    @Override
     public StartDocument createStartDocument() {
         return new StartDocumentEventImpl(mLocation);
     }
 
+    @Override
     public StartDocument createStartDocument(String encoding) {
         return new StartDocumentEventImpl(mLocation, encoding);
     }
 
+    @Override
     public StartDocument createStartDocument(String encoding, String version) {
         return new StartDocumentEventImpl(mLocation, encoding, version);
     }
 
-    public StartDocument createStartDocument(String encoding, String version, boolean standalone)
-    {
-        return new StartDocumentEventImpl(mLocation, encoding, version,
-                                          true, standalone);
+    @Override
+    public StartDocument createStartDocument(String encoding, String version, boolean standalone) {
+        return new StartDocumentEventImpl(mLocation, encoding, version, true, standalone);
     }
 
-    public StartElement createStartElement(QName name, Iterator attr, Iterator ns)
-    {
+    @Override
+    public StartElement createStartElement(QName name, Iterator attr, Iterator ns) {
         return createStartElement(name, attr, ns, null);
     }
 
-    public StartElement createStartElement(String prefix, String nsURI, String localName)
-    {
+    @Override
+    public StartElement createStartElement(String prefix, String nsURI, String localName) {
         return createStartElement(createQName(nsURI, localName, prefix),
                                   null, null, null);
     }
 
+    @Override
     public StartElement createStartElement(String prefix, String nsURI,
                                            String localName, Iterator attr,
                                            Iterator ns)
@@ -153,6 +171,7 @@ public abstract class Stax2EventFactoryImpl
                                   null);
     }
 
+    @Override
     public StartElement createStartElement(String prefix, String nsURI,
                                            String localName, Iterator attr,
                                            Iterator ns, NamespaceContext nsCtxt)
@@ -161,6 +180,7 @@ public abstract class Stax2EventFactoryImpl
                                   attr, ns, nsCtxt);
     }
 
+    @Override
     public void setLocation(Location loc)
     {
         mLocation = loc;
@@ -172,12 +192,14 @@ public abstract class Stax2EventFactoryImpl
     /////////////////////////////////////////////////////////////
      */
 
+    @Override
     public DTD2 createDTD(String rootName, String sysId, String pubId,
                           String intSubset)
     {
         return new DTDEventImpl(mLocation, rootName, sysId, pubId, intSubset, null);
     }
 
+    @Override
     public DTD2 createDTD(String rootName, String sysId, String pubId,
                           String intSubset, Object processedDTD)
     {
@@ -195,8 +217,8 @@ public abstract class Stax2EventFactoryImpl
 
     protected abstract QName createQName(String nsURI, String localName, String prefix);
 
-    protected StartElement createStartElement(QName name, Iterator attr,
-                                              Iterator ns, NamespaceContext ctxt)
+    protected StartElement createStartElement(QName name, Iterator<?> attr,
+                                              Iterator<?> ns, NamespaceContext ctxt)
     {
         return StartElementEventImpl.construct(mLocation, name, attr, ns, ctxt);
     }
