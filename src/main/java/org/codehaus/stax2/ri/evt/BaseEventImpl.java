@@ -23,12 +23,17 @@ public abstract class BaseEventImpl
     /**
      * Location where token started; exact definition may depends
      * on event type.
+     *<p>
+     * TODO: remove direct dependencies to this by sub-classes; rename
+     * 
+     * @deprecated Call {@link #getLocation()} instead.
      */
-    protected final Location _location;
+    @Deprecated // 
+    protected final Location mLocation;
 
     protected BaseEventImpl(Location loc)
     {
-        _location = loc;
+        mLocation = loc;
     }
 
     /*
@@ -52,7 +57,7 @@ public abstract class BaseEventImpl
     public abstract int getEventType();
 
     public Location getLocation() {
-        return _location;
+        return mLocation;
     }
 
     public QName getSchemaType() {

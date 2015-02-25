@@ -17,23 +17,23 @@ public class Stax2EventWriterImpl
     implements XMLEventWriter,
                XMLStreamConstants
 {
-    final XMLStreamWriter2 mWriter;
+    final protected XMLStreamWriter2 _writer;
 
     /*
-    ////////////////////////////////////////////////////
-    // Construction, init
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Construction, init
+    /**********************************************************************
      */
 
     public Stax2EventWriterImpl(XMLStreamWriter2 sw)
     {
-        mWriter = sw;
+        _writer = sw;
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLEventWriter API
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventWriter API
+    /**********************************************************************
      */
 
     /**
@@ -57,23 +57,23 @@ public class Stax2EventWriterImpl
             {
                 Attribute attr = (Attribute) event;
                 QName name = attr.getName();
-                mWriter.writeAttribute(name.getPrefix(), name.getNamespaceURI(),
+                _writer.writeAttribute(name.getPrefix(), name.getNamespaceURI(),
                                        name.getLocalPart(), attr.getValue());
             }
             break;
 
         case END_DOCUMENT:
-            mWriter.writeEndDocument();
+            _writer.writeEndDocument();
             break;
 
         case END_ELEMENT:
-            mWriter.writeEndElement();
+            _writer.writeEndElement();
             break;
             
         case NAMESPACE:
             {
                 Namespace ns = (Namespace) event;
-                mWriter.writeNamespace(ns.getPrefix(), ns.getNamespaceURI());
+                _writer.writeNamespace(ns.getPrefix(), ns.getNamespaceURI());
             }
             break;
             
@@ -81,9 +81,9 @@ public class Stax2EventWriterImpl
             {
                 StartDocument sd = (StartDocument) event;
                 if (!sd.encodingSet()) { // encoding defined?
-                    mWriter.writeStartDocument(sd.getVersion());
+                    _writer.writeStartDocument(sd.getVersion());
                 } else {
-                    mWriter.writeStartDocument(sd.getCharacterEncodingScheme(),
+                    _writer.writeStartDocument(sd.getCharacterEncodingScheme(),
                                                sd.getVersion());
                 }
             }
@@ -94,9 +94,9 @@ public class Stax2EventWriterImpl
             {
                 StartElement se = event.asStartElement();
                 QName n = se.getName();
-                mWriter.writeStartElement(n.getPrefix(), n.getLocalPart(),
+                _writer.writeStartElement(n.getPrefix(), n.getLocalPart(),
                                           n.getNamespaceURI());
-                Iterator it = se.getNamespaces();
+                Iterator<?> it = se.getNamespaces();
                 while (it.hasNext()) {
                     Namespace ns = (Namespace) it.next();
                     add(ns);
@@ -119,33 +119,33 @@ public class Stax2EventWriterImpl
                 Characters ch = event.asCharacters();
                 String text = ch.getData();
                 if (ch.isCData()) {
-                    mWriter.writeCData(text);
+                    _writer.writeCData(text);
                 } else {
-                    mWriter.writeCharacters(text);
+                    _writer.writeCharacters(text);
                 }
             }
             break;
 
         case CDATA:
-            mWriter.writeCData(event.asCharacters().getData());
+            _writer.writeCData(event.asCharacters().getData());
             break;
             
         case COMMENT:
-            mWriter.writeComment(((Comment) event).getText());
+            _writer.writeComment(((Comment) event).getText());
             break;
             
         case DTD:
-            mWriter.writeDTD(((DTD) event).getDocumentTypeDeclaration());
+            _writer.writeDTD(((DTD) event).getDocumentTypeDeclaration());
             break;
 
         case ENTITY_REFERENCE:
-            mWriter.writeEntityRef(((EntityReference) event).getName());
+            _writer.writeEntityRef(((EntityReference) event).getName());
             break;
 
         case PROCESSING_INSTRUCTION: // let's just write directly
             {
                 ProcessingInstruction pi = (ProcessingInstruction) event;
-                mWriter.writeProcessingInstruction(pi.getTarget(), pi.getData());
+                _writer.writeProcessingInstruction(pi.getTarget(), pi.getData());
             }
             break;
 
@@ -156,7 +156,7 @@ public class Stax2EventWriterImpl
 
             // Easy, if stax2 enabled
             if (event instanceof XMLEvent2) {
-                ((XMLEvent2) event).writeUsing(mWriter);
+                ((XMLEvent2) event).writeUsing(_writer);
             } else {
                 // Otherwise... well, no real way to do it in generic manner
                 throw new XMLStreamException("Don't know how to output event "+event);
@@ -175,40 +175,40 @@ public class Stax2EventWriterImpl
     public void close()
         throws XMLStreamException
     {
-        mWriter.close();
+        _writer.close();
     }
 
     public void flush()
         throws XMLStreamException
     {
-        mWriter.flush();
+        _writer.flush();
     }
 
     public NamespaceContext getNamespaceContext() {
-        return mWriter.getNamespaceContext();
+        return _writer.getNamespaceContext();
     }
 
     public String getPrefix(String uri)
         throws XMLStreamException
     {
-        return mWriter.getPrefix(uri);
+        return _writer.getPrefix(uri);
     }
 
     public void setDefaultNamespace(String uri)
         throws XMLStreamException
     {
-        mWriter.setDefaultNamespace(uri);
+        _writer.setDefaultNamespace(uri);
     }
 
     public void setNamespaceContext(NamespaceContext ctxt)
         throws XMLStreamException
     {
-        mWriter.setNamespaceContext(ctxt);
+        _writer.setNamespaceContext(ctxt);
     }
 
     public void setPrefix(String prefix, String uri)
         throws XMLStreamException
     {
-        mWriter.setPrefix(prefix, uri);
+        _writer.setPrefix(prefix, uri);
     }
 }

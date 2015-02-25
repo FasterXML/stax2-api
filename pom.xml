@@ -76,21 +76,10 @@
                 <mavenExecutorId>forked-path</mavenExecutorId>
             </configuration>
         </plugin>
-        <plugin><!-- plug-in to attach source bundle in repo -->
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>attach-sources</id>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${version.plugin.javadoc}</version>
           <!-- 06-Jul-2013, tatu: When can we switch to 1.6?
             -->
           <configuration>

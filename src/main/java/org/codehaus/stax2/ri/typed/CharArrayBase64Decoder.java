@@ -43,7 +43,7 @@ public class CharArrayBase64Decoder
 
     /**
      * Pointer of the next segment to process (after current one stored
-     * in {@link #_currSegment}) within {@link #mOtherSegments}.
+     * in {@link #_currSegment}) within {@link #_nextSegments}.
      */
     protected  int _nextSegmentIndex;
 

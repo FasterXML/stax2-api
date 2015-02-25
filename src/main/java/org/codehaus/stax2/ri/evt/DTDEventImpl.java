@@ -7,6 +7,8 @@ import java.util.*;
 
 import javax.xml.stream.*;
 import javax.xml.stream.events.DTD;
+import javax.xml.stream.events.EntityDeclaration;
+import javax.xml.stream.events.NotationDeclaration;
 
 import org.codehaus.stax2.XMLStreamWriter2;
 import org.codehaus.stax2.evt.DTD2;
@@ -94,13 +96,13 @@ public class DTDEventImpl
         }
     }
 
-    public List<Object> getEntities()
+    public List<EntityDeclaration> getEntities()
     {
         // !!! TODO: create stax2 abstraction to allow accessing this
         return null;
     }
 
-    public List<Object> getNotations()
+    public List<NotationDeclaration> getNotations()
     {
         // !!! TODO: create stax2 abstraction to allow accessing this
         return null;

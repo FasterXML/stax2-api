@@ -87,9 +87,9 @@ public class StartElementEventImpl
     }
 
     /*
-    /////////////////////////////////////////////////////
-    // Implementation of abstract base methods, overrides
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of abstract base methods, overrides
+    /**********************************************************************
      */
 
     public StartElement asStartElement() { // overriden to save a cast
@@ -256,7 +256,7 @@ public class StartElementEventImpl
         return null;
     }
 
-    public Iterator getAttributes()
+    public Iterator<Attribute> getAttributes()
     {
         if (_attrs == null) {
             return EmptyIterator.getInstance();
@@ -265,9 +265,9 @@ public class StartElementEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Standard method impl
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Standard method impl
+    /**********************************************************************
      */
 
     public boolean equals(Object o)
