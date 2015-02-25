@@ -14,29 +14,28 @@ import javax.xml.stream.events.Namespace;
 public class MergedNsContext
     implements NamespaceContext
 {
-    final NamespaceContext mParentCtxt;
+    final NamespaceContext _parentCtxt;
 
     /**
      * List of {@link Namespace} instances.
      */
-    final List mNamespaces;
+    final List<Namespace> _namespaces;
 
-    protected MergedNsContext(NamespaceContext parentCtxt, List localNs)
+    protected MergedNsContext(NamespaceContext parentCtxt, List<Namespace> localNs)
     {
-        mParentCtxt = parentCtxt;
-        mNamespaces = (localNs == null) ? Collections.EMPTY_LIST : localNs;
+        _parentCtxt = parentCtxt;
+        _namespaces = (localNs == null) ? Collections.<Namespace>emptyList() : localNs;
     }
 
-    public static MergedNsContext construct(NamespaceContext parentCtxt,
-                                            List localNs)
+    public static MergedNsContext construct(NamespaceContext parentCtxt, List<Namespace> localNs)
     {
         return new MergedNsContext(parentCtxt, localNs);
     }
 
     /*
-    /////////////////////////////////////////////
-    // NamespaceContext API
-    /////////////////////////////////////////////
+    /**********************************************************************
+    /* NamespaceContext API
+    /**********************************************************************
      */
 
     public String getNamespaceURI(String prefix)
@@ -44,15 +43,15 @@ public class MergedNsContext
         if (prefix == null) {
             throw new IllegalArgumentException("Illegal to pass null prefix");
         }
-        for (int i = 0, len = mNamespaces.size(); i < len; ++i) {
-            Namespace ns = (Namespace) mNamespaces.get(i);
+        for (int i = 0, len = _namespaces.size(); i < len; ++i) {
+            Namespace ns = _namespaces.get(i);
             if (prefix.equals(ns.getPrefix())) {
                 return ns.getNamespaceURI();
             }
         }
         // Not found; how about from parent?
-        if (mParentCtxt != null) {
-            String uri = mParentCtxt.getNamespaceURI(prefix);
+        if (_parentCtxt != null) {
+            String uri = _parentCtxt.getNamespaceURI(prefix);
             if (uri != null) {
                 return uri;
             }
@@ -74,15 +73,15 @@ public class MergedNsContext
         /* Ok, first: if we can find it from within current namespaces,
          * we are golden:
          */
-        for (int i = 0, len = mNamespaces.size(); i < len; ++i) {
-            Namespace ns = (Namespace) mNamespaces.get(i);
+        for (int i = 0, len = _namespaces.size(); i < len; ++i) {
+            Namespace ns = _namespaces.get(i);
             if (nsURI.equals(ns.getNamespaceURI())) {
                 return ns.getPrefix();
             }
         }
         // If not, let's first try the easy way:
-        if (mParentCtxt != null) {
-            String prefix = mParentCtxt.getPrefix(nsURI);
+        if (_parentCtxt != null) {
+            String prefix = _parentCtxt.getPrefix(nsURI);
             if (prefix != null) {
                 // Must check for masking
                 String uri2 = getNamespaceURI(prefix);
@@ -93,7 +92,7 @@ public class MergedNsContext
             }
 
             // Otherwise, must check other candidates
-            Iterator it = mParentCtxt.getPrefixes(nsURI);
+            Iterator<?> it = _parentCtxt.getPrefixes(nsURI);
             while (it.hasNext()) {
                 String p2 = (String) it.next();
                 if (!p2.equals(prefix)) { // no point re-checking first prefix
@@ -119,24 +118,24 @@ public class MergedNsContext
         return null;
     }
 
-    public Iterator getPrefixes(String nsURI)
+    public Iterator<String> getPrefixes(String nsURI)
     {
         if (nsURI == null || nsURI.length() == 0) {
             throw new IllegalArgumentException("Illegal to pass null/empty prefix as argument.");
         }
 
         // Any local bindings?
-        ArrayList l = null;
-        for (int i = 0, len = mNamespaces.size(); i < len; ++i) {
-            Namespace ns = (Namespace) mNamespaces.get(i);
+        ArrayList<String> l = null;
+        for (int i = 0, len = _namespaces.size(); i < len; ++i) {
+            Namespace ns = _namespaces.get(i);
             if (nsURI.equals(ns.getNamespaceURI())) {
                 l = addToList(l, ns.getPrefix());
             }
         }
 
         // How about parent?
-        if (mParentCtxt != null) {
-            Iterator it = mParentCtxt.getPrefixes(nsURI);
+        if (_parentCtxt != null) {
+            Iterator<?> it = _parentCtxt.getPrefixes(nsURI);
             while (it.hasNext()) {
                 String p2 = (String) it.next();
                 // But is it masked?
@@ -160,15 +159,15 @@ public class MergedNsContext
     }
 
     /*
-    /////////////////////////////////////////////
-    // Internal methods
-    /////////////////////////////////////////////
+    /**********************************************************************
+    /* Internal methods
+    /**********************************************************************
      */
 
-    protected ArrayList addToList(ArrayList l, String value)
+    protected <T> ArrayList<T> addToList(ArrayList<T> l, T value)
     {
         if (l == null) {
-            l = new ArrayList();
+            l = new ArrayList<T>();
         }
         l.add(value);
         return l;

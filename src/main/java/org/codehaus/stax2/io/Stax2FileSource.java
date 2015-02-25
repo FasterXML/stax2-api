@@ -10,16 +10,16 @@ import java.net.URL;
 public class Stax2FileSource
     extends Stax2ReferentialSource
 {
-    final File mFile;
+    final File _file;
 
     public Stax2FileSource(File f) {
-        mFile = f;
+        _file = f;
     }
 
     /*
-    /////////////////////////////////////////
-    // Implementation of the Public API
-    /////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of the Public API
+    /**********************************************************************
      */
 
     /**
@@ -34,13 +34,13 @@ public class Stax2FileSource
          *   filename are properly quoted
          */
         try {
-            return mFile.toURL();
+            return _file.toURL();
         } catch (java.net.MalformedURLException e) {
             /* Hmmh. Signature doesn't allow IOException to be thrown. So,
              * let's use something close enough; this should not occur
              * often in practice.
              */
-            throw new IllegalArgumentException("(was "+e.getClass()+") Could not convert File '"+mFile.getPath()+"' to URL: "+e);
+            throw new IllegalArgumentException("(was "+e.getClass()+") Could not convert File '"+_file.getPath()+"' to URL: "+e);
         }
     }
 
@@ -52,22 +52,22 @@ public class Stax2FileSource
             return new InputStreamReader(constructInputStream(), enc);
         }
         // Sub-optimal; really shouldn't use the platform default encoding
-        return new FileReader(mFile);
+        return new FileReader(_file);
     }
 
     public InputStream constructInputStream()
         throws IOException
     {
-        return new FileInputStream(mFile);
+        return new FileInputStream(_file);
     }
 
     /*
-    /////////////////////////////////////////
-    // Additional API for this source
-    /////////////////////////////////////////
+    /**********************************************************************
+    /* Additional API for this source
+    /**********************************************************************
      */
 
     public File getFile() {
-        return mFile;
+        return _file;
     }
 }

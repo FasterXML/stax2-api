@@ -7,13 +7,14 @@ import java.util.Iterator;
  * iterate over.
  */
 public final class EmptyIterator
-    implements Iterator
+    implements Iterator<Object>
 {
-    final static EmptyIterator sInstance = new EmptyIterator();
-    
+    final static Iterator<?> sInstance = new EmptyIterator();
+
     private EmptyIterator() { }
-    
-    public static EmptyIterator getInstance() { return sInstance; }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Iterator<T> getInstance() { return (Iterator<T>) sInstance; }
     
     public boolean hasNext() { return false; }
     

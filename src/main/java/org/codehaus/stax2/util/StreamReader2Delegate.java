@@ -26,289 +26,291 @@ public class StreamReader2Delegate
     extends StreamReaderDelegate
     implements XMLStreamReader2
 {
-    protected XMLStreamReader2 mDelegate2;
+    protected XMLStreamReader2 _delegate2;
 
     /*
-    //////////////////////////////////////////////
-    // Life-cycle
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* Life-cycle
+    /**********************************************************************
      */
 
     public StreamReader2Delegate(XMLStreamReader2 sr)
     {
         super(sr);
-        mDelegate2 = sr;
+        _delegate2 = sr;
     }
 
     // @Override
     public void setParent(XMLStreamReader pr)
     {
         super.setParent(pr);
-        mDelegate2 = (XMLStreamReader2) pr;
+        _delegate2 = (XMLStreamReader2) pr;
     }
 
     /*
-    //////////////////////////////////////////////
-    // XMLStreamReader2 implementation
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamReader2 implementation
+    /**********************************************************************
      */
 
     public void closeCompletely() throws XMLStreamException {
-        mDelegate2.closeCompletely();
+        _delegate2.closeCompletely();
     }
 
     public AttributeInfo getAttributeInfo() throws XMLStreamException {
-        return mDelegate2.getAttributeInfo();
+        return _delegate2.getAttributeInfo();
     }
 
     public DTDInfo getDTDInfo() throws XMLStreamException {
-        return mDelegate2.getDTDInfo();
+        return _delegate2.getDTDInfo();
     }
 
     public int getDepth() {
-        return mDelegate2.getDepth();
+        return _delegate2.getDepth();
     }
 
+    @SuppressWarnings("deprecation")
     public Object getFeature(String name) {
-        return mDelegate2.getFeature(name);
+        return _delegate2.getFeature(name);
     }
 
     public LocationInfo getLocationInfo() {
-        return mDelegate2.getLocationInfo();
+        return _delegate2.getLocationInfo();
     }
 
     public NamespaceContext getNonTransientNamespaceContext() {
-        return mDelegate2.getNonTransientNamespaceContext();
+        return _delegate2.getNonTransientNamespaceContext();
     }
 
     public String getPrefixedName() {
-        return mDelegate2.getPrefixedName();
+        return _delegate2.getPrefixedName();
     }
 
     public int getText(Writer w, boolean preserveContents)
         throws IOException, XMLStreamException
     {
-        return mDelegate2.getText(w, preserveContents);
+        return _delegate2.getText(w, preserveContents);
     }
 
     public boolean isEmptyElement()
         throws XMLStreamException
     {
-        return mDelegate2.isEmptyElement();
+        return _delegate2.isEmptyElement();
     }
 
     public boolean isPropertySupported(String name) {
-        return mDelegate2.isPropertySupported(name);
+        return _delegate2.isPropertySupported(name);
     }
 
+    @SuppressWarnings("deprecation")
     public void setFeature(String name, Object value) {
-        mDelegate2.setFeature(name, value);
+        _delegate2.setFeature(name, value);
     }
 
     public boolean setProperty(String name, Object value) {
-        return mDelegate2.setProperty(name, value);
+        return _delegate2.setProperty(name, value);
     }
 
     public void skipElement() throws XMLStreamException {
-        mDelegate2.skipElement();
+        _delegate2.skipElement();
     }
 
     /*
-    //////////////////////////////////////////////
-    // XMLStreamReader2, Validatable
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamReader2, Validatable
+    /**********************************************************************
      */
 
     public ValidationProblemHandler setValidationProblemHandler(ValidationProblemHandler h) {
-        return mDelegate2.setValidationProblemHandler(h);
+        return _delegate2.setValidationProblemHandler(h);
     }
 
     public XMLValidator stopValidatingAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
-        return mDelegate2.stopValidatingAgainst(schema);
+        return _delegate2.stopValidatingAgainst(schema);
     }
 
     public XMLValidator stopValidatingAgainst(XMLValidator validator)
         throws XMLStreamException
     {
-        return mDelegate2.stopValidatingAgainst(validator);
+        return _delegate2.stopValidatingAgainst(validator);
     }
 
     public XMLValidator validateAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
-        return mDelegate2.validateAgainst(schema);
+        return _delegate2.validateAgainst(schema);
     }
 
     /*
-    //////////////////////////////////////////////
-    // TypedXMLStreamReader implementation
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* TypedXMLStreamReader implementation
+    /**********************************************************************
      */
 
     public int getAttributeIndex(String namespaceURI, String localName) {
-        return mDelegate2.getAttributeIndex(namespaceURI, localName);
+        return _delegate2.getAttributeIndex(namespaceURI, localName);
     }
 
     public boolean getAttributeAsBoolean(int index) throws XMLStreamException
     {
-        return mDelegate2.getAttributeAsBoolean(index);
+        return _delegate2.getAttributeAsBoolean(index);
     }
 
     public BigDecimal getAttributeAsDecimal(int index)
         throws XMLStreamException
     {
-        return mDelegate2.getAttributeAsDecimal(index);
+        return _delegate2.getAttributeAsDecimal(index);
     }
 
     public double getAttributeAsDouble(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsDouble(index);
+        return _delegate2.getAttributeAsDouble(index);
     }
 
     public float getAttributeAsFloat(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsFloat(index);
+        return _delegate2.getAttributeAsFloat(index);
     }
 
     public int getAttributeAsInt(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsInt(index);
+        return _delegate2.getAttributeAsInt(index);
     }
 
     public BigInteger getAttributeAsInteger(int index)
         throws XMLStreamException
     {
-        return mDelegate2.getAttributeAsInteger(index);
+        return _delegate2.getAttributeAsInteger(index);
     }
 
     public long getAttributeAsLong(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsLong(index);
+        return _delegate2.getAttributeAsLong(index);
     }
 
     public QName getAttributeAsQName(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsQName(index);
+        return _delegate2.getAttributeAsQName(index);
     }
 
     public int[] getAttributeAsIntArray(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsIntArray(index);
+        return _delegate2.getAttributeAsIntArray(index);
     }
 
     public long[] getAttributeAsLongArray(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsLongArray(index);
+        return _delegate2.getAttributeAsLongArray(index);
     }
 
     public float[] getAttributeAsFloatArray(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsFloatArray(index);
+        return _delegate2.getAttributeAsFloatArray(index);
     }
 
     public double[] getAttributeAsDoubleArray(int index) throws XMLStreamException {
-        return mDelegate2.getAttributeAsDoubleArray(index);
+        return _delegate2.getAttributeAsDoubleArray(index);
     }
 
     public void getElementAs(TypedValueDecoder tvd) throws XMLStreamException {
-        mDelegate2.getElementAs(tvd);
+        _delegate2.getElementAs(tvd);
     }
 
     public boolean getElementAsBoolean() throws XMLStreamException {
-        return mDelegate2.getElementAsBoolean();
+        return _delegate2.getElementAsBoolean();
     }
 
     public BigDecimal getElementAsDecimal() throws XMLStreamException {
-        return mDelegate2.getElementAsDecimal();
+        return _delegate2.getElementAsDecimal();
     }
 
     public double getElementAsDouble() throws XMLStreamException {
-        return mDelegate2.getElementAsDouble();
+        return _delegate2.getElementAsDouble();
     }
 
     public float getElementAsFloat() throws XMLStreamException {
-        return mDelegate2.getElementAsFloat();
+        return _delegate2.getElementAsFloat();
     }
 
     public int getElementAsInt() throws XMLStreamException {
-        return mDelegate2.getElementAsInt();
+        return _delegate2.getElementAsInt();
     }
 
     public BigInteger getElementAsInteger() throws XMLStreamException {
-        return mDelegate2.getElementAsInteger();
+        return _delegate2.getElementAsInteger();
     }
 
     public long getElementAsLong() throws XMLStreamException {
-        return mDelegate2.getElementAsLong();
+        return _delegate2.getElementAsLong();
     }
 
     public QName getElementAsQName() throws XMLStreamException {
-        return mDelegate2.getElementAsQName();
+        return _delegate2.getElementAsQName();
     }
 
     public byte[] getElementAsBinary() throws XMLStreamException {
-        return mDelegate2.getElementAsBinary();
+        return _delegate2.getElementAsBinary();
     }
 
     public byte[] getElementAsBinary(Base64Variant v) throws XMLStreamException {
-        return mDelegate2.getElementAsBinary(v);
+        return _delegate2.getElementAsBinary(v);
     }
 
     public void getAttributeAs(int index, TypedValueDecoder tvd)
         throws XMLStreamException
     {
-        mDelegate2.getAttributeAs(index, tvd);
+        _delegate2.getAttributeAs(index, tvd);
     }
 
     public int getAttributeAsArray(int index, TypedArrayDecoder tad)
         throws XMLStreamException
     {
-        return mDelegate2.getAttributeAsArray(index, tad);
+        return _delegate2.getAttributeAsArray(index, tad);
     }
 
     public byte[] getAttributeAsBinary(int index) throws XMLStreamException
     {
-        return mDelegate2.getAttributeAsBinary(index);
+        return _delegate2.getAttributeAsBinary(index);
     }
 
     public byte[] getAttributeAsBinary(int index, Base64Variant v) throws XMLStreamException
     {
-        return mDelegate2.getAttributeAsBinary(index, v);
+        return _delegate2.getAttributeAsBinary(index, v);
     }
 
     public int readElementAsDoubleArray(double[] value, int from, int length)
         throws XMLStreamException
     {
-        return mDelegate2.readElementAsDoubleArray(value, from, length);
+        return _delegate2.readElementAsDoubleArray(value, from, length);
     }
 
     public int readElementAsFloatArray(float[] value, int from, int length)
         throws XMLStreamException
     {
-        return mDelegate2.readElementAsFloatArray(value, from, length);
+        return _delegate2.readElementAsFloatArray(value, from, length);
     }
 
     public int readElementAsIntArray(int[] value, int from, int length)
         throws XMLStreamException {
-        return mDelegate2.readElementAsIntArray(value, from, length);
+        return _delegate2.readElementAsIntArray(value, from, length);
     }
 
     public int readElementAsLongArray(long[] value, int from, int length)
         throws XMLStreamException
     {
-        return mDelegate2.readElementAsLongArray(value, from, length);
+        return _delegate2.readElementAsLongArray(value, from, length);
     }
 
     public int readElementAsArray(TypedArrayDecoder tad)
         throws XMLStreamException
     {
-        return mDelegate2.readElementAsArray(tad);
+        return _delegate2.readElementAsArray(tad);
     }
 
     public int readElementAsBinary(byte[] resultBuffer, int offset, int maxLength)
         throws XMLStreamException
     {
-        return mDelegate2.readElementAsBinary(resultBuffer, offset, maxLength);
+        return _delegate2.readElementAsBinary(resultBuffer, offset, maxLength);
     }
 
     public int readElementAsBinary(byte[] resultBuffer, int offset, int maxLength,
                                    Base64Variant v)
         throws XMLStreamException
     {
-        return mDelegate2.readElementAsBinary(resultBuffer, offset, maxLength, v);
+        return _delegate2.readElementAsBinary(resultBuffer, offset, maxLength, v);
     }
 }

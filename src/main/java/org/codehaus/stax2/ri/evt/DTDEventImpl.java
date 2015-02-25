@@ -22,20 +22,20 @@ public class DTDEventImpl
     extends BaseEventImpl
     implements DTD2
 {
-    final String mRootName;
+    final protected String mRootName;
 
-    final String mSystemId;
+    final protected String mSystemId;
 
-    final String mPublicId;
+    final protected String mPublicId;
 
-    final String mInternalSubset;
+    final protected String mInternalSubset;
 
-    final Object mDTD;
+    final protected Object mDTD;
 
     /*
-    /////////////////////////////////////////////////////
-    // Lazily constructed objects
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Lazily constructed objects
+    /**********************************************************************
      */
 
     /**
@@ -44,12 +44,12 @@ public class DTDEventImpl
      * older StAX interfaces), may be the only piece that's actually
      * passed.
      */
-    String mFullText = null;
+    protected String mFullText = null;
 
     /*
-    /////////////////////////////////////////////////////
-    // Constuctors
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Constructors
+    /**********************************************************************
      */
 
     public DTDEventImpl(Location loc, String rootName,
@@ -80,9 +80,9 @@ public class DTDEventImpl
     }
 
     /*
-    /////////////////////////////////////////////////////
-    // Accessors
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Accessors
+    /**********************************************************************
      */
 
     public String getDocumentTypeDeclaration()
@@ -94,13 +94,13 @@ public class DTDEventImpl
         }
     }
 
-    public List getEntities()
+    public List<Object> getEntities()
     {
         // !!! TODO: create stax2 abstraction to allow accessing this
         return null;
     }
 
-    public List getNotations()
+    public List<Object> getNotations()
     {
         // !!! TODO: create stax2 abstraction to allow accessing this
         return null;
@@ -112,9 +112,9 @@ public class DTDEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Implementation of abstract base methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of abstract base methods
+    /**********************************************************************
      */
 
     public int getEventType() {
@@ -172,9 +172,9 @@ public class DTDEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Extended interface (DTD2)
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Extended interface (DTD2)
+    /**********************************************************************
      */
 
     public String getRootName() {
@@ -194,9 +194,9 @@ public class DTDEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Standard method impl
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Standard method impl
+    /**********************************************************************
      */
 
     public boolean equals(Object o)
@@ -233,9 +233,9 @@ public class DTDEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Internal methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Internal methods
+    /**********************************************************************
      */
 
     protected String doGetDocumentTypeDeclaration()

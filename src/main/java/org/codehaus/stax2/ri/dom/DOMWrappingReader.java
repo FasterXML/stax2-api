@@ -201,7 +201,7 @@ public abstract class DOMWrappingReader
      * As such, elements are {@link org.w3c.dom.Attr} instances.
      *<p>
      */
-    protected List _attrList = null;
+    protected List<Node> _attrList = null;
 
     /**
      * Lazily instantiated String pairs of all namespace declarations for the
@@ -210,7 +210,7 @@ public abstract class DOMWrappingReader
      * (empty String for the default namespace declaration), and second
      * URI it is bound to.
      */
-    protected List _nsDeclList = null;
+    protected List<String> _nsDeclList = null;
 
     /**
      * Factory used for constructing decoders we need for typed access
@@ -224,9 +224,9 @@ public abstract class DOMWrappingReader
     protected StringBase64Decoder _base64Decoder = null;
 
     /*
-    ////////////////////////////////////////////////////
-    // Construction, configuration
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Construction, configuration
+    /**********************************************************************
      */
 
     /**
@@ -275,18 +275,18 @@ public abstract class DOMWrappingReader
     protected void setInternNsURIs(boolean state) { _cfgInternNsURIs = state; }
 
     /*
-    ////////////////////////////////////////////////////
-    // Abstract methods for sub-classes to implement
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Abstract methods for sub-classes to implement
+    /**********************************************************************
      */
 
     protected abstract void throwStreamException(String msg, Location loc)
         throws XMLStreamException;
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLStreamReader, document info
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamReader, document info
+    /**********************************************************************
      */
 
     /**
@@ -336,9 +336,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // Public API, configuration
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Public API, configuration
+    /**********************************************************************
      */
 
     public abstract Object getProperty(String name);
@@ -357,9 +357,9 @@ public abstract class DOMWrappingReader
     public abstract boolean setProperty(String name, Object value);
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLStreamReader, current state
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamReader, current state
+    /**********************************************************************
      */
 
     // // // Attribute access:
@@ -844,9 +844,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLStreamReader, iterating
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamReader, iterating
+    /**********************************************************************
      */
 
     public int next()
@@ -1032,17 +1032,15 @@ public abstract class DOMWrappingReader
      * {@link org.codehaus.stax2.XMLInputFactory2#P_AUTO_CLOSE_INPUT} is
      * set to true.
      */
-    public void close()
-        throws XMLStreamException
+    public void close() throws XMLStreamException
     {
         // Since DOM tree has no real input source, nothing to do
     }
 
-
     /*
-    ////////////////////////////////////////////////////
-    // NamespaceContext
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* NamespaceContext
+    /**********************************************************************
      */
 
     public String getNamespaceURI(String prefix)
@@ -1123,19 +1121,19 @@ public abstract class DOMWrappingReader
         return null;
     }
 
-    public Iterator getPrefixes(String namespaceURI) 
+    public Iterator<String> getPrefixes(String namespaceURI) 
     {
         String prefix = getPrefix(namespaceURI);
         if (prefix == null) {
             return EmptyIterator.getInstance();
         }
-        return new SingletonIterator(prefix);
+        return SingletonIterator.create(prefix);
     }
 
     /*
-    /////////////////////////////////////////////////
-    // TypedXMLStreamReader2 implementation, element
-    /////////////////////////////////////////////////
+    /**********************************************************************
+    /* TypedXMLStreamReader2 implementation, element
+    /**********************************************************************
      */
 
     public boolean getElementAsBoolean() throws XMLStreamException
@@ -1374,9 +1372,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////////////////
-    // TypedXMLStreamReader2 implementation, binary data
-    ////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* TypedXMLStreamReader2 implementation, binary data
+    /**********************************************************************
      */
 
     public int readElementAsBinary(byte[] resultBuffer, int offset, int maxLength)
@@ -1493,9 +1491,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    /////////////////////////////////////////////////
-    // TypedXMLStreamReader2 implementation, attribute
-    /////////////////////////////////////////////////
+    /**********************************************************************
+    /* TypedXMLStreamReader2 implementation, attribute
+    /**********************************************************************
      */
 
     public int getAttributeIndex(String namespaceURI, String localName)
@@ -1682,9 +1680,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLStreamReader2 (StAX2) implementation
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamReader2 (StAX2) implementation
+    /**********************************************************************
      */
 
     // // // StAX2, per-reader configuration
@@ -1908,9 +1906,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // DTDInfo implementation (StAX 2)
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* DTDInfo implementation (StAX 2)
+    /**********************************************************************
      */
 
     public Object getProcessedDTD() {
@@ -1957,9 +1955,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // LocationInfo implementation (StAX 2)
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* LocationInfo implementation (StAX 2)
+    /**********************************************************************
      */
 
     // // // First, the "raw" offset accessors:
@@ -2005,9 +2003,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // Stax2 validation: !!! TODO
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Stax2 validation: !!! TODO
+    /**********************************************************************
      */
 
     public XMLValidator validateAgainst(XMLValidationSchema schema)
@@ -2064,9 +2062,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////
-    // Internal methods, namespace support
-    ////////////////////////////////////////////
+    /**********************************************************************
+    /* Internal methods, namespace support
+    /**********************************************************************
      */
 
     private QName _constructQName(String uri, String ln, String prefix)
@@ -2086,22 +2084,23 @@ public abstract class DOMWrappingReader
         // A common case: neither attrs nor ns decls, can use short-cut
         int len = attrsIn.getLength();
         if (len == 0) {
-            _attrList = _nsDeclList = Collections.EMPTY_LIST;
+            _attrList = Collections.emptyList();
+            _nsDeclList = Collections.emptyList();
             return;
         }
 
         if (!_cfgNsAware) {
-            _attrList = new ArrayList(len);
+            _attrList = new ArrayList<Node>(len);
             for (int i = 0; i < len; ++i) {
                 _attrList.add(attrsIn.item(i));
             }
-            _nsDeclList = Collections.EMPTY_LIST;
+            _nsDeclList = Collections.emptyList();
             return;
         }
 
         // most should be attributes... and possibly no ns decls:
-        ArrayList attrsOut = null;
-        ArrayList nsOut = null;
+        ArrayList<Node> attrsOut = null;
+        ArrayList<String> nsOut = null;
 
         for (int i = 0; i < len; ++i) {
             Node attr = attrsIn.item(i);
@@ -2113,7 +2112,7 @@ public abstract class DOMWrappingReader
                 if (!"xmlns".equals(attr.getLocalName())) { // nope
                     if (attrsToo) {
                         if (attrsOut == null) {
-                            attrsOut = new ArrayList(len - i);
+                            attrsOut = new ArrayList<Node>(len - i);
                         }
                         attrsOut.add(attr);
                     }
@@ -2124,7 +2123,7 @@ public abstract class DOMWrappingReader
                 if (!"xmlns".equals(prefix)) { // nope
                     if (attrsToo) {
                         if (attrsOut == null) {
-                            attrsOut = new ArrayList(len - i);
+                            attrsOut = new ArrayList<Node>(len - i);
                         }
                         attrsOut.add(attr);
                     }
@@ -2133,14 +2132,14 @@ public abstract class DOMWrappingReader
                 prefix = attr.getLocalName();
             }
             if (nsOut == null) {
-                nsOut = new ArrayList((len - i) * 2);
+                nsOut = new ArrayList<String>((len - i) * 2);
             }
             nsOut.add(_internName(prefix));
             nsOut.add(_internNsURI(attr.getNodeValue()));
         }
 
-        _attrList = (attrsOut == null) ? Collections.EMPTY_LIST : attrsOut;
-        _nsDeclList = (nsOut == null) ? Collections.EMPTY_LIST : nsOut;
+        _attrList = (attrsOut == null) ? Collections.<Node>emptyList() : attrsOut;
+        _nsDeclList = (nsOut == null) ? Collections.<String>emptyList() : nsOut;
     }
 
     private void handleIllegalAttrIndex(int index)

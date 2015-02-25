@@ -23,7 +23,7 @@ import org.codehaus.stax2.typed.Base64Variant;
  * Base64 decoder that can be used to decode base64 encoded content that
  * is passed as char arrays.
  */
-public final class CharArrayBase64Decoder
+public class CharArrayBase64Decoder
     extends Base64DecoderBase
 {
     // // // Input buffer information
@@ -31,27 +31,27 @@ public final class CharArrayBase64Decoder
     /**
      * Text segment being currently processed.
      */
-    char[] _currSegment;
+    protected char[] _currSegment;
 
-    int _currSegmentPtr;
-    int _currSegmentEnd;
+    protected int _currSegmentPtr;
+    protected int _currSegmentEnd;
 
-    final ArrayList _nextSegments = new ArrayList();
+    protected  final ArrayList<char[]> _nextSegments = new ArrayList<char[]>();
 
-    int _lastSegmentOffset;
-    int _lastSegmentEnd;
+    protected  int _lastSegmentOffset;
+    protected  int _lastSegmentEnd;
 
     /**
      * Pointer of the next segment to process (after current one stored
      * in {@link #_currSegment}) within {@link #mOtherSegments}.
      */
-    int _nextSegmentIndex;
+    protected  int _nextSegmentIndex;
 
     public CharArrayBase64Decoder() { super(); }
 
     public void init(Base64Variant variant, boolean firstChunk,
                      char[] lastSegment, int lastOffset, int lastLen,
-                     List segments)
+                     List<char[]> segments)
     {
         _variant = variant;
         /* Leftovers only cleared if it is the first chunk (i.e.
@@ -70,8 +70,8 @@ public final class CharArrayBase64Decoder
                 throw new IllegalArgumentException();
             }
 
-            Iterator it = segments.iterator();
-            _currSegment = (char[]) it.next();
+            Iterator<char[]> it = segments.iterator();
+            _currSegment = it.next();
             _currSegmentPtr = 0;
             _currSegmentEnd = _currSegment.length;
 
@@ -247,9 +247,9 @@ public final class CharArrayBase64Decoder
     }
 
     /*
-    //////////////////////////////////////////////////////////////
-    // Internal helper methods for input access:
-    //////////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Internal helper methods for input access
+    /**********************************************************************
      */
      
     private boolean nextSegment()

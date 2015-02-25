@@ -5,8 +5,10 @@ import java.util.*;
 import javax.xml.namespace.QName;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.*;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.DTD;
 import javax.xml.stream.events.EntityReference;
+import javax.xml.stream.events.Namespace;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import javax.xml.stream.util.XMLEventAllocator;
@@ -158,26 +160,26 @@ public class Stax2EventAllocatorImpl
             nsCtxt = ((XMLStreamReader2) r).getNonTransientNamespaceContext();
         }
 
-        List attrs;
+        List<Attribute> attrs;
         {
             int attrCount = r.getAttributeCount();
             if (attrCount < 1) {
                 attrs = null;
             } else {
-                attrs = new ArrayList(attrCount);
+                attrs = new ArrayList<Attribute>(attrCount);
                 for (int i = 0; i < attrCount; ++i) {
                     QName aname = r.getAttributeName(i);
                     attrs.add(new AttributeEventImpl(loc, aname, r.getAttributeValue(i), r.isAttributeSpecified(i)));
                 }
             }
         }
-        List ns;
+        List<Namespace> ns;
         {
             int nsCount = r.getNamespaceCount();
             if (nsCount < 1) {
                 ns = null;
             } else {
-                ns = new ArrayList(nsCount);
+                ns = new ArrayList<Namespace>(nsCount);
                 for (int i = 0; i < nsCount; ++i) {
                     ns.add(NamespaceEventImpl.constructNamespace(loc, r.getNamespacePrefix(i), r.getNamespaceURI(i)));
                 }

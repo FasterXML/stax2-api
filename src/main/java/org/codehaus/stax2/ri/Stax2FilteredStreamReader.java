@@ -33,7 +33,7 @@ public class Stax2FilteredStreamReader
     {
         int type;
         do {
-            type = mDelegate2.next();
+            type = _delegate2.next();
             if (mFilter.accept(this)) {
                 break;
             }
@@ -48,7 +48,7 @@ public class Stax2FilteredStreamReader
         int type;
         // Can be implemented very much like next()
         while (true) {
-            type = mDelegate2.nextTag();
+            type = _delegate2.nextTag();
             if (mFilter.accept(this)) {
                 break;
             }

@@ -24,17 +24,17 @@ public abstract class BaseEventImpl
      * Location where token started; exact definition may depends
      * on event type.
      */
-    protected final Location mLocation;
+    protected final Location _location;
 
     protected BaseEventImpl(Location loc)
     {
-        mLocation = loc;
+        _location = loc;
     }
 
     /*
-    //////////////////////////////////////////////
-    // Skeleton XMLEvent API
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* Skeleton XMLEvent API
+    /**********************************************************************
      */
 
     public Characters asCharacters() {
@@ -52,7 +52,7 @@ public abstract class BaseEventImpl
     public abstract int getEventType();
 
     public Location getLocation() {
-        return mLocation;
+        return _location;
     }
 
     public QName getSchemaType() {
@@ -108,17 +108,17 @@ public abstract class BaseEventImpl
         throws XMLStreamException;
 
     /*
-    //////////////////////////////////////////////
-    // XMLEvent2 (StAX2)
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEvent2 (StAX2)
+    /**********************************************************************
      */
 
     public abstract void writeUsing(XMLStreamWriter2 w) throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////
-    // Overridden standard methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Overridden standard methods
+    /**********************************************************************
      */
 
     /**
@@ -160,7 +160,7 @@ public abstract class BaseEventImpl
         return (s2 != null) && s1.equals(s2);
     }
 
-    protected static boolean iteratedEquals(Iterator it1, Iterator it2)
+    protected static boolean iteratedEquals(Iterator<?> it1, Iterator<?> it2)
     {
         if (it1 == null || it2 == null) { // if one is null, both have to be
             return (it1 == it2);
@@ -180,7 +180,7 @@ public abstract class BaseEventImpl
         return true;
     }
 
-    protected static int addHash(Iterator it, int baseHash)
+    protected static int addHash(Iterator<?> it, int baseHash)
     {
         int hash = baseHash;
         if (it != null) {
