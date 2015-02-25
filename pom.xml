@@ -2,18 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion> 
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
+      <groupId>com.fasterxml</groupId>
+      <artifactId>oss-parent</artifactId>
+      <version>19</version>
   </parent>
   <groupId>org.codehaus.woodstox</groupId>
   <artifactId>stax2-api</artifactId>
   <name>Stax2 API</name>
-  <version>3.1.5-SNAPSHOT</version>
+  <version>4.0.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <description>tax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.
   </description>
-  <url>http://wiki.fasterxml.com/WoodstoxStax2</url>
+  <url>http://github.com/FasterXML/stax2-api</url>
   <scm>
     <connection>scm:git:git@github.com:FasterXML/stax2-api.git</connection>
     <developerConnection>scm:git:git@github.com:FasterXML/stax2-api.git</developerConnection>
@@ -40,8 +40,8 @@
   </organization>
 
   <dependencies>
-    <!-- Stax API jar is needed; 1.0-2 seems to be the last "official"
-         version prior to JDK 6 that bundles API
+    <!-- Since baseline with 4.0 is Java5, we still need to officially keep this in;
+         should drop once we go up to Java6 or 7
       -->
     <dependency>
       <groupId>javax.xml.stream</groupId>
@@ -56,7 +56,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.5.1</version>
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
@@ -73,7 +72,6 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-release-plugin</artifactId>
-            <version>2.4.1</version>
             <configuration>
                 <mavenExecutorId>forked-path</mavenExecutorId>
             </configuration>
@@ -81,7 +79,6 @@
         <plugin><!-- plug-in to attach source bundle in repo -->
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
-          <version>2.1.2</version>
           <executions>
             <execution>
               <id>attach-sources</id>
@@ -94,7 +91,6 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.6.1</version>
           <!-- 06-Jul-2013, tatu: When can we switch to 1.6?
             -->
           <configuration>
@@ -119,7 +115,6 @@
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <version>2.3.7</version>
           <extensions>true</extensions>
           <configuration>
             <instructions>
