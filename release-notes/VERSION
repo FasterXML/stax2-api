@@ -1,9 +1,16 @@
 Project: Stax2 API
-Version: 3.1.4 (28-Feb-2014)
+
+------------------------------------------------------------------------
+= Releases
+------------------------------------------------------------------------
+
+3.1.5:
+
+#3: Add LICENSE file that indicates BSD (2-clause) as the license
+
+3.1.4 (28-Feb-2014)
 
 The first version released from github.
-
-Changes:
 
 #2: Stax2EventFactoryImpl.createEndElement() not passing namespace prefix
  (reported by Jimmy Praet)
