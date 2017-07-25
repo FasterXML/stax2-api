@@ -31,7 +31,7 @@ package org.codehaus.stax2.ri.typed;
  *  <li>First, {@link #bufferNeedsFlush} is called once; and
  *   if indicated by return value of true, caller must flush
  *   its buffer so it is completely empty (buffer also must have
- *   size of at at least <code>MIN_CHARS_WITHOUT_FLUSH)
+ *   size of at at least <code>MIN_CHARS_WITHOUT_FLUSH</code>)
  *   </li>
  *  <li>Then, one of {@link #encodeMore} methods is to be called
  *   </li>

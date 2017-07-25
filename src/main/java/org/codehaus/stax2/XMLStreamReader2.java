@@ -33,7 +33,7 @@ import org.codehaus.stax2.validation.Validatable;
  * SOAP-messages).
  *<p>
  * The features supported via {@link #setFeature} are:
- *<dt>
+ *<dl>
  * <dt>FEATURE_DTD_OVERRIDE: (write-only)</dt>
  * <dd>Feature used to specify the source for DTD external subset to use
  *    instead of DTD specified by the XML document itself (if any).
@@ -41,10 +41,10 @@ import org.codehaus.stax2.validation.Validatable;
  *    essentially allows for injecting an alternate DOCTYPE declaration.
  *    Note that setting this value to null is both legal, and sometimes
  *    useful: it is equivalent of removing the DOCTYPE declaration.
- *   <br />Feature is write-only, since storing it after loading the DTD
+ *   <br>Feature is write-only, since storing it after loading the DTD
  *    in question does not have much use.
- *  </dt>
- *</dt>
+ *  </dd>
+ *</dl>
  *<p>
  * Since version 3.0, stream writer will also implement "Typed Access API"
  * on output side.
@@ -62,6 +62,7 @@ public interface XMLStreamReader2
      *
      * @deprecated Use {@link XMLInputFactory2#P_DTD_OVERRIDE} instead.
      */
+    @Deprecated
     public final static String FEATURE_DTD_OVERRIDE = XMLInputFactory2.P_DTD_OVERRIDE;
 
     /*
@@ -94,7 +95,7 @@ public interface XMLStreamReader2
      * @return True, if the specified property was <b>succesfully</b>
      *    set to specified value; false if its value was not changed
      *
-     * @throws InvalidArgumentException if the property is not supported
+     * @throws IllegalArgumentException if the property is not supported
      *   (or recognized) by the stream reader implementation
      */
     public boolean setProperty(String name, Object value);
@@ -115,6 +116,7 @@ public interface XMLStreamReader2
      * @return Value of the feature (possibly null), if supported; null
      *     otherwise
      */
+    @Deprecated
     public Object getFeature(String name);
 
     /**
@@ -132,6 +134,7 @@ public interface XMLStreamReader2
      * @param name Name of the feature to set
      * @param value Value to set feature to.
      */
+    @Deprecated
     public void setFeature(String name, Object value);
 
     /*
@@ -240,7 +243,7 @@ public interface XMLStreamReader2
     /**
      * Method that can be used to check whether current START_ELEMENT
      * event was created for an empty element (xml short-hand notation
-     * where one tag implies start and end, ending with "/>"), or not.
+     * where one tag implies start and end, ending with "/&gt;"), or not.
      *<p>
      * Note: method may need to read more data to know if the element
      * is an empty one, and as such may throw an i/o or parsing exception

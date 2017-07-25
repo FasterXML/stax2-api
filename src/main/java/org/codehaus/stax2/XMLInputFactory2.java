@@ -14,7 +14,7 @@ import javax.xml.stream.XMLStreamReader;
  * recognize, and preferably support. There are also some profile-based
  * configuration methods which allow implementations to set proper goal-based
  * values for custom properties.
- *<br />
+ *<br>
  * NOTE: although actual values for the property names are
  * visible, implementations should try to use the symbolic constants
  * defined here instead, to avoid typos.

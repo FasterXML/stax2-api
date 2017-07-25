@@ -92,18 +92,22 @@ public class StartElementEventImpl
     /**********************************************************************
      */
 
+    @Override
     public StartElement asStartElement() { // overriden to save a cast
         return this;
     }
 
+    @Override
     public int getEventType() {
         return START_ELEMENT;
     }
 
+    @Override
     public boolean isStartElement() {
         return true;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -142,6 +146,7 @@ public class StartElementEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 sw) throws XMLStreamException
     {
         QName n = _name;
@@ -270,6 +275,7 @@ public class StartElementEventImpl
     /**********************************************************************
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -294,6 +300,7 @@ public class StartElementEventImpl
         return false;
     }
 
+    @Override
     public int hashCode()
     {
         int hash = _name.hashCode();

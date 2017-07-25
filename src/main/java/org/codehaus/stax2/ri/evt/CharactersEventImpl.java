@@ -66,18 +66,21 @@ public class CharactersEventImpl
     /////////////////////////////////////////////////////
      */
 
+    @Override
     public Characters asCharacters() { // overriden to save a cast
         return this;
     }
 
+    @Override
     public int getEventType() {
         return mIsCData ? CDATA : CHARACTERS;
     }
 
+    @Override
     public boolean isCharacters() { return true; }
 
-    public void writeAsEncodedUnicode(Writer w)
-        throws XMLStreamException
+    @Override
+    public void writeAsEncodedUnicode(Writer w) throws XMLStreamException
     {
         try {
             if (mIsCData) {
@@ -92,6 +95,7 @@ public class CharactersEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         if (mIsCData) {
@@ -154,6 +158,7 @@ public class CharactersEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -170,8 +175,8 @@ public class CharactersEventImpl
         return false;
     }
 
-    public int hashCode()
-    {
+    @Override
+    public int hashCode() {
         return mContent.hashCode();
     }
 

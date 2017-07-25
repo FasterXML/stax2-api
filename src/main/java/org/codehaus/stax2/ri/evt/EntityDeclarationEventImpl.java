@@ -67,10 +67,12 @@ public class EntityDeclarationEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return ENTITY_DECLARATION;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -89,6 +91,7 @@ public class EntityDeclarationEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         // Really shouldn't be output. But if we must...
@@ -103,6 +106,7 @@ public class EntityDeclarationEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -120,6 +124,7 @@ public class EntityDeclarationEventImpl
             ;
     }
 
+    @Override
     public int hashCode()
     {
         // Since we don't have much data, this is easy...

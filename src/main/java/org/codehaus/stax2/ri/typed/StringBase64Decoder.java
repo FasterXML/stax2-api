@@ -56,6 +56,7 @@ public final class StringBase64Decoder
      *
      * @return Number of bytes decoded and returned in the result buffer
      */
+    @Override
     public int decode(byte[] resultBuffer, int resultOffset, int maxLength)
         throws IllegalArgumentException
     {

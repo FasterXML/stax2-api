@@ -86,6 +86,7 @@ public abstract class Stax2EventFactoryImpl
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" }) // due to Stax's non-generic-ness
+    @Override
     public EndElement createEndElement(QName name, Iterator namespaces) {
         return new EndElementEventImpl(mLocation, name, (Iterator<Namespace>) namespaces);
     }

@@ -36,14 +36,17 @@ public class ProcInstrEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return PROCESSING_INSTRUCTION;
     }
 
+    @Override
     public boolean isProcessingInstruction() {
         return true;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -59,6 +62,7 @@ public class ProcInstrEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         if (mData != null && mData.length() > 0) {
@@ -74,6 +78,7 @@ public class ProcInstrEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -86,6 +91,7 @@ public class ProcInstrEventImpl
             && stringsWithNullsEqual(mData, other.getData());
     }
 
+    @Override
     public int hashCode()
     {
         int hash = mTarget.hashCode();

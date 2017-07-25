@@ -27,6 +27,7 @@ public class Stax2FileSource
      *   of resolving a relative reference from content read from the
      *   resource.
      */
+    @Override
     public URL getReference()
     {
         /* !!! 13-May-2006, TSa: For Woodstox 4.0, consider converting
@@ -44,8 +45,8 @@ public class Stax2FileSource
         }
     }
 
-    public Reader constructReader()
-        throws IOException
+    @Override
+    public Reader constructReader() throws IOException
     {
         String enc = getEncoding();
         if (enc != null && enc.length() > 0) {
@@ -55,8 +56,8 @@ public class Stax2FileSource
         return new FileReader(_file);
     }
 
-    public InputStream constructInputStream()
-        throws IOException
+    @Override
+    public InputStream constructInputStream() throws IOException
     {
         return new FileInputStream(_file);
     }

@@ -510,8 +510,8 @@ public abstract class DOMWrappingReader
      * this is not a text-only element.
      * Regardless of value of javax.xml.stream.isCoalescing this method always
      * returns coalesced content.
-     *<br/>Precondition: the current event is START_ELEMENT.
-     *<br/>Postcondition: the current event is the corresponding END_ELEMENT. 
+     *<br>Precondition: the current event is START_ELEMENT.
+     *<br>Postcondition: the current event is the corresponding END_ELEMENT. 
      *</blockquote>
      */
     public String getElementText()
@@ -1687,12 +1687,14 @@ public abstract class DOMWrappingReader
 
     // // // StAX2, per-reader configuration
 
+    @Deprecated
     public Object getFeature(String name)
     {
         // No readable features supported yet
         throw new IllegalArgumentException("Unrecognized feature \""+name+"\"");
     }
 
+    @Deprecated
     public void setFeature(String name, Object value)
     {
         throw new IllegalArgumentException("Unrecognized feature \""+name+"\"");
@@ -1852,7 +1854,7 @@ public abstract class DOMWrappingReader
 
     /**
      * @return True, if cursor points to a start or end element that is
-     *    constructed from 'empty' element (ends with '/>');
+     *    constructed from 'empty' element (ends with {@code '/>'});
      *    false otherwise.
      */
     public boolean isEmptyElement() throws XMLStreamException

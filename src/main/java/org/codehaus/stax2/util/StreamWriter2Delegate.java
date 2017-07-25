@@ -31,7 +31,8 @@ public class StreamWriter2Delegate
     {
         super(parent);
     }
-    // @Override
+
+    @Override
     public void setParent(XMLStreamWriter w)
     {
         super.setParent(w);

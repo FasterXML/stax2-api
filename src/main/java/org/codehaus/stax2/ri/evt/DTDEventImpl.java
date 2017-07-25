@@ -119,10 +119,12 @@ public class DTDEventImpl
     /**********************************************************************
      */
 
+    @Override
     public int getEventType() {
         return DTD;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -162,6 +164,7 @@ public class DTDEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         if (mRootName != null) {
@@ -201,6 +204,7 @@ public class DTDEventImpl
     /**********************************************************************
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -209,17 +213,15 @@ public class DTDEventImpl
 
         DTD other = (DTD) o;
 
-        /* Hmmh. Comparison for this event get very
-         * tricky, very fast, if one tries to do it correctly
-         * (partly due to Stax2 incompleteness, but not just
-         * because of that)... let's actually try to minimize
-         * work here
+        /* Hmmh. Comparison for this event get very tricky, very fast, if one
+         * tries to do it correctly (partly due to Stax2 incompleteness, but not just
+         * because of that)... let's actually try to minimize work here
          */
         return stringsWithNullsEqual(getDocumentTypeDeclaration(),
                                      other.getDocumentTypeDeclaration());
     }
 
-
+    @Override
     public int hashCode()
     {
         int hash = 0;

@@ -168,8 +168,10 @@ public final class ValueEncoderFactory
             _value = value;
         }
 
+        @Override
         public boolean isCompleted() { return (_value == null); }
 
+        @Override
         public int encodeMore(char[] buffer, int ptr, int end)
         {
             String str = _value;
@@ -180,6 +182,7 @@ public final class ValueEncoderFactory
             return ptr;
         }
 
+        @Override
         public int encodeMore(byte[] buffer, int ptr, int end)
         {
             String str = _value;
@@ -214,8 +217,10 @@ public final class ValueEncoderFactory
             _value = value;
         }
 
+        @Override
         public boolean isCompleted() { return (_value == null); }
 
+        @Override
         public int encodeMore(char[] buffer, int ptr, int end)
         {
             int left = _value.length() - _offset;
@@ -230,6 +235,7 @@ public final class ValueEncoderFactory
             return end;
         }
 
+        @Override
         public int encodeMore(byte[] buffer, int ptr, int end)
         {
             int left = _value.length() - _offset;
@@ -262,6 +268,7 @@ public final class ValueEncoderFactory
          * written in one go, they will always be completed by
          * time method is called./
          */
+        @Override
         public final boolean isCompleted() { return true; }
     }
 
@@ -276,13 +283,13 @@ public final class ValueEncoderFactory
             _value = value;
         }
 
-        public int encodeMore(char[] buffer, int ptr, int end)
-        {
+        @Override
+        public int encodeMore(char[] buffer, int ptr, int end) {
             return NumberUtil.writeInt(_value, buffer, ptr);
         }
 
-        public int encodeMore(byte[] buffer, int ptr, int end)
-        {
+        @Override
+        public int encodeMore(byte[] buffer, int ptr, int end) {
             return NumberUtil.writeInt(_value, buffer, ptr);
         }
     }
@@ -298,13 +305,13 @@ public final class ValueEncoderFactory
             _value = value;
         }
 
-        public int encodeMore(char[] buffer, int ptr, int end)
-        {
+        @Override
+        public int encodeMore(char[] buffer, int ptr, int end) {
             return NumberUtil.writeLong(_value, buffer, ptr);
         }
 
-        public int encodeMore(byte[] buffer, int ptr, int end)
-        {
+        @Override
+        public int encodeMore(byte[] buffer, int ptr, int end) {
             return NumberUtil.writeLong(_value, buffer, ptr);
         }
     }
@@ -320,13 +327,13 @@ public final class ValueEncoderFactory
             _value = value;
         }
 
-        public int encodeMore(char[] buffer, int ptr, int end)
-        {
+        @Override
+        public int encodeMore(char[] buffer, int ptr, int end) {
             return NumberUtil.writeFloat(_value, buffer, ptr);
         }
 
-        public int encodeMore(byte[] buffer, int ptr, int end)
-        {
+        @Override
+        public int encodeMore(byte[] buffer, int ptr, int end) {
             return NumberUtil.writeFloat(_value, buffer, ptr);
         }
     }
@@ -342,13 +349,13 @@ public final class ValueEncoderFactory
             _value = value;
         }
 
-        public int encodeMore(char[] buffer, int ptr, int end)
-        {
+        @Override
+        public int encodeMore(char[] buffer, int ptr, int end) {
             return NumberUtil.writeDouble(_value, buffer, ptr);
         }
 
-        public int encodeMore(byte[] buffer, int ptr, int end)
-        {
+        @Override
+        public int encodeMore(byte[] buffer, int ptr, int end) {
             return NumberUtil.writeDouble(_value, buffer, ptr);
         }
     }
@@ -375,8 +382,10 @@ public final class ValueEncoderFactory
             _end = end;
         }
 
+        @Override
         public final boolean isCompleted() { return (_ptr >= _end); }
 
+        @Override
         public abstract int encodeMore(char[] buffer, int ptr, int end);
     }
 
@@ -394,6 +403,7 @@ public final class ValueEncoderFactory
             _values = values;
         }
 
+        @Override
         public int encodeMore(char[] buffer, int ptr, int end)
         {
             int lastOk = end - (1+NumberUtil.MAX_INT_CLEN);
@@ -404,6 +414,7 @@ public final class ValueEncoderFactory
             return ptr;
         }
 
+        @Override
         public int encodeMore(byte[] buffer, int ptr, int end)
         {
             int lastOk = end - (1+NumberUtil.MAX_INT_CLEN);
@@ -426,6 +437,7 @@ public final class ValueEncoderFactory
             _values = values;
         }
 
+        @Override
         public int encodeMore(char[] buffer, int ptr, int end)
         {
             int lastOk = end - (1+NumberUtil.MAX_LONG_CLEN);
@@ -436,6 +448,7 @@ public final class ValueEncoderFactory
             return ptr;
         }
 
+        @Override
         public int encodeMore(byte[] buffer, int ptr, int end)
         {
             int lastOk = end - (1+NumberUtil.MAX_LONG_CLEN);
@@ -458,6 +471,7 @@ public final class ValueEncoderFactory
             _values = values;
         }
 
+        @Override
         public int encodeMore(char[] buffer, int ptr, int end)
         {
             int lastOk = end - (1+NumberUtil.MAX_FLOAT_CLEN);
@@ -468,6 +482,7 @@ public final class ValueEncoderFactory
             return ptr;
         }
 
+        @Override
         public int encodeMore(byte[] buffer, int ptr, int end)
         {
             int lastOk = end - (1+NumberUtil.MAX_FLOAT_CLEN);
@@ -490,6 +505,7 @@ public final class ValueEncoderFactory
             _values = values;
         }
 
+        @Override
         public int encodeMore(char[] buffer, int ptr, int end)
         {
             int lastOk = end - (1+NumberUtil.MAX_DOUBLE_CLEN);
@@ -500,6 +516,7 @@ public final class ValueEncoderFactory
             return ptr;
         }
 
+        @Override
         public int encodeMore(byte[] buffer, int ptr, int end)
         {
             int lastOk = end - (1+NumberUtil.MAX_DOUBLE_CLEN);
@@ -552,8 +569,10 @@ public final class ValueEncoderFactory
             _chunksBeforeLf = _variant.getMaxLineLength() >> 2;
         }
 
+        @Override
         public boolean isCompleted() { return (_inputPtr >= _inputEnd); }
 
+        @Override
         public int encodeMore(char[] buffer, int outPtr, int outEnd)
         {
             // Encoding is by chunks of 3 input, 4 output chars, so:
@@ -590,6 +609,7 @@ public final class ValueEncoderFactory
             return outPtr;
         }
 
+        @Override
         public int encodeMore(byte[] buffer, int outPtr, int outEnd)
         {
             int inEnd = _inputEnd-3;

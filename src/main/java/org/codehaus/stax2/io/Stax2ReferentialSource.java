@@ -27,10 +27,13 @@ public abstract class Stax2ReferentialSource
     /////////////////////////////////////////
      */
 
+    @Override
     public abstract URL getReference();
 
+    @Override
     public abstract Reader constructReader() throws IOException;
 
+    @Override
     public abstract InputStream constructInputStream() throws IOException;
 
     /*
@@ -42,6 +45,7 @@ public abstract class Stax2ReferentialSource
     /**
      * Since we can determine a system id from the base URL
      */
+    @Override
     public String getSystemId()
     {
         String sysId = super.getSystemId();

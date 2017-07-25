@@ -201,6 +201,7 @@ public final class ValueDecoderFactory
          * any non-white space characters (including the case where
          * typed accessor is called for an empty element).
          */
+        @Override
         public void handleEmptyValue()
         {
             /* Defalt behavior for all types implemented within
@@ -498,12 +499,13 @@ public final class ValueDecoderFactory
 
         public BooleanDecoder() { }
 
+        @Override
         public String getType() { return "boolean"; }
 
         public boolean getValue() { return mValue; }
 
-        public void decode(String lexical)
-            throws IllegalArgumentException
+        @Override
+        public void decode(String lexical) throws IllegalArgumentException
         {
             int len = lexical.length();
             char c = lexical.charAt(0);
@@ -537,7 +539,8 @@ public final class ValueDecoderFactory
             }
             throw constructInvalidValue(lexical);
         }
-        
+
+        @Override
         public void decode(char[] lexical, int start, int end)
             throws IllegalArgumentException
         {
@@ -583,12 +586,13 @@ public final class ValueDecoderFactory
 
         public IntDecoder() { }
 
+        @Override
         public String getType() { return "int"; }
 
         public int getValue() { return mValue; }
 
-        public void decode(String lexical)
-            throws IllegalArgumentException
+        @Override
+        public void decode(String lexical) throws IllegalArgumentException
         {
             final int end = lexical.length();
             char ch = lexical.charAt(0);
@@ -640,7 +644,8 @@ public final class ValueDecoderFactory
             throw new IllegalArgumentException("value \""+lexicalDesc(lexical)+"\" not a valid 32-bit integer: overflow.");
 
         }
-        
+
+        @Override
         public void decode(char[] lexical, final int start, final int end)
             throws IllegalArgumentException
         {
@@ -702,10 +707,12 @@ public final class ValueDecoderFactory
 
         public LongDecoder() { }
 
+        @Override
         public String getType() { return "long"; }
 
         public long getValue() { return mValue; }
 
+        @Override
         public void decode(String lexical)
             throws IllegalArgumentException
         {
@@ -752,6 +759,7 @@ public final class ValueDecoderFactory
             mValue = parseUsingBD(lexical.substring(ptr, ptr+charsLeft), neg);
         }
 
+        @Override
         public void decode(char[] lexical, final int start, final int end)
             throws IllegalArgumentException
         {
@@ -822,10 +830,12 @@ public final class ValueDecoderFactory
 
         public FloatDecoder() { }
 
+        @Override
         public String getType() { return "float"; }
 
         public float getValue() { return mValue; }
 
+        @Override
         public void decode(String lexical)
             throws IllegalArgumentException
         {
@@ -865,6 +875,7 @@ public final class ValueDecoderFactory
             }
         }
 
+        @Override
         public void decode(char[] lexical, int start, int end)
             throws IllegalArgumentException
         {
@@ -911,10 +922,12 @@ public final class ValueDecoderFactory
 
         public DoubleDecoder() { }
 
+        @Override
         public String getType() { return "double"; }
 
         public double getValue() { return mValue; }
 
+        @Override
         public void decode(String lexical)
             throws IllegalArgumentException
         {
@@ -954,6 +967,7 @@ public final class ValueDecoderFactory
             }
         }
 
+        @Override
         public void decode(char[] lexical, int start, int end)
             throws IllegalArgumentException
         {
@@ -1006,10 +1020,12 @@ public final class ValueDecoderFactory
 
         public IntegerDecoder() { }
 
+        @Override
         public String getType() { return "integer"; }
 
         public BigInteger getValue() { return mValue; }
 
+        @Override
         public void decode(String lexical) throws IllegalArgumentException
         {
             try {
@@ -1019,6 +1035,7 @@ public final class ValueDecoderFactory
             }
         }
 
+        @Override
         public void decode(char[] lexical, int start, int end) throws IllegalArgumentException
         {
             String lexicalStr = new String(lexical, start, (end-start));
@@ -1037,10 +1054,12 @@ public final class ValueDecoderFactory
 
         public DecimalDecoder() { }
 
+        @Override
         public String getType() { return "decimal"; }
 
         public BigDecimal getValue() { return mValue; }
 
+        @Override
         public void decode(String lexical) throws IllegalArgumentException
         {
             try {
@@ -1050,6 +1069,7 @@ public final class ValueDecoderFactory
             }
         }
 
+        @Override
         public void decode(char[] lexical, int start, int end) throws IllegalArgumentException
         {
             int len = end-start;
@@ -1077,10 +1097,12 @@ public final class ValueDecoderFactory
             mNsCtxt = nsc;
         }
 
+        @Override
         public String getType() { return "QName"; }
 
         public QName getValue() { return mValue; }
 
+        @Override
         public void decode(String lexical) throws IllegalArgumentException
         {
             int ix = lexical.indexOf(':');
@@ -1092,6 +1114,7 @@ public final class ValueDecoderFactory
             }
         }
 
+        @Override
         public void decode(char[] lexical, int start, int end) throws IllegalArgumentException
         {
             int i = start;
@@ -1178,7 +1201,10 @@ public final class ValueDecoderFactory
             mEnd = maxCount;
         }
 
+        @Override
         public final int getCount() { return mCount; }
+
+        @Override
         public final boolean hasRoom() { return mCount < mEnd; }
 
         /**
@@ -1227,6 +1253,7 @@ public final class ValueDecoderFactory
             mDecoder = intDecoder;
         }
 
+        @Override
         public void expand()
         {
             int[] old = mResult;
@@ -1246,6 +1273,7 @@ public final class ValueDecoderFactory
             return result;
         }
 
+        @Override
         public boolean decodeValue(String input) throws IllegalArgumentException
         {
             mDecoder.decode(input);
@@ -1253,6 +1281,7 @@ public final class ValueDecoderFactory
             return (++mCount >= mEnd);
         }
 
+        @Override
         public boolean decodeValue(char[] buffer, int start, int end) throws IllegalArgumentException
         {
             mDecoder.decode(buffer, start, end);
@@ -1284,6 +1313,7 @@ public final class ValueDecoderFactory
             mDecoder = longDecoder;
         }
 
+        @Override
         public void expand()
         {
             long[] old = mResult;
@@ -1302,6 +1332,7 @@ public final class ValueDecoderFactory
             return result;
         }
 
+        @Override
         public boolean decodeValue(String input) throws IllegalArgumentException
         {
             mDecoder.decode(input);
@@ -1309,6 +1340,7 @@ public final class ValueDecoderFactory
             return (++mCount >= mEnd);
         }
 
+        @Override
         public boolean decodeValue(char[] buffer, int start, int end) throws IllegalArgumentException
         {
             mDecoder.decode(buffer, start, end);
@@ -1339,6 +1371,7 @@ public final class ValueDecoderFactory
             mDecoder = floatDecoder;
         }
 
+        @Override
         public void expand()
         {
             float[] old = mResult;
@@ -1357,6 +1390,7 @@ public final class ValueDecoderFactory
             return result;
         }
 
+        @Override
         public boolean decodeValue(String input) throws IllegalArgumentException
         {
             mDecoder.decode(input);
@@ -1364,6 +1398,7 @@ public final class ValueDecoderFactory
             return (++mCount >= mEnd);
         }
 
+        @Override
         public boolean decodeValue(char[] buffer, int start, int end) throws IllegalArgumentException
         {
             mDecoder.decode(buffer, start, end);
@@ -1394,6 +1429,7 @@ public final class ValueDecoderFactory
             mDecoder = doubleDecoder;
         }
 
+        @Override
         public void expand()
         {
             double[] old = mResult;
@@ -1412,6 +1448,7 @@ public final class ValueDecoderFactory
             return result;
         }
 
+        @Override
         public boolean decodeValue(String input) throws IllegalArgumentException
         {
             mDecoder.decode(input);
@@ -1419,6 +1456,7 @@ public final class ValueDecoderFactory
             return (++mCount >= mEnd);
         }
 
+        @Override
         public boolean decodeValue(char[] buffer, int start, int end) throws IllegalArgumentException
         {
             mDecoder.decode(buffer, start, end);

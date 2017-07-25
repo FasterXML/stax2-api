@@ -115,8 +115,8 @@ public class Stax2ReaderAdapter
     ///////////////////////////////////////////////////////////////////////
      */
 
-    public int next()
-        throws XMLStreamException
+    @Override
+    public int next() throws XMLStreamException
     {
         /* First special check: are we in the middle of chunked
          * decode operation? If so, we'll just end it...
@@ -135,9 +135,7 @@ public class Stax2ReaderAdapter
         return type;
     }
 
-    /**
-     * As per [WSTX-254], must override and add handling for depth calculation here.
-     */
+    @Override
     public String getElementText() throws XMLStreamException
     {
         /* Should not succeed (as per specs) if not pointing to START_ELEMENT, but just in
@@ -652,12 +650,14 @@ public class Stax2ReaderAdapter
 
     // // // StAX2, per-reader configuration
 
+    @Deprecated
     public Object getFeature(String name)
     {
         // No features defined
         return null;
     }
 
+    @Deprecated
     public void setFeature(String name, Object value)
     {
         // No features defined

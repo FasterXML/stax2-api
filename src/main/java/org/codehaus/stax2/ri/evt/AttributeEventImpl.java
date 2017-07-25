@@ -51,12 +51,15 @@ public class AttributeEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return ATTRIBUTE;
     }
 
+    @Override
     public boolean isAttribute() { return true; }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -79,6 +82,7 @@ public class AttributeEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         QName n = mName;
@@ -120,6 +124,7 @@ public class AttributeEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -141,6 +146,7 @@ public class AttributeEventImpl
         return false;
     }
 
+    @Override
     public int hashCode()
     {
         /* Hmmh. Definitely need hashCode of name; but how about

@@ -16,7 +16,7 @@ import org.codehaus.stax2.io.EscapingWriterFactory;
  * Also contains extended standard properties that conforming stream
  * writer factory and instance implementations should at least
  * recognize, and preferably support.
- *<br />
+ *<br>
  * NOTE: although actual values for the property names are
  * visible, implementations should try to use the symbolic constants
  * defined here instead, to avoid typos.
@@ -27,15 +27,15 @@ import org.codehaus.stax2.io.EscapingWriterFactory;
  * Whether output classes should keep track of and output namespace
  * information provided via write methods.
  * When enabled (set to Boolean.TRUE), will use all namespace information
- * provided, and does not allow colons in names (local name, prefix).<br />
+ * provided, and does not allow colons in names (local name, prefix).<br>
  * What exactly is kept track
  * of depends on other settings, specifically whether
  * writer is in "repairing" mode or not.
  * When disabled, will only make use of local name part, which
  * may contain colons, and ignore prefix and namespace URI if any
- * are passed.<br />
+ * are passed.<br>
  * Turning this option off may improve performance if no namespace
- * handling is needed.<br />
+ * handling is needed.<br>
  * Default value for implementations should be 'true'; implementations
  * are not required to implement 'false'.
  *  </li>

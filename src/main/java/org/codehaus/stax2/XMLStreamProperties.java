@@ -67,7 +67,7 @@ public interface XMLStreamProperties
      * Default value is implementation-specific, but recommended default
      * value is <code>XSP_V_XMLID_TYPING</code> for implementations
      * that do support Xml:id specification: those that do not, have to
-     * default to <code>XSP_V_XMLID_NONE.
+     * default to <code>XSP_V_XMLID_NONE</code>.
      * For Xml:id-enabled implementations, typing support is the most
      * logical default, since it
      * provides the intuitive behavior of xml:id functionality, as well

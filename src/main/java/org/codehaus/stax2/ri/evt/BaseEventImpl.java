@@ -129,13 +129,16 @@ public abstract class BaseEventImpl
     /**
      * Declared abstract to force redefinition by sub-classes
      */
+    @Override
     public abstract boolean equals(Object o);
 
     /**
      * Declared abstract to force redefinition by sub-classes
      */
+    @Override
     public abstract int hashCode();
 
+    @Override
     public String toString() {
         return "[Stax Event #"+getEventType()+"]";
     }

@@ -102,14 +102,17 @@ public class StartDocumentEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return START_DOCUMENT;
     }
 
+    @Override
     public boolean isStartDocument() {
         return true;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -140,6 +143,7 @@ public class StartDocumentEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         w.writeStartDocument();
@@ -151,6 +155,7 @@ public class StartDocumentEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -168,7 +173,7 @@ public class StartDocumentEventImpl
             ;
     }
 
-
+    @Override
     public int hashCode()
     {
         int hash = 0;

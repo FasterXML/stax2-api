@@ -91,18 +91,22 @@ public class EndElementEventImpl
     /**********************************************************************
      */
 
+    @Override
     public EndElement asEndElement() { // overriden to save a cast
         return this;
     }
 
+    @Override
     public int getEventType() {
         return END_ELEMENT;
     }
 
+    @Override
     public boolean isEndElement() {
         return true;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -120,8 +124,8 @@ public class EndElementEventImpl
         }
     }
 
-    public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
-    {
+    @Override
+    public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException {
         w.writeEndElement();
     }
 
@@ -131,6 +135,7 @@ public class EndElementEventImpl
     /**********************************************************************
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -151,6 +156,7 @@ public class EndElementEventImpl
         return false;
     }
 
+    @Override
     public int hashCode()
     {
         return getName().hashCode();

@@ -23,7 +23,9 @@ public abstract class Stax2BlockResult
     /////////////////////////////////////////
      */
 
+    @Override
     public abstract Writer constructWriter() throws IOException;
 
+    @Override
     public abstract OutputStream constructOutputStream() throws IOException;
 }

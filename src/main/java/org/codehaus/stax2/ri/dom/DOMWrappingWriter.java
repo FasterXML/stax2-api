@@ -43,7 +43,7 @@ import org.codehaus.stax2.validation.*;
  * <code>javax.xml.transform.dom.DOMResult</code>. It can however be
  * used for both full documents, and single element root fragments,
  * depending on what node is passed as the argument.
- *>p>
+ *<p>
  * One more implementation note: much code is identical to one
  * used by {@link org.codehaus.stax2.ri.Stax2WriterAdapter}.
  * Alas it is hard to reuse it without cut'n pasting.

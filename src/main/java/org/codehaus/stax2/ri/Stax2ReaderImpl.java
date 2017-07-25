@@ -66,12 +66,14 @@ public abstract class Stax2ReaderImpl
 
     // // // StAX2, per-reader configuration
 
+    @Deprecated
     public Object getFeature(String name)
     {
         // No features defined
         return null;
     }
 
+    @Deprecated
     public void setFeature(String name, Object value)
     {
         // No features defined

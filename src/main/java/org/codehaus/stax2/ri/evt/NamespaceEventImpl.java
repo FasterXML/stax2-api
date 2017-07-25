@@ -74,10 +74,12 @@ public class NamespaceEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return NAMESPACE;
     }
 
+    @Override
     public boolean isNamespace() {
         return true;
     }
