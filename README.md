@@ -12,8 +12,8 @@ pull-parser API of JDK, added in JDK 6.
 
 Stax2 API is implemented natively by following Stax XML implementations:
 
- * [Woodstox](http://wiki.fasterxml.com/WoodstoxHome)
- * [Aalto](https://github.com/FasterXML/aalto-xml)
+ * [Woodstox](../../../woodstox-core)
+ * [Aalto](../../../aalto-xml)
 
 In addition, Stax2 API contains wrapper implementations that can be used to support most of API on
 regular Stax implementations like Sun SJSXP (default Stax implementation bundled with JDK 1.6 and 1.7).
