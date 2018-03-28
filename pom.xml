@@ -40,7 +40,7 @@
   </scm>
 
   <properties>
-      <!-- 5.1 adds "Automatic-Module-Name" for JDK 9
+      <!-- 4.1 adds "Automatic-Module-Name" for JDK 9
            Note: choice between Maven group id and Java package bit tricky;
            choose latter at this point (may change in future)
         -->
