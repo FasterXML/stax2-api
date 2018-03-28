@@ -4,9 +4,11 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-4.1.0 (not yet released)
+4.1 (not yet released)
 
 - Add `Automatic-Module-Name` for Java 9
+- Upgrade JDK baseline requirement Java 6 (from Java 5);
+  remove `stax-api` dependency (since bundled on Java 6)
 
 4.0.0: (01-Feb-2015)
 
