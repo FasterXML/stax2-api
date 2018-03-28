@@ -9,7 +9,7 @@
   <groupId>org.codehaus.woodstox</groupId>
   <artifactId>stax2-api</artifactId>
   <name>Stax2 API</name>
-  <version>4.1-SNAPSHOT</version>
+  <version>4.1</version>
   <packaging>bundle</packaging>
   <description>tax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.
   </description>
@@ -36,7 +36,7 @@
     <connection>scm:git:git@github.com:FasterXML/stax2-api.git</connection>
     <developerConnection>scm:git:git@github.com:FasterXML/stax2-api.git</developerConnection>
     <url>http://github.com/FasterXML/stax2-api</url>    
-    <tag>HEAD</tag>
+    <tag>stax2-api-4.1</tag>
   </scm>
 
   <properties>
