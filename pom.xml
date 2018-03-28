@@ -40,10 +40,7 @@
   </scm>
 
   <properties>
-      <!-- 4.1 adds "Automatic-Module-Name" for JDK 9
-           Note: choice between Maven group id and Java package bit tricky;
-           choose latter at this point (may change in future)
-        -->
+      <!-- 4.1 adds "Automatic-Module-Name" for JDK 9 -->
       <jdk.module.name>org.codehaus.stax2</jdk.module.name>
   </properties>
 
