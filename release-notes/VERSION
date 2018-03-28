@@ -4,7 +4,11 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-4.0.0: (not yet released)
+4.1.0 (not yet released)
+
+- Add `Automatic-Module-Name` for Java 9
+
+4.0.0: (01-Feb-2015)
 
 - Update codebase to Java5 (add generics); minor related cleanup.
 #3: Add LICENSE file that indicates BSD (2-clause) as the license
