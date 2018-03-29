@@ -41,6 +41,7 @@ public abstract class Stax2WriterImpl
     ///////////////////////////////////////////////////////////
      */
 
+    @Override
     public boolean isPropertySupported(String name)
     {
         /* No base properties (or should we have something for impl
@@ -49,23 +50,28 @@ public abstract class Stax2WriterImpl
         return false;
     }
 
+    @Override
     public boolean setProperty(String name, Object value)
     {
         throw new IllegalArgumentException("No settable property '"+name+"'");
     }
 
+    @Override
     public abstract XMLStreamLocation2 getLocation();
 
+    @Override
     public abstract String getEncoding();
 
+    @Override
     public void writeCData(char[] text, int start, int len)
         throws XMLStreamException
     {
         writeCData(new String(text, start, len));
     }
 
+    @Override
     public void writeDTD(String rootName, String systemId, String publicId,
-                         String internalSubset)
+            String internalSubset)
         throws XMLStreamException
     {
         /* This may or may not work... depending on how well underlying
@@ -95,8 +101,8 @@ public abstract class Stax2WriterImpl
         writeDTD(sb.toString());
     }
 
-    public void writeFullEndElement()
-        throws XMLStreamException
+    @Override
+    public void writeFullEndElement() throws XMLStreamException
     {
         /* This should work with base Stax 1.0 implementations.
          * Sub-classes are, however, encouraged to implement it
@@ -106,8 +112,8 @@ public abstract class Stax2WriterImpl
         writeEndElement();
     }
 
-    public void writeSpace(String text)
-        throws XMLStreamException
+    @Override
+    public void writeSpace(String text) throws XMLStreamException
     {
         /* Hmmh. Two choices: either try to write as regular characters,
          * or output as is via raw calls. Latter would be safer, if we
@@ -117,6 +123,7 @@ public abstract class Stax2WriterImpl
         writeRaw(text);
     }
 
+    @Override
     public void writeSpace(char[] text, int offset, int length)
         throws XMLStreamException
     {
@@ -124,8 +131,9 @@ public abstract class Stax2WriterImpl
         writeRaw(text, offset, length);
     }
 
+    @Override
     public abstract void writeStartDocument(String version, String encoding,
-                                            boolean standAlone)
+            boolean standAlone)
         throws XMLStreamException;
     
     /*
@@ -134,18 +142,19 @@ public abstract class Stax2WriterImpl
     ///////////////////////////////////////////////////////////
     */
 
-    public void writeRaw(String text)
-        throws XMLStreamException
+    @Override
+    public void writeRaw(String text) throws XMLStreamException
     {
         writeRaw(text, 0, text.length());
     }
 
-    public abstract void writeRaw(String text, int offset, int len)
-        throws XMLStreamException;
+    @Override
+    public abstract void writeRaw(String text, int offset, int len) throws XMLStreamException;
 
-    public abstract void writeRaw(char[] text, int offset, int length)
-        throws XMLStreamException;
+    @Override
+    public abstract void writeRaw(char[] text, int offset, int length) throws XMLStreamException;
 
+    @Override
     public void copyEventFromReader(XMLStreamReader2 sr, boolean preserveEventData)
         throws XMLStreamException
     {
@@ -243,24 +252,28 @@ public abstract class Stax2WriterImpl
     ///////////////////////////////////////////////////////////
     */
 
+    @Override
     public XMLValidator validateAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
         return null;
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidator validator)
         throws XMLStreamException
     {
         return null;
     }
 
+    @Override
     public ValidationProblemHandler setValidationProblemHandler(ValidationProblemHandler h)
     {
         /* Not a real problem: although we can't do anything with it

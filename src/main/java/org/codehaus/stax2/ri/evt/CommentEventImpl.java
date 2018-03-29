@@ -20,6 +20,7 @@ public class CommentEventImpl
         mContent = content;
     }
 
+    @Override
     public String getText()
     {
         return mContent;

@@ -186,10 +186,12 @@ public class StartElementEventImpl
     /**********************************************************************
      */
 
+    @Override
     public final QName getName() {
         return _name;
     }
 
+    @Override
     public Iterator<Namespace> getNamespaces() 
     {
         if (_nsDecls == null) {
@@ -198,6 +200,7 @@ public class StartElementEventImpl
         return _nsDecls.iterator();
     }
 
+    @Override
     public NamespaceContext getNamespaceContext()
     {
         if (_actualNsCtxt == null) {
@@ -210,6 +213,7 @@ public class StartElementEventImpl
         return _actualNsCtxt;
     }
 
+    @Override
     public String getNamespaceURI(String prefix)
     {
         if (_nsDecls != null) {
@@ -231,6 +235,7 @@ public class StartElementEventImpl
         return null;
     }
 
+    @Override
     public Attribute getAttributeByName(QName nameIn)
     {
         if (_attrs == null) {
@@ -261,6 +266,7 @@ public class StartElementEventImpl
         return null;
     }
 
+    @Override
     public Iterator<Attribute> getAttributes()
     {
         if (_attrs == null) {

@@ -21,10 +21,12 @@ public class SingletonIterator<T> implements Iterator<T>
         return new SingletonIterator<T>(value);
     }
     
+    @Override
     public boolean hasNext() {
         return !_done;
     }
     
+    @Override
     public T next() {
         if (_done) {
             throw new java.util.NoSuchElementException();
@@ -33,6 +35,7 @@ public class SingletonIterator<T> implements Iterator<T>
         return _value;
     }
     
+    @Override
     public void remove()
     {
         throw new UnsupportedOperationException("Can not remove item from SingletonIterator.");

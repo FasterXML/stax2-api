@@ -22,10 +22,12 @@ public class ProcInstrEventImpl
         mData = data;
     }
 
+    @Override
     public String getData() {
         return mData;
     }
 
+    @Override
     public String getTarget() {
         return mTarget;
     }

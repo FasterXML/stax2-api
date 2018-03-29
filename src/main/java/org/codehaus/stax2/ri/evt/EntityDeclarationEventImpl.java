@@ -31,31 +31,37 @@ public class EntityDeclarationEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public String getBaseURI()
     {
         return "";
     }
 
+    @Override
     public String getName()
     {
         return mName;
     }
 
+    @Override
     public String getNotationName()
     {
         return null;
     }
 
+    @Override
     public String getPublicId()
     {
         return null;
     }
 
+    @Override
     public String getReplacementText()
     {
         return null;
     }
 
+    @Override
     public String getSystemId()
     {
         return null;

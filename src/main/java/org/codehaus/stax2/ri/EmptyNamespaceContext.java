@@ -25,6 +25,7 @@ public class EmptyNamespaceContext
     /**********************************************************************
      */
 
+    @Override
     public final String getNamespaceURI(String prefix)
     {
         /* First the known offenders; invalid args, 2 predefined xml namespace
@@ -44,6 +45,7 @@ public class EmptyNamespaceContext
         return null;
     }
 
+    @Override
     public String getPrefix(String nsURI)
     {
         /* First the known offenders; invalid args, 2 predefined xml namespace
@@ -61,6 +63,7 @@ public class EmptyNamespaceContext
         return null;
     }
 
+    @Override
     public Iterator<String> getPrefixes(String nsURI)
     {
         /* First the known offenders; invalid args, 2 predefined xml namespace

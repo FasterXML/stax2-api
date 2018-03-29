@@ -72,34 +72,40 @@ public class StartDocumentEventImpl
         mSystemId = "";
     }
 
+    @Override
     public boolean encodingSet() {
         return mEncodingSet;
     }
 
+    @Override
     public String getCharacterEncodingScheme() {
         return mEncodingScheme;
     }
 
+    @Override
     public String getSystemId() {
         return mSystemId;
     }
 
+    @Override
     public String getVersion() {
         return mVersion;
     }
 
+    @Override
     public boolean isStandalone() {
         return mIsStandalone;
     }
 
+    @Override
     public boolean standaloneSet() {
         return mStandaloneSet;
     }
 
     /*
-    ///////////////////////////////////////////
-    // Implementation of abstract base methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of abstract base methods
+    /**********************************************************************
      */
 
     @Override
@@ -150,9 +156,9 @@ public class StartDocumentEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Standard method impl
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Standard method impl
+    /**********************************************************************
      */
 
     @Override

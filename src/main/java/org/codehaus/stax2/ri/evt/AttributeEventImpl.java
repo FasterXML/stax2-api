@@ -96,6 +96,7 @@ public class AttributeEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public String getDTDType() {
         /* !!! TBI: 07-Sep-2004, TSa: Need to figure out an efficient way
          *    to pass this info...
@@ -103,16 +104,19 @@ public class AttributeEventImpl
         return "CDATA";
     }
 
+    @Override
     public QName getName()
     {
         return mName;
     }
 
+    @Override
     public String getValue()
     {
         return mValue;
     }
 
+    @Override
     public boolean isSpecified()
     {
         return mWasSpecified;

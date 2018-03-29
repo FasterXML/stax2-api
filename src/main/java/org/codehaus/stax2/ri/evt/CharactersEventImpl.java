@@ -111,18 +111,22 @@ public class CharactersEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public String getData() {
         return mContent;
     }
 
+    @Override
     public boolean isCData() {
         return mIsCData;
     }
 
+    @Override
     public boolean isIgnorableWhiteSpace() {
         return mIgnorableWS;
     }
 
+    @Override
     public boolean isWhiteSpace() {
         // Better only do white space check, if it's done already...
         if (!mWhitespaceChecked) {

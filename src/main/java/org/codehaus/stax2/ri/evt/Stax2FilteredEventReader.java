@@ -33,23 +33,25 @@ public class Stax2FilteredEventReader
     ////////////////////////////////////////////////////
      */
 
-    public void close()
-        throws XMLStreamException
+    @Override
+    public void close() throws XMLStreamException
     {
         mReader.close();
     }
 
-    public String getElementText()
-        throws XMLStreamException
+    @Override
+    public String getElementText() throws XMLStreamException
     {
         // Is this enough?
         return mReader.getElementText();
     }
 
+    @Override
     public Object getProperty(String name) {
         return mReader.getProperty(name);
     }
 
+    @Override
     public boolean hasNext()
     {
         try {
@@ -59,8 +61,8 @@ public class Stax2FilteredEventReader
         }
     }
 
-    public XMLEvent nextEvent()
-        throws XMLStreamException
+    @Override
+    public XMLEvent nextEvent() throws XMLStreamException
     {
         while (true) {
             XMLEvent evt = mReader.nextEvent();
@@ -71,6 +73,7 @@ public class Stax2FilteredEventReader
         }
     }
 
+    @Override
     public Object next()
     {
         try {
@@ -80,8 +83,8 @@ public class Stax2FilteredEventReader
         }
     }
 
-    public XMLEvent nextTag()
-        throws XMLStreamException
+    @Override
+    public XMLEvent nextTag() throws XMLStreamException
     {
         // This can be implemented very similar to next()...
 
@@ -97,8 +100,8 @@ public class Stax2FilteredEventReader
      * This is bit tricky to implement, but it should filter out
      * events just as nextEvent() would.
      */
-    public XMLEvent peek()
-        throws XMLStreamException
+    @Override
+    public XMLEvent peek() throws XMLStreamException
     {
         while (true) {
             XMLEvent evt = mReader.peek();
@@ -113,6 +116,7 @@ public class Stax2FilteredEventReader
     /**
      * Note: only here because we implement Iterator interface
      */
+    @Override
     public void remove() { // let's let underlying impl fail on it
         mReader.remove();
     }
@@ -123,17 +127,19 @@ public class Stax2FilteredEventReader
     ////////////////////////////////////////////////////
      */
 
-    public boolean hasNextEvent()
-        throws XMLStreamException
+    @Override
+    public boolean hasNextEvent() throws XMLStreamException
     {
         return (peek() != null);
     }
 
+    @Override
     public boolean isPropertySupported(String name)
     {
         return mReader.isPropertySupported(name);
     }
 
+    @Override
     public boolean setProperty(String name, Object value)
     {
         return mReader.setProperty(name, value);

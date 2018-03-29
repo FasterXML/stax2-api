@@ -2133,6 +2133,7 @@ public abstract class DOMWrappingReader
         return null;
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidator validator)
         throws XMLStreamException
     {
@@ -2140,6 +2141,7 @@ public abstract class DOMWrappingReader
         return null;
     }
 
+    @Override
     public ValidationProblemHandler setValidationProblemHandler(ValidationProblemHandler h)
     {
         // Not implemented by the basic reader
@@ -2147,9 +2149,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ////////////////////////////////////////////
-    // Internal methods, text gathering
-    ////////////////////////////////////////////
+    /**********************************************************************
+    /* Internal methods, text gathering
+    /**********************************************************************
      */
 
     protected void coalesceText(int initialType)
@@ -2285,9 +2287,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ///////////////////////////////////////////////
-    // Overridable error reporting methods
-    ///////////////////////////////////////////////
+    /**********************************************************************
+    /* Overridable error reporting methods
+    /**********************************************************************
      */
 
     protected void reportWrongState(int errorType)
@@ -2347,9 +2349,9 @@ public abstract class DOMWrappingReader
     }
 
     /*
-    ///////////////////////////////////////////////
-    // Other internal methods
-    ///////////////////////////////////////////////
+    /**********************************************************************
+    /* Other internal methods
+    /**********************************************************************
      */
 
     protected ValueDecoderFactory _decoderFactory()

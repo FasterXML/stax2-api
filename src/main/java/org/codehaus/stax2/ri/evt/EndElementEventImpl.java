@@ -73,11 +73,13 @@ public class EndElementEventImpl
     /**********************************************************************
      */
 
+    @Override
     public QName getName() {
         return mName;
     }
 
-    public Iterator<Namespace> getNamespaces() 
+    @Override
+   public Iterator<Namespace> getNamespaces() 
     {
         if (mNamespaces == null) {
             return EmptyIterator.getInstance();

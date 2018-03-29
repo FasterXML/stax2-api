@@ -28,12 +28,12 @@ import org.codehaus.stax2.XMLEventReader2;
 public class Stax2EventReaderAdapter
     implements XMLEventReader2
 {
-    final XMLEventReader mReader;
+    final protected XMLEventReader mReader;
 
     /*
-    ////////////////////////////////////////////////////
-    // Life-cycle methods
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Life-cycle methods
+    /**********************************************************************
      */
 
     protected Stax2EventReaderAdapter(XMLEventReader er)
@@ -57,9 +57,9 @@ public class Stax2EventReaderAdapter
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLEventReader pass-through methods
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventReader pass-through methods
+    /**********************************************************************
      */
 
     @Override
@@ -111,9 +111,9 @@ public class Stax2EventReaderAdapter
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLEventReader2 implementation
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventReader2 implementation
+    /**********************************************************************
      */
 
     @Override

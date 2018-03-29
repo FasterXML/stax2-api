@@ -30,14 +30,17 @@ public class NotationDeclarationEventImpl
         mSystemId = sysId;
     }
 
+    @Override
     public String getName() {
         return mName;
     }
 
+    @Override
     public String getPublicId() {
         return mPublicId;
     }
 
+    @Override
     public String getSystemId() {
         return mSystemId;
     }
@@ -45,6 +48,7 @@ public class NotationDeclarationEventImpl
     /**
      * Empty base implementation: sub-classes should implement
      */
+    @Override
     public String getBaseURI()
     {
         return "";

@@ -87,6 +87,7 @@ public class DTDEventImpl
     /**********************************************************************
      */
 
+    @Override
     public String getDocumentTypeDeclaration()
     {
         try {
@@ -96,18 +97,21 @@ public class DTDEventImpl
         }
     }
 
+    @Override
     public List<EntityDeclaration> getEntities()
     {
         // !!! TODO: create stax2 abstraction to allow accessing this
         return null;
     }
 
+    @Override
     public List<NotationDeclaration> getNotations()
     {
         // !!! TODO: create stax2 abstraction to allow accessing this
         return null;
     }
 
+    @Override
     public Object getProcessedDTD()
     {
         return mDTD;
@@ -182,18 +186,22 @@ public class DTDEventImpl
     /**********************************************************************
      */
 
+    @Override
     public String getRootName() {
         return mRootName;
     }
 
+    @Override
     public String getSystemId() {
         return mSystemId;
     }
 
+    @Override
     public String getPublicId() {
         return mPublicId;
     }
 
+    @Override
     public String getInternalSubset() {
         return mInternalSubset;
     }

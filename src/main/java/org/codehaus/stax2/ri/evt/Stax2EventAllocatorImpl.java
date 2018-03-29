@@ -28,11 +28,12 @@ public class Stax2EventAllocatorImpl
     public Stax2EventAllocatorImpl() { }
 
     /*
-    //////////////////////////////////////////////////////////
-    // XMLEventAllocator implementation
-    //////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventAllocator implementation
+    /**********************************************************************
      */
 
+    @Override
     public XMLEvent allocate(XMLStreamReader r)
         throws XMLStreamException
     {
@@ -87,21 +88,23 @@ public class Stax2EventAllocatorImpl
             throw new XMLStreamException("Unrecognized event type "+r.getEventType()+".");
         }
     }
-    
+
+    @Override
     public void allocate(XMLStreamReader r, XMLEventConsumer consumer)
         throws XMLStreamException
     {
         consumer.add(allocate(r));
     }
 
+    @Override
     public XMLEventAllocator newInstance() {
         return new Stax2EventAllocatorImpl();
     }
 
     /*
-    //////////////////////////////////////////////////////////
-    // Overridable methods
-    //////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Overridable methods
+    /**********************************************************************
      */
 
     /**

@@ -38,6 +38,7 @@ public class MergedNsContext
     /**********************************************************************
      */
 
+    @Override
     public String getNamespaceURI(String prefix)
     {
         if (prefix == null) {
@@ -65,6 +66,7 @@ public class MergedNsContext
         return null;
     }
 
+    @Override
     public String getPrefix(String nsURI)
     {
         if (nsURI == null || nsURI.length() == 0) {
@@ -118,6 +120,7 @@ public class MergedNsContext
         return null;
     }
 
+    @Override
     public Iterator<String> getPrefixes(String nsURI)
     {
         if (nsURI == null || nsURI.length() == 0) {
