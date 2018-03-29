@@ -42,73 +42,89 @@ public abstract class BaseEventImpl
     /**********************************************************************
      */
 
+    @Override
     public Characters asCharacters() {
         return (Characters) this;
     }
 
+    @Override
     public EndElement asEndElement() {
         return (EndElement) this;
     }
 
+    @Override
     public StartElement asStartElement() {
         return (StartElement) this;
     }
 
+    @Override
     public abstract int getEventType();
 
+    @Override
     public Location getLocation() {
         return mLocation;
     }
 
+    @Override
     public QName getSchemaType() {
         return null;
     }
 
+    @Override
     public boolean isAttribute()
     {
         return false;
     }
 
+    @Override
     public boolean isCharacters()
     {
         return false;
     }
 
+    @Override
     public boolean isEndDocument()
     {
         return false;
     }
 
+    @Override
     public boolean isEndElement()
     {
         return false;
     }
 
+    @Override
     public boolean isEntityReference()
     {
         return false;
     }
 
+    @Override
     public boolean isNamespace()
     {
         return false;
     }
 
+    @Override
     public boolean isProcessingInstruction()
     {
         return false;
     }
 
+    @Override
     public boolean isStartDocument()
     {
         return false;
     }
 
+    @Override
     public boolean isStartElement()
     {
         return false;
     }
 
+    @Override
     public abstract void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException;
 
@@ -118,6 +134,7 @@ public abstract class BaseEventImpl
     /**********************************************************************
      */
 
+    @Override
     public abstract void writeUsing(XMLStreamWriter2 w) throws XMLStreamException;
 
     /*
@@ -144,9 +161,9 @@ public abstract class BaseEventImpl
     }
 
     /*
-    //////////////////////////////////////////////
-    // Helper methods
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* Helper methods
+    /**********************************************************************
      */
 
     protected void throwFromIOE(IOException ioe)

@@ -49,7 +49,6 @@ import org.codehaus.stax2.validation.Validatable;
  * Since version 3.0, stream writer will also implement "Typed Access API"
  * on output side.
  *
- * @version 3.0.1 06-Nov-2008
  * @author Tatu Saloranta (tatu.saloranta@iki.fi)
  */
 public interface XMLStreamReader2

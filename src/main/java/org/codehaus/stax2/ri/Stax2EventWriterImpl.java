@@ -45,6 +45,7 @@ public class Stax2EventWriterImpl
      * through stream writer. This because it may want to do
      * different kinds of validation
      */
+    @Override
     public void add(XMLEvent event)
         throws XMLStreamException
     {
@@ -164,6 +165,7 @@ public class Stax2EventWriterImpl
         }
     }
 
+    @Override
     public void add(XMLEventReader reader)
         throws XMLStreamException
     {
@@ -172,40 +174,47 @@ public class Stax2EventWriterImpl
         }
     }
 
+    @Override
     public void close()
         throws XMLStreamException
     {
         _writer.close();
     }
 
+    @Override
     public void flush()
         throws XMLStreamException
     {
         _writer.flush();
     }
 
+    @Override
     public NamespaceContext getNamespaceContext() {
         return _writer.getNamespaceContext();
     }
 
+    @Override
     public String getPrefix(String uri)
         throws XMLStreamException
     {
         return _writer.getPrefix(uri);
     }
 
+    @Override
     public void setDefaultNamespace(String uri)
         throws XMLStreamException
     {
         _writer.setDefaultNamespace(uri);
     }
 
+    @Override
     public void setNamespaceContext(NamespaceContext ctxt)
         throws XMLStreamException
     {
         _writer.setNamespaceContext(ctxt);
     }
 
+    @Override
     public void setPrefix(String prefix, String uri)
         throws XMLStreamException
     {

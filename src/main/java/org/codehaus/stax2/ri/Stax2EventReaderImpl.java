@@ -141,8 +141,10 @@ public abstract class Stax2EventReaderImpl
     //////////////////////////////////////////////////////
      */
 
+    @Override
     public abstract boolean isPropertySupported(String name);
 
+    @Override
     public abstract boolean setProperty(String name, Object value);
 
     /**
@@ -164,14 +166,14 @@ public abstract class Stax2EventReaderImpl
     //////////////////////////////////////////////////////
      */
 
-    public void close()
-        throws XMLStreamException
+    @Override
+    public void close() throws XMLStreamException
     {
         mReader.close();
     }
 
-    public String getElementText()
-        throws XMLStreamException
+    @Override
+    public String getElementText() throws XMLStreamException
     {
         /* Simple, if no peeking occured: can just forward this to the
          * underlying parser
@@ -227,16 +229,18 @@ public abstract class Stax2EventReaderImpl
         return (str == null) ? "" : str;
     }
 
+    @Override
     public Object getProperty(String name) {
         return mReader.getProperty(name);
     }
 
+    @Override
     public boolean hasNext() {
         return (mState != STATE_END_OF_INPUT);
     }
 
-    public XMLEvent nextEvent()
-        throws XMLStreamException
+    @Override
+    public XMLEvent nextEvent() throws XMLStreamException
     {
         if (mState == STATE_END_OF_INPUT) {
             throwEndOfInput();
@@ -255,6 +259,7 @@ public abstract class Stax2EventReaderImpl
         return createNextEvent(true, mReader.next());
     }
 
+    @Override
     public Object next() {
         try {
             return nextEvent();
@@ -264,8 +269,8 @@ public abstract class Stax2EventReaderImpl
         }
     }
 
-    public XMLEvent nextTag()
-        throws XMLStreamException
+    @Override
+    public XMLEvent nextTag() throws XMLStreamException
     {
         // If we have peeked something, need to process it
         if (mPeekedEvent != null) {
@@ -348,8 +353,8 @@ public abstract class Stax2EventReaderImpl
         }
     }
 
-    public XMLEvent peek()
-        throws XMLStreamException
+    @Override
+    public XMLEvent peek() throws XMLStreamException
     {
         if (mPeekedEvent == null) {
             if (mState == STATE_END_OF_INPUT) {
@@ -374,6 +379,7 @@ public abstract class Stax2EventReaderImpl
      * Note: only here because we implement Iterator interface. Will not
      * work, don't bother calling it.
      */
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("Can not remove events from XMLEventReader.");
     }
@@ -392,8 +398,8 @@ public abstract class Stax2EventReaderImpl
      * It's still declared, in case in future there is need to throw
      * such an exception.
      */
-    public boolean hasNextEvent()
-        throws XMLStreamException
+    @Override
+    public boolean hasNextEvent() throws XMLStreamException
     {
         return (mState != STATE_END_OF_INPUT);
     }

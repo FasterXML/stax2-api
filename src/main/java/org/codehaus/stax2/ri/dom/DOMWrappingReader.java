@@ -293,6 +293,7 @@ public abstract class DOMWrappingReader
      * As per Stax (1.0) specs, needs to return whatever xml declaration
      * claimed encoding is, if any; or null if no xml declaration found.
      */
+    @Override
     public String getCharacterEncodingScheme() {
         /* No standard way to figure it out from a DOM Document node;
          * have to return null
@@ -306,6 +307,7 @@ public abstract class DOMWrappingReader
      * cases where this can not be found; specifically when being passed a
      * {@link java.io.Reader}), it should return null.
      */
+    @Override
     public String getEncoding() {
         /* We have no information regarding underlying stream/Reader, so
          * best we can do is to see if we know xml declaration encoding.
@@ -313,6 +315,7 @@ public abstract class DOMWrappingReader
         return getCharacterEncodingScheme();
     }
 
+    @Override
     public String getVersion()
     {
         /* No standard way to figure it out from a DOM Document node;
@@ -321,17 +324,17 @@ public abstract class DOMWrappingReader
         return null;
     }
 
+    @Override
     public boolean isStandalone() {
-        /* No standard way to figure it out from a DOM Document node;
-         * have to return false
-         */
+        // No standard way to figure it out from a DOM Document node;
+        // have to return false
         return false;
     }
 
+    @Override
     public boolean standaloneSet() {
-        /* No standard way to figure it out from a DOM Document node;
-         * have to return false
-         */
+        // No standard way to figure it out from a DOM Document node;
+        // have to return false
         return false;
     }
 
@@ -341,10 +344,12 @@ public abstract class DOMWrappingReader
     /**********************************************************************
      */
 
+    @Override
     public abstract Object getProperty(String name);
 
     // NOTE: getProperty() defined in Stax 1.0 interface
 
+    @Override
     public abstract boolean isPropertySupported(String name);
 
     /**
@@ -354,6 +359,7 @@ public abstract class DOMWrappingReader
      * @return True, if the specified property was <b>succesfully</b>
      *    set to specified value; false if its value was not changed
      */
+    @Override
     public abstract boolean setProperty(String name, Object value);
 
     /*
@@ -364,6 +370,7 @@ public abstract class DOMWrappingReader
 
     // // // Attribute access:
 
+    @Override
     public int getAttributeCount()
     {
         if (_currEvent != START_ELEMENT) {
@@ -375,6 +382,7 @@ public abstract class DOMWrappingReader
         return _attrList.size();
     }
 
+    @Override
     public String getAttributeLocalName(int index)
     {
         if (_currEvent != START_ELEMENT) {
@@ -391,6 +399,7 @@ public abstract class DOMWrappingReader
         return _internName(_safeGetLocalName(attr));
     }
 
+    @Override
     public QName getAttributeName(int index)
     {
         if (_currEvent != START_ELEMENT) {
@@ -407,6 +416,7 @@ public abstract class DOMWrappingReader
         return _constructQName(attr.getNamespaceURI(), _safeGetLocalName(attr), attr.getPrefix());
     }
 
+    @Override
     public String getAttributeNamespace(int index)
     {
         if (_currEvent != START_ELEMENT) {
@@ -423,6 +433,7 @@ public abstract class DOMWrappingReader
         return _internNsURI(attr.getNamespaceURI());
     }
 
+    @Override
     public String getAttributePrefix(int index)
     {
         if (_currEvent != START_ELEMENT) {
@@ -439,6 +450,7 @@ public abstract class DOMWrappingReader
         return _internName(attr.getPrefix());
     }
 
+    @Override
     public String getAttributeType(int index)
     {
         if (_currEvent != START_ELEMENT) {
@@ -468,6 +480,7 @@ public abstract class DOMWrappingReader
         return "CDATA";
     }
 
+    @Override
     public String getAttributeValue(int index)
     {
         if (_currEvent != START_ELEMENT) {
@@ -484,6 +497,7 @@ public abstract class DOMWrappingReader
         return attr.getValue();
     }
 
+    @Override
     public String getAttributeValue(String nsURI, String localName)
     {
         if (_currEvent != START_ELEMENT) {
@@ -514,8 +528,8 @@ public abstract class DOMWrappingReader
      *<br>Postcondition: the current event is the corresponding END_ELEMENT. 
      *</blockquote>
      */
-    public String getElementText()
-        throws XMLStreamException
+    @Override
+    public String getElementText() throws XMLStreamException
     {
         if (_currEvent != START_ELEMENT) {
             /* Quite illogical: this is not an IllegalStateException
@@ -569,11 +583,13 @@ public abstract class DOMWrappingReader
      * Returns type of the last event returned; or START_DOCUMENT before
      * any events has been explicitly returned.
      */
+    @Override
     public int getEventType()
     {
         return _currEvent;
     }
     
+    @Override
     public String getLocalName()
     {
         if (_currEvent == START_ELEMENT || _currEvent == END_ELEMENT) {
@@ -585,10 +601,12 @@ public abstract class DOMWrappingReader
         return _internName(_currNode.getNodeName());
     }
 
+    @Override
     public final Location getLocation() {
         return getStartLocation();
     }
 
+    @Override
     public QName getName()
     {
         if (_currEvent != START_ELEMENT && _currEvent != END_ELEMENT) {
@@ -599,10 +617,12 @@ public abstract class DOMWrappingReader
 
     // // // Namespace access
 
+    @Override
     public NamespaceContext getNamespaceContext() {
         return this;
     }
 
+    @Override
     public int getNamespaceCount()
     {
         if (_currEvent != START_ELEMENT && _currEvent != END_ELEMENT) {
@@ -622,6 +642,7 @@ public abstract class DOMWrappingReader
      * determining actual declarations. Thus, have to indicate that
      * there are no declarations.
      */
+    @Override
     public String getNamespacePrefix(int index) {
         if (_currEvent != START_ELEMENT && _currEvent != END_ELEMENT) {
             reportWrongState(ERR_STATE_NOT_ELEM);
@@ -639,6 +660,7 @@ public abstract class DOMWrappingReader
         return (String) _nsDeclList.get(index + index);
     }
 
+    @Override
     public String getNamespaceURI() {
         if (_currEvent != START_ELEMENT && _currEvent != END_ELEMENT) {
             reportWrongState(ERR_STATE_NOT_ELEM);
@@ -646,6 +668,7 @@ public abstract class DOMWrappingReader
         return _internNsURI(_currNode.getNamespaceURI());
     }
 
+    @Override
     public String getNamespaceURI(int index) {
         if (_currEvent != START_ELEMENT && _currEvent != END_ELEMENT) {
             reportWrongState(ERR_STATE_NOT_ELEM);
@@ -666,6 +689,7 @@ public abstract class DOMWrappingReader
     // Note: implemented as part of NamespaceContext
     //public String getNamespaceURI(String prefix)
 
+    @Override
     public String getPIData() {
         if (_currEvent != PROCESSING_INSTRUCTION) {
             reportWrongState(ERR_STATE_NOT_PI);
@@ -673,6 +697,7 @@ public abstract class DOMWrappingReader
         return _currNode.getNodeValue();
     }
 
+    @Override
     public String getPITarget() {
         if (_currEvent != PROCESSING_INSTRUCTION) {
             reportWrongState(ERR_STATE_NOT_PI);
@@ -680,6 +705,7 @@ public abstract class DOMWrappingReader
         return _internName(_currNode.getNodeName());
     }
 
+    @Override
     public String getPrefix() {
         if (_currEvent != START_ELEMENT && _currEvent != END_ELEMENT) {
             reportWrongState(ERR_STATE_NOT_ELEM);
@@ -687,6 +713,7 @@ public abstract class DOMWrappingReader
         return _internName(_currNode.getPrefix());
     }
 
+    @Override
     public String getText()
     {
         if (_coalescedText != null) {
@@ -698,12 +725,14 @@ public abstract class DOMWrappingReader
         return _currNode.getNodeValue();
     }
 
+    @Override
     public char[] getTextCharacters()
     {
         String text = getText();
         return text.toCharArray();
     }
 
+    @Override
     public int getTextCharacters(int sourceStart, char[] target, int targetStart, int len)
     {
         if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
@@ -717,6 +746,7 @@ public abstract class DOMWrappingReader
         return len;
     }
 
+    @Override
     public int getTextLength()
     {
         if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
@@ -725,6 +755,7 @@ public abstract class DOMWrappingReader
         return getText().length();
     }
 
+    @Override
     public int getTextStart()
     {
         if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
@@ -733,18 +764,22 @@ public abstract class DOMWrappingReader
         return 0;
     }
 
+    @Override
     public boolean hasName() {
         return (_currEvent == START_ELEMENT) || (_currEvent == END_ELEMENT);
     }
 
+    @Override
     public boolean hasNext() {
         return (_currEvent != END_DOCUMENT);
     }
 
+    @Override
     public boolean hasText() {
         return (((1 << _currEvent) & MASK_GET_TEXT) != 0);
     }
 
+    @Override
     public boolean isAttributeSpecified(int index)
     {
         if (_currEvent != START_ELEMENT) {
@@ -759,19 +794,23 @@ public abstract class DOMWrappingReader
         return attr.getSpecified();
     }
 
+    @Override
     public boolean isCharacters()
     {
         return (_currEvent == CHARACTERS);
     }
 
+    @Override
     public boolean isEndElement() {
         return (_currEvent == END_ELEMENT);
     }
 
+    @Override
     public boolean isStartElement() {
         return (_currEvent == START_ELEMENT);
     }
 
+    @Override
     public boolean isWhiteSpace()
     {
         if (_currEvent == CHARACTERS || _currEvent == CDATA) {
@@ -788,7 +827,8 @@ public abstract class DOMWrappingReader
         }
         return (_currEvent == SPACE);
     }
-    
+
+    @Override
     public void require(int type, String nsUri, String localName)
         throws XMLStreamException
     {
@@ -849,8 +889,8 @@ public abstract class DOMWrappingReader
     /**********************************************************************
      */
 
-    public int next()
-        throws XMLStreamException
+    @Override
+    public int next() throws XMLStreamException
     {
         _coalescedText = null;
 
@@ -998,8 +1038,8 @@ public abstract class DOMWrappingReader
         return _currEvent;
     }
 
-    public int nextTag()
-        throws XMLStreamException
+    @Override
+    public int nextTag() throws XMLStreamException
     {
         while (true) {
             int next = next();
@@ -1032,6 +1072,7 @@ public abstract class DOMWrappingReader
      * {@link org.codehaus.stax2.XMLInputFactory2#P_AUTO_CLOSE_INPUT} is
      * set to true.
      */
+    @Override
     public void close() throws XMLStreamException
     {
         // Since DOM tree has no real input source, nothing to do
@@ -1043,6 +1084,7 @@ public abstract class DOMWrappingReader
     /**********************************************************************
      */
 
+    @Override
     public String getNamespaceURI(String prefix)
     {
         /* !!! 26-Apr-2006, TSa: Alas, these methods are DOM Level 3,
@@ -1080,6 +1122,7 @@ public abstract class DOMWrappingReader
         return null;
     }
 
+    @Override
     public String getPrefix(String namespaceURI)
     {
         /* !!! 26-Apr-2006, TSa: Alas, these methods are DOM Level 3,
@@ -1121,6 +1164,7 @@ public abstract class DOMWrappingReader
         return null;
     }
 
+    @Override
     public Iterator<String> getPrefixes(String namespaceURI) 
     {
         String prefix = getPrefix(namespaceURI);
@@ -1136,6 +1180,7 @@ public abstract class DOMWrappingReader
     /**********************************************************************
      */
 
+    @Override
     public boolean getElementAsBoolean() throws XMLStreamException
     {
         ValueDecoderFactory.BooleanDecoder dec = _decoderFactory().getBooleanDecoder();
@@ -1143,6 +1188,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public int getElementAsInt() throws XMLStreamException
     {
         ValueDecoderFactory.IntDecoder dec = _decoderFactory().getIntDecoder();
@@ -1150,6 +1196,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public long getElementAsLong() throws XMLStreamException
     {
         ValueDecoderFactory.LongDecoder dec = _decoderFactory().getLongDecoder();
@@ -1157,6 +1204,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public float getElementAsFloat() throws XMLStreamException
     {
         ValueDecoderFactory.FloatDecoder dec = _decoderFactory().getFloatDecoder();
@@ -1164,6 +1212,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public double getElementAsDouble() throws XMLStreamException
     {
         ValueDecoderFactory.DoubleDecoder dec = _decoderFactory().getDoubleDecoder();
@@ -1171,6 +1220,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public BigInteger getElementAsInteger() throws XMLStreamException
     {
         ValueDecoderFactory.IntegerDecoder dec = _decoderFactory().getIntegerDecoder();
@@ -1178,6 +1228,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public BigDecimal getElementAsDecimal() throws XMLStreamException
     {
         ValueDecoderFactory.DecimalDecoder dec = _decoderFactory().getDecimalDecoder();
@@ -1185,6 +1236,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public QName getElementAsQName() throws XMLStreamException
     {
         ValueDecoderFactory.QNameDecoder dec = _decoderFactory().getQNameDecoder(getNamespaceContext());
@@ -1192,11 +1244,13 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public byte[] getElementAsBinary() throws XMLStreamException
     {
         return getElementAsBinary(Base64Variants.getDefaultVariant());
     }
 
+    @Override
     public byte[] getElementAsBinary(Base64Variant v) throws XMLStreamException
     {
         // note: code here is similar to Base64DecoderBase.aggregateAll(), see comments there
@@ -1217,6 +1271,7 @@ public abstract class DOMWrappingReader
         }
     }
 
+    @Override
     public void getElementAs(TypedValueDecoder tvd) throws XMLStreamException
     {
         String value = getElementText();
@@ -1232,26 +1287,31 @@ public abstract class DOMWrappingReader
         }
     }
 
+    @Override
     public int readElementAsIntArray(int[] value, int from, int length) throws XMLStreamException
     {
         return readElementAsArray(_decoderFactory().getIntArrayDecoder(value, from, length));
     }
 
+    @Override
     public int readElementAsLongArray(long[] value, int from, int length) throws XMLStreamException
     {
         return readElementAsArray(_decoderFactory().getLongArrayDecoder(value, from, length));
     }
 
+    @Override
     public int readElementAsFloatArray(float[] value, int from, int length) throws XMLStreamException
     {
         return readElementAsArray(_decoderFactory().getFloatArrayDecoder(value, from, length));
     }
 
+    @Override
     public int readElementAsDoubleArray(double[] value, int from, int length) throws XMLStreamException
     {
         return readElementAsArray(_decoderFactory().getDoubleArrayDecoder(value, from, length));
     }
 
+    @Override
     public int readElementAsArray(TypedArrayDecoder tad) throws XMLStreamException
     {
         /* Otherwise either we are just starting (START_ELEMENT), or
@@ -1377,12 +1437,14 @@ public abstract class DOMWrappingReader
     /**********************************************************************
      */
 
+    @Override
     public int readElementAsBinary(byte[] resultBuffer, int offset, int maxLength)
         throws XMLStreamException
     {
         return readElementAsBinary(resultBuffer, offset, maxLength, Base64Variants.getDefaultVariant());
     }
 
+    @Override
     public int readElementAsBinary(byte[] resultBuffer, int offset, int maxLength,
                                    Base64Variant v)
         throws XMLStreamException
@@ -1496,11 +1558,13 @@ public abstract class DOMWrappingReader
     /**********************************************************************
      */
 
+    @Override
     public int getAttributeIndex(String namespaceURI, String localName)
     {
         return findAttributeIndex(namespaceURI, localName);
     }
 
+    @Override
     public boolean getAttributeAsBoolean(int index) throws XMLStreamException
     {
         ValueDecoderFactory.BooleanDecoder dec = _decoderFactory().getBooleanDecoder();
@@ -1508,6 +1572,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public int getAttributeAsInt(int index) throws XMLStreamException
     {
         ValueDecoderFactory.IntDecoder dec = _decoderFactory().getIntDecoder();
@@ -1515,6 +1580,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public long getAttributeAsLong(int index) throws XMLStreamException
     {
         ValueDecoderFactory.LongDecoder dec = _decoderFactory().getLongDecoder();
@@ -1522,6 +1588,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public float getAttributeAsFloat(int index) throws XMLStreamException
     {
         ValueDecoderFactory.FloatDecoder dec = _decoderFactory().getFloatDecoder();
@@ -1529,6 +1596,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public double getAttributeAsDouble(int index) throws XMLStreamException
     {
         ValueDecoderFactory.DoubleDecoder dec = _decoderFactory().getDoubleDecoder();
@@ -1536,6 +1604,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public BigInteger getAttributeAsInteger(int index) throws XMLStreamException
     {
         ValueDecoderFactory.IntegerDecoder dec = _decoderFactory().getIntegerDecoder();
@@ -1543,6 +1612,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public BigDecimal getAttributeAsDecimal(int index) throws XMLStreamException
     {
         ValueDecoderFactory.DecimalDecoder dec = _decoderFactory().getDecimalDecoder();
@@ -1550,6 +1620,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public QName getAttributeAsQName(int index) throws XMLStreamException
     {
         ValueDecoderFactory.QNameDecoder dec = _decoderFactory().getQNameDecoder(getNamespaceContext());
@@ -1557,6 +1628,7 @@ public abstract class DOMWrappingReader
         return dec.getValue();
     }
 
+    @Override
     public final void getAttributeAs(int index, TypedValueDecoder tvd) throws XMLStreamException
     {
         String value = getAttributeValue(index);
@@ -1572,6 +1644,7 @@ public abstract class DOMWrappingReader
         }
     }
 
+    @Override
     public int[] getAttributeAsIntArray(int index) throws XMLStreamException
     {
         ValueDecoderFactory.IntArrayDecoder dec = _decoderFactory().getIntArrayDecoder();
@@ -1579,6 +1652,7 @@ public abstract class DOMWrappingReader
         return dec.getValues();
     }
 
+    @Override
     public long[] getAttributeAsLongArray(int index) throws XMLStreamException
     {
         ValueDecoderFactory.LongArrayDecoder dec = _decoderFactory().getLongArrayDecoder();
@@ -1586,6 +1660,7 @@ public abstract class DOMWrappingReader
         return dec.getValues();
     }
 
+    @Override
     public float[] getAttributeAsFloatArray(int index) throws XMLStreamException
     {
         ValueDecoderFactory.FloatArrayDecoder dec = _decoderFactory().getFloatArrayDecoder();
@@ -1593,6 +1668,7 @@ public abstract class DOMWrappingReader
         return dec.getValues();
     }
 
+    @Override
     public double[] getAttributeAsDoubleArray(int index) throws XMLStreamException
     {
         ValueDecoderFactory.DoubleArrayDecoder dec = _decoderFactory().getDoubleArrayDecoder();
@@ -1600,6 +1676,7 @@ public abstract class DOMWrappingReader
         return dec.getValues();
     }
 
+    @Override
     public int getAttributeAsArray(int index, TypedArrayDecoder tad) throws XMLStreamException
     {
         return _getAttributeAsArray(tad, getAttributeValue(index));
@@ -1662,11 +1739,13 @@ public abstract class DOMWrappingReader
         return false;
     }
 
+    @Override
     public byte[] getAttributeAsBinary(int index) throws XMLStreamException
     {
         return getAttributeAsBinary(index, Base64Variants.getDefaultVariant());
     }
 
+    @Override
     public byte[] getAttributeAsBinary(int index, Base64Variant v) throws XMLStreamException
     {
         String lexical = getAttributeValue(index);
@@ -1687,6 +1766,7 @@ public abstract class DOMWrappingReader
 
     // // // StAX2, per-reader configuration
 
+    @Override
     @Deprecated
     public Object getFeature(String name)
     {
@@ -1694,6 +1774,7 @@ public abstract class DOMWrappingReader
         throw new IllegalArgumentException("Unrecognized feature \""+name+"\"");
     }
 
+    @Override
     @Deprecated
     public void setFeature(String name, Object value)
     {
@@ -1702,6 +1783,7 @@ public abstract class DOMWrappingReader
 
     // // // StAX2, additional traversal methods
 
+    @Override
     public void skipElement() throws XMLStreamException
     {
         if (_currEvent != START_ELEMENT) {
@@ -1723,6 +1805,7 @@ public abstract class DOMWrappingReader
 
     // // // StAX2, additional attribute access
 
+    @Override
     public AttributeInfo getAttributeInfo() throws XMLStreamException
     {
         if (_currEvent != START_ELEMENT) {
@@ -1735,6 +1818,7 @@ public abstract class DOMWrappingReader
 
     //public int getAttributeCount()
 
+    @Override
     public int findAttributeIndex(String nsURI, String localName)
     {
         if (_currEvent != START_ELEMENT) {
@@ -1766,6 +1850,7 @@ public abstract class DOMWrappingReader
         return -1;
     }
 
+    @Override
     public int getIdAttributeIndex()
     {
         // !!! TBI
@@ -1775,6 +1860,7 @@ public abstract class DOMWrappingReader
         return -1;
     }
 
+    @Override
     public int getNotationAttributeIndex()
     {
         // !!! TBI
@@ -1790,6 +1876,7 @@ public abstract class DOMWrappingReader
      * Since this class implements {@link DTDInfo}, method can just
      * return <code>this</code>.
      */
+    @Override
     public DTDInfo getDTDInfo() throws XMLStreamException
     {
         /* Let's not allow it to be accessed during other events -- that
@@ -1806,6 +1893,7 @@ public abstract class DOMWrappingReader
     /**
      * Location information is always accessible, for this reader.
      */
+    @Override
     public final LocationInfo getLocationInfo() {
         return this;
     }
@@ -1834,6 +1922,7 @@ public abstract class DOMWrappingReader
      *
      * @return Number of characters written to the reader
      */
+    @Override
     public int getText(Writer w, boolean preserveContents)
         throws IOException, XMLStreamException
     {
@@ -1848,6 +1937,7 @@ public abstract class DOMWrappingReader
      * @return Number of open elements in the stack; 0 when parser is in
      *  prolog/epilog, 1 inside root element and so on.
      */
+    @Override
     public int getDepth() {
         return _depth;
     }
@@ -1857,12 +1947,14 @@ public abstract class DOMWrappingReader
      *    constructed from 'empty' element (ends with {@code '/>'});
      *    false otherwise.
      */
+    @Override
     public boolean isEmptyElement() throws XMLStreamException
     {
         // No way to really figure it out via DOM is there?
         return false;
     }
 
+    @Override
     public NamespaceContext getNonTransientNamespaceContext()
     {
         /* Since DOM does not expose enough functionality to figure
@@ -1873,6 +1965,7 @@ public abstract class DOMWrappingReader
         return EmptyNamespaceContext.getInstance();
     }
 
+    @Override
     public String getPrefixedName()
     {
         switch (_currEvent) {
@@ -1902,6 +1995,7 @@ public abstract class DOMWrappingReader
         throw new IllegalStateException("Current state ("+Stax2Util.eventTypeDesc(_currEvent)+") not START_ELEMENT, END_ELEMENT, ENTITY_REFERENCE, PROCESSING_INSTRUCTION or DTD");
     }
 
+    @Override
     public void closeCompletely() throws XMLStreamException
     {
         // Nothing special to do...
@@ -1913,10 +2007,12 @@ public abstract class DOMWrappingReader
     /**********************************************************************
      */
 
+    @Override
     public Object getProcessedDTD() {
         return null;
     }
 
+    @Override
     public String getDTDRootName() {
         if (_currEvent == DTD) {
             return _internName(((DocumentType) _currNode).getName());
@@ -1924,6 +2020,7 @@ public abstract class DOMWrappingReader
         return null;
     }
 
+    @Override
     public String getDTDPublicId() {
         if (_currEvent == DTD) {
             return ((DocumentType) _currNode).getPublicId();
@@ -1931,6 +2028,7 @@ public abstract class DOMWrappingReader
         return null;
     }
 
+    @Override
     public String getDTDSystemId() {
         if (_currEvent == DTD) {
             return ((DocumentType) _currNode).getSystemId();
@@ -1942,6 +2040,7 @@ public abstract class DOMWrappingReader
      * @return Internal subset portion of the DOCTYPE declaration, if any;
      *   empty String if none
      */
+    @Override
     public String getDTDInternalSubset() {
         /* DOM (level 3) doesn't expose anything extra; would need to
          * synthetize subset... which would only contain some of the
@@ -1952,6 +2051,7 @@ public abstract class DOMWrappingReader
 
     // // StAX2, v2.0
 
+    @Override
     public DTDValidationSchema getProcessedDTDSchema() {
         return null;
     }
@@ -1964,22 +2064,26 @@ public abstract class DOMWrappingReader
 
     // // // First, the "raw" offset accessors:
 
+    @Override
     public long getStartingByteOffset() {
         // !!! TBI
         return -1L;
     }
 
+    @Override
     public long getStartingCharOffset() {
         // !!! TBI
         return 0;
     }
 
+    @Override
     public long getEndingByteOffset() throws XMLStreamException
     {
         // !!! TBI
         return -1;
     }
 
+    @Override
     public long getEndingCharOffset() throws XMLStreamException
     {
         // !!! TBI
@@ -1988,16 +2092,19 @@ public abstract class DOMWrappingReader
 
     // // // and then the object-based access methods:
 
+    @Override
     public XMLStreamLocation2 getStartLocation()
     {
         return XMLStreamLocation2.NOT_AVAILABLE;
     }
 
+    @Override
     public XMLStreamLocation2 getCurrentLocation()
     {
         return XMLStreamLocation2.NOT_AVAILABLE;
     }
 
+    @Override
     public final XMLStreamLocation2 getEndLocation()
         throws XMLStreamException
     {
@@ -2010,6 +2117,7 @@ public abstract class DOMWrappingReader
     /**********************************************************************
      */
 
+    @Override
     public XMLValidator validateAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
@@ -2017,6 +2125,7 @@ public abstract class DOMWrappingReader
         return null;
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {

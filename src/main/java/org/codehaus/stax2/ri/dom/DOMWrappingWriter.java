@@ -62,9 +62,9 @@ public abstract class DOMWrappingWriter
     final static String DEFAULT_XML_VERSION = "1.0";
 
     /*
-    ////////////////////////////////////////////////////
-    // Configuration
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Configuration
+    /**********************************************************************
      */
 
     protected final boolean mNsAware;
@@ -85,9 +85,9 @@ public abstract class DOMWrappingWriter
     protected NamespaceContext mNsContext;
 
     /*
-    ////////////////////////////////////////////////////
-    // State
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* State
+    /**********************************************************************
      */
 
     /**
@@ -97,9 +97,9 @@ public abstract class DOMWrappingWriter
     protected final Document mDocument;
 
     /*
-    ////////////////////////////////////////////////////
-    // Helper objects
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Helper objects
+    /**********************************************************************
      */
 
     /**
@@ -109,13 +109,12 @@ public abstract class DOMWrappingWriter
     protected SimpleValueEncoder mValueEncoder;
 
     /*
-    ////////////////////////////////////////////////////
-    // Life-cycle
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Life-cycle
+    /**********************************************************************
      */
     
-    protected DOMWrappingWriter(Node treeRoot,
-                                boolean nsAware, boolean nsRepairing)
+    protected DOMWrappingWriter(Node treeRoot, boolean nsAware, boolean nsRepairing)
         throws XMLStreamException
     {
         if (treeRoot == null) {
@@ -154,67 +153,80 @@ public abstract class DOMWrappingWriter
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // Partial XMLStreamWriter API (Stax 1.0) impl
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Partial XMLStreamWriter API (Stax 1.0) impl
+    /**********************************************************************
      */
 
+    @Override
     public void close() {
         // NOP
     }
 
+    @Override
     public void flush() {
         // NOP
     }
 
+    @Override
     public abstract NamespaceContext getNamespaceContext();
+    @Override
     public abstract String getPrefix(String uri);
+    @Override
     public abstract Object getProperty(String name);
+    @Override
     public abstract void setDefaultNamespace(String uri);
 
+    @Override
     public void setNamespaceContext(NamespaceContext context) {
         mNsContext = context;
     }
 
+    @Override
     public abstract void setPrefix(String prefix, String uri)
         throws XMLStreamException;
 
+    @Override
     public abstract void writeAttribute(String localName, String value)
         throws XMLStreamException;
+    @Override
     public abstract void writeAttribute(String nsURI, String localName, String value)
         throws XMLStreamException;
+    @Override
     public abstract void writeAttribute(String prefix, String nsURI, String localName, String value)
         throws XMLStreamException;
 
-    public void writeCData(String data)
-        throws XMLStreamException
+    @Override
+    public void writeCData(String data) throws XMLStreamException
     {
         appendLeaf(mDocument.createCDATASection(data));
     }
 
+    @Override
     public void writeCharacters(char[] text, int start, int len)
         throws XMLStreamException
     {
         writeCharacters(new String(text, start, len));
     }
 
-    public void writeCharacters(String text)
-        throws XMLStreamException
+    @Override
+    public void writeCharacters(String text) throws XMLStreamException
     {
         appendLeaf(mDocument.createTextNode(text));
     }
 
-    public void writeComment(String data)
-        throws XMLStreamException
+    @Override
+    public void writeComment(String data) throws XMLStreamException
     {
         appendLeaf(mDocument.createComment(data));
     }
 
+    @Override
     public abstract void writeDefaultNamespace(String nsURI)
         throws XMLStreamException;
 
-    public void writeDTD(String dtd)
-        throws XMLStreamException
+    @Override
+    public void writeDTD(String dtd) throws XMLStreamException
     {
         /* Would need to parse contents, not easy to do via DOM
          * in any case.
@@ -222,47 +234,54 @@ public abstract class DOMWrappingWriter
         reportUnsupported("writeDTD()");
     }
 
+    @Override
     public abstract void writeEmptyElement(String localName)
         throws XMLStreamException;
+    @Override
     public abstract void writeEmptyElement(String nsURI, String localName)
         throws XMLStreamException;
+    @Override
     public abstract void writeEmptyElement(String prefix, String localName, String nsURI)  
         throws XMLStreamException;
 
+    @Override
     public abstract void writeEndDocument() throws XMLStreamException;
 
+    @Override
     public void writeEntityRef(String name) throws XMLStreamException
     {
         appendLeaf(mDocument.createEntityReference(name));
     }
 
+    @Override
     public void writeProcessingInstruction(String target)
         throws XMLStreamException
     {
         writeProcessingInstruction(target, null);
     }
 
+    @Override
     public void writeProcessingInstruction(String target, String data)
         throws XMLStreamException
     {
         appendLeaf(mDocument.createProcessingInstruction(target, data));
     }
 
-    public void writeStartDocument()
-        throws XMLStreamException
+    @Override
+    public void writeStartDocument() throws XMLStreamException
     {
-        /* Note: while these defaults are not very intuitive, they
-         * are what Stax 1.0 specification clearly mandates:
-         */
+        // Note: while these defaults are not very intuitive, they
+        // are what Stax 1.0 specification clearly mandates:
         writeStartDocument(DEFAULT_OUTPUT_ENCODING, DEFAULT_XML_VERSION);
     }
 
-    public void writeStartDocument(String version)
-        throws XMLStreamException
+    @Override
+    public void writeStartDocument(String version) throws XMLStreamException
     {
         writeStartDocument(null, version);
     }
 
+    @Override
     public void writeStartDocument(String encoding, String version)
         throws XMLStreamException
     {
@@ -272,55 +291,62 @@ public abstract class DOMWrappingWriter
 
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLStreamWriter2 API (Stax2 v3.0):
-    // additional accessors
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamWriter2 API (Stax2 v3.0): additional accessors
+    /**********************************************************************
      */
 
+    @Override
     public XMLStreamLocation2 getLocation() {
         // !!! TBI
         return null;
     }
 
+    @Override
     public String getEncoding() {
         return mEncoding;
     }
 
+    @Override
     public abstract boolean isPropertySupported(String name);
+    @Override
     public abstract boolean setProperty(String name, Object value);
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLStreamWriter2 API (Stax2 v2.0):
-    // extended write methods
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamWriter2 API (Stax2 v2.0): extended write methods
+    /**********************************************************************
      */
 
+    @Override
     public void writeCData(char[] text, int start, int len)
         throws XMLStreamException
     {
         writeCData(new String(text, start, len));
     }
 
+    @Override
     public abstract void writeDTD(String rootName, String systemId, String publicId,
                                   String internalSubset)
         throws XMLStreamException;
 
     //public void writeDTD(String rootName, String systemId, String publicId, String internalSubset)
 
+    @Override
     public void writeFullEndElement() throws XMLStreamException
     {
         // No difference with DOM
         writeEndElement();
     }
 
+    @Override
     public void writeSpace(char[] text, int start, int len)
         throws XMLStreamException
     {
         writeSpace(new String(text, start, len));
     }
 
+    @Override
     public void writeSpace(String text)
         throws XMLStreamException
     {
@@ -332,6 +358,7 @@ public abstract class DOMWrappingWriter
         writeCharacters(text);
     }
 
+    @Override
     public void writeStartDocument(String version, String encoding, boolean standAlone)
         throws XMLStreamException
     {
@@ -339,11 +366,12 @@ public abstract class DOMWrappingWriter
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLStreamWriter2 API (Stax2 v2.0): validation
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLStreamWriter2 API (Stax2 v2.0): validation
+    /**********************************************************************
      */
 
+    @Override
     public XMLValidator validateAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
@@ -351,6 +379,7 @@ public abstract class DOMWrappingWriter
         return null;
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
@@ -358,6 +387,7 @@ public abstract class DOMWrappingWriter
         return null;
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidator validator)
         throws XMLStreamException
     {
@@ -365,6 +395,7 @@ public abstract class DOMWrappingWriter
         return null;
     }
 
+    @Override
     public ValidationProblemHandler setValidationProblemHandler(ValidationProblemHandler h)
     {
         // !!! TBI
@@ -372,29 +403,32 @@ public abstract class DOMWrappingWriter
     }
 
     /*
-    ///////////////////////////////
-    // Stax2, pass-through methods
-    ///////////////////////////////
+    /**********************************************************************
+    /* Stax2, pass-through methods
+    /**********************************************************************
      */
 
-    public void writeRaw(String text)
-        throws XMLStreamException
+    @Override
+    public void writeRaw(String text) throws XMLStreamException
     {
         reportUnsupported("writeRaw()");
     }
 
+    @Override
     public void writeRaw(String text, int start, int offset)
         throws XMLStreamException
     {
         reportUnsupported("writeRaw()");
     }
 
+    @Override
     public void writeRaw(char[] text, int offset, int length)
         throws XMLStreamException
     {
         reportUnsupported("writeRaw()");
     }
 
+    @Override
     public void copyEventFromReader(XMLStreamReader2 r, boolean preserveEventData)
         throws XMLStreamException
     {
@@ -402,74 +436,83 @@ public abstract class DOMWrappingWriter
     }
 
     /*
-    ///////////////////////////////
-    // Stax2, output handling
-    ///////////////////////////////
-    */
+    /**********************************************************************
+    /* Stax2, output handling
+    /**********************************************************************
+     */
 
+    @Override
     public void closeCompletely()
     {
         // NOP
     }
 
     /*
-    /////////////////////////////////////////////////
-    // TypedXMLStreamWriter2 implementation
-    // (Typed Access API, Stax v3.0)
-    /////////////////////////////////////////////////
+    /**********************************************************************
+    /* TypedXMLStreamWriter2 implementation (Typed Access API, Stax v3.0)
+    /**********************************************************************
      */
 
     // // // Typed element content write methods
 
+    @Override
     public void writeBoolean(boolean value) throws XMLStreamException
     {
         writeCharacters(value ? "true" : "false");
     }
 
+    @Override
     public void writeInt(int value) throws XMLStreamException
     {
         writeCharacters(String.valueOf(value));
     }
 
+    @Override
     public void writeLong(long value) throws XMLStreamException
     {
         writeCharacters(String.valueOf(value));
     }
 
+    @Override
     public void writeFloat(float value) throws XMLStreamException
     {
         writeCharacters(String.valueOf(value));
     }
 
+    @Override
     public void writeDouble(double value) throws XMLStreamException
     {
         writeCharacters(String.valueOf(value));
     }
 
+    @Override
     public void writeInteger(BigInteger value) throws XMLStreamException
     {
         writeCharacters(value.toString());
     }
 
+    @Override
     public void writeDecimal(BigDecimal value) throws XMLStreamException
     {
         writeCharacters(value.toString());
     }
 
+    @Override
     public void writeQName(QName name) throws XMLStreamException
     {
         writeCharacters(serializeQNameValue(name));
     }
 
+    @Override
     public void writeIntArray(int[] value, int from, int length)
         throws XMLStreamException
     {
-        /* true -> start with space, to allow for multiple consecutive
-         * to be written
-         */
+        // true -> start with space, to allow for multiple consecutive
+        // to be written
         writeCharacters(getValueEncoder().encodeAsString(value, from, length));
     }
 
+    @Override
     public void writeLongArray(long[] value, int from, int length)
         throws XMLStreamException
     {
@@ -477,6 +520,7 @@ public abstract class DOMWrappingWriter
         writeCharacters(getValueEncoder().encodeAsString(value, from, length));
     }
 
+    @Override
     public void writeFloatArray(float[] value, int from, int length)
         throws XMLStreamException
     {
@@ -484,6 +528,7 @@ public abstract class DOMWrappingWriter
         writeCharacters(getValueEncoder().encodeAsString(value, from, length));
     }
 
+    @Override
     public void writeDoubleArray(double[] value, int from, int length)
         throws XMLStreamException
     {
@@ -491,12 +536,14 @@ public abstract class DOMWrappingWriter
         writeCharacters(getValueEncoder().encodeAsString(value, from, length));
     }
 
+    @Override
     public void writeBinary(byte[] value, int from, int length)
         throws XMLStreamException
     {
         writeBinary(Base64Variants.getDefaultVariant(), value, from, length);
     }
 
+    @Override
     public void writeBinary(Base64Variant v, byte[] value, int from, int length)
         throws XMLStreamException
     {
@@ -505,54 +552,63 @@ public abstract class DOMWrappingWriter
 
     // // // Typed attribute value write methods
 
+    @Override
     public void writeBooleanAttribute(String prefix, String nsURI, String localName, boolean value)
         throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName, value ? "true" : "false");
     }
 
+    @Override
     public void writeIntAttribute(String prefix, String nsURI, String localName, int value)
         throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName, String.valueOf(value));
     }
 
+    @Override
     public void writeLongAttribute(String prefix, String nsURI, String localName, long value)
         throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName, String.valueOf(value));
     }
 
+    @Override
     public void writeFloatAttribute(String prefix, String nsURI, String localName, float value)
         throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName, String.valueOf(value));
     }
 
+    @Override
     public void writeDoubleAttribute(String prefix, String nsURI, String localName, double value)
         throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName, String.valueOf(value));
     }
 
+    @Override
     public void writeIntegerAttribute(String prefix, String nsURI, String localName, BigInteger value)
         throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName, value.toString());
     }
 
+    @Override
     public void writeDecimalAttribute(String prefix, String nsURI, String localName, BigDecimal value)
         throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName, value.toString());
     }
 
+    @Override
     public void writeQNameAttribute(String prefix, String nsURI, String localName, QName name)
         throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName, serializeQNameValue(name));
     }
 
+    @Override
     public void writeIntArrayAttribute(String prefix, String nsURI, String localName, int[] value)
         throws XMLStreamException
     {
@@ -560,49 +616,53 @@ public abstract class DOMWrappingWriter
                        getValueEncoder().encodeAsString(value, 0, value.length));
     }
 
+    @Override
     public void writeLongArrayAttribute(String prefix, String nsURI, String localName, long[] value) throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName,
                        getValueEncoder().encodeAsString(value, 0, value.length));
     }
     
+    @Override
     public void writeFloatArrayAttribute(String prefix, String nsURI, String localName, float[] value) throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName,
                        getValueEncoder().encodeAsString(value, 0, value.length));
     }
     
+    @Override
     public void writeDoubleArrayAttribute(String prefix, String nsURI, String localName, double[] value) throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName,
                        getValueEncoder().encodeAsString(value, 0, value.length));
     }
 
+    @Override
     public void writeBinaryAttribute(String prefix, String nsURI, String localName, byte[] value) throws XMLStreamException
     {
         writeBinaryAttribute(Base64Variants.getDefaultVariant(), prefix, nsURI, localName, value);
     }
 
+    @Override
     public void writeBinaryAttribute(Base64Variant v, String prefix, String nsURI, String localName, byte[] value) throws XMLStreamException
     {
         writeAttribute(prefix, nsURI, localName,
                        getValueEncoder().encodeAsString(v, value, 0, value.length));
     }
 
-
     /*
-    ////////////////////////////////////////////////////
-    // Abstract methods for sub-classes to implement
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Abstract methods for sub-classes to implement
+    /**********************************************************************
      */
 
     protected abstract void appendLeaf(Node n)
         throws IllegalStateException;
 
     /*
-    ////////////////////////////////////////////////////
-    // Shared package methods
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Shared package methods
+    /**********************************************************************
      */
 
     /**
@@ -656,9 +716,9 @@ public abstract class DOMWrappingWriter
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // Package methods, basic output problem reporting
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Package methods, basic output problem reporting
+    /**********************************************************************
      */
 
     protected static void throwOutputError(String msg)

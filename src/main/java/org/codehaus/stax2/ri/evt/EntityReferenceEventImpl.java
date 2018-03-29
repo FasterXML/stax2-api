@@ -28,20 +28,22 @@ public class EntityReferenceEventImpl
         mDecl = new EntityDeclarationEventImpl(loc, name);
     }
 
+    @Override
     public EntityDeclaration getDeclaration()
     {
         return mDecl;
     }
 
+    @Override
     public String getName()
     {
         return mDecl.getName();
     }
 
     /*
-    ///////////////////////////////////////////
-    // Implementation of abstract base methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of abstract base methods
+    /**********************************************************************
      */
 
     @Override
@@ -74,9 +76,9 @@ public class EntityReferenceEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Standard method impl
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Standard method impl
+    /**********************************************************************
      */
 
     @Override
