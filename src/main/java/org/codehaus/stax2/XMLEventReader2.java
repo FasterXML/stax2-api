@@ -25,10 +25,10 @@ public interface XMLEventReader2
     public boolean hasNextEvent() throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Configuration
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Configuration
+    /**********************************************************************
+     */
 
     /**
      * Method similar to {@link javax.xml.stream.XMLInputFactory#isPropertySupported}, used

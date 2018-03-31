@@ -65,10 +65,10 @@ public interface XMLStreamReader2
     public final static String FEATURE_DTD_OVERRIDE = XMLInputFactory2.P_DTD_OVERRIDE;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Configuration
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Configuration
+    /**********************************************************************
+     */
 
     /**
      * Method similar to {@link javax.xml.stream.XMLInputFactory#isPropertySupported}, used
@@ -137,10 +137,10 @@ public interface XMLStreamReader2
     public void setFeature(String name, Object value);
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Additional event traversing
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Additional event traversing
+    /**********************************************************************
+     */
 
     /**
      * Method that will skip all the contents of the element that the
@@ -153,10 +153,10 @@ public interface XMLStreamReader2
     public void skipElement() throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Additional DTD access
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Additional DTD access
+    /**********************************************************************
+     */
 
     /**
      * Method that can be called to get information about DOCTYPE declaration
@@ -173,10 +173,10 @@ public interface XMLStreamReader2
     public DTDInfo getDTDInfo() throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Additional attribute accessors
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Additional attribute accessors
+    /**********************************************************************
+     */
 
     /**
      * Method that can be called to get additional information about
@@ -188,18 +188,18 @@ public interface XMLStreamReader2
     public AttributeInfo getAttributeInfo() throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Extended location information access
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Extended location information access
+    /**********************************************************************
+     */
 
     public LocationInfo getLocationInfo();
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Pass-through text accessors
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Pass-through text accessors
+    /**********************************************************************
+     */
 
     /**
      * Method similar to {@link #getText()}, except
@@ -234,10 +234,10 @@ public interface XMLStreamReader2
         throws IOException, XMLStreamException;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Other accessors
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Other accessors
+    /**********************************************************************
+     */
 
     /**
      * Method that can be used to check whether current START_ELEMENT
@@ -302,10 +302,10 @@ public interface XMLStreamReader2
     public String getPrefixedName();
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Input handling
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Input handling
+    /**********************************************************************
+     */
 
     /**
      * Method similar to
@@ -319,6 +319,5 @@ public interface XMLStreamReader2
      * access to the actually input source ({@link java.io.InputStream}
      * opened from a {@link java.net.URL} and so on).
      */
-    public void closeCompletely()
-        throws XMLStreamException;
+    public void closeCompletely() throws XMLStreamException;
 }

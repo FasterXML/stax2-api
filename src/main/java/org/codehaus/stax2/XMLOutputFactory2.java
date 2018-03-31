@@ -51,9 +51,9 @@ public abstract class XMLOutputFactory2
     implements XMLStreamProperties
 {
     /*
-    ///////////////////////////////////////////////////////////
-    // We share some options with other factories
-    ///////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* We share some options with other factories
+    /**********************************************************************
      */
 
     //public final static String XSP_IMPLEMENTATION_NAME
@@ -62,9 +62,9 @@ public abstract class XMLOutputFactory2
     //public final static String XSP_PROBLEM_REPORTER
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Additional standard configuration properties
-    ///////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Additional standard configuration properties
+    /**********************************************************************
      */
 
     // // General output options:
@@ -138,9 +138,9 @@ public abstract class XMLOutputFactory2
     public final static String P_ATTR_VALUE_ESCAPER = "org.codehaus.stax2.attrValueEscaper";
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Life-cycle
-    ///////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Life-cycle
+    /**********************************************************************
      */
 
     protected XMLOutputFactory2() {
@@ -158,9 +158,9 @@ public abstract class XMLOutputFactory2
         throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Configuring using profiles
-    ///////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Configuring using profiles
+    /**********************************************************************
      */
 
     /**

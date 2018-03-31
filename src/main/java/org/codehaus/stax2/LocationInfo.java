@@ -19,9 +19,9 @@ import javax.xml.stream.XMLStreamException;
 public interface LocationInfo
 {
     /*
-    /////////////////////////////////////////////////////
-    // Low-level extended "raw" location access methods
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Low-level extended "raw" location access methods
+    /**********************************************************************
      */
 
     /**
@@ -105,9 +105,9 @@ public interface LocationInfo
         throws XMLStreamException;
 
     /*
-    /////////////////////////////////////////////////////
-    // Object-oriented location access methods
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Object-oriented location access methods
+    /**********************************************************************
      */
 
     // // // Existing method from XMLStreamReader:
