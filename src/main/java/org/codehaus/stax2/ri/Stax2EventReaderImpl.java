@@ -29,7 +29,7 @@ import org.codehaus.stax2.XMLStreamReader2;
  * a generic {@link XMLStreamReader} implementation (using aggregation).
  * Designed to be used by concrete Stax2 implementations to provide
  * full Event API implementation with minimal effort.
- *<p> 
+ *<p>
  * Since there is not much to optimize at this
  * level (API and underlying stream reader pretty much define functionality
  * and optimizations that can be done), implementation is fairly straight
@@ -106,7 +106,7 @@ public abstract class Stax2EventReaderImpl
     private XMLEvent mPeekedEvent = null;
 
     /**
-     * High-level state indicator, with currently three values: 
+     * High-level state indicator, with currently three values:
      * whether we are initializing (need to synthetize START_DOCUMENT),
      * at END_OF_INPUT (end-of-doc), or otherwise, normal operation.
      * Useful in simplifying some methods, as well as to make sure
@@ -169,7 +169,9 @@ public abstract class Stax2EventReaderImpl
     @Override
     public void close() throws XMLStreamException
     {
-        mReader.close();
+        /*
+        Note : we do not close underlying input as defined in XMLEventReader API.
+        */
     }
 
     @Override
@@ -222,7 +224,7 @@ public abstract class Stax2EventReaderImpl
                 sb.append(curr);
             }
         }
-        
+
         if (sb != null) {
             return sb.toString();
         }
@@ -320,7 +322,7 @@ public abstract class Stax2EventReaderImpl
                 mState = STATE_CONTENT;
             }
         }
- 
+
         while (true) {
             int next = mReader.next();
 
