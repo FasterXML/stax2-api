@@ -147,7 +147,7 @@ public final class StringBase64Decoder
                     // otherwise, our triple is now complete
                     _decodedData = (_decodedData << 6) | bits;
                 }
-                // still along fast path
+                // fall through, still along fast path
 
             case STATE_OUTPUT_3:
                 if (resultOffset >= resultBufferEnd) { // no room
