@@ -82,6 +82,8 @@ public class Stax2EventWriterImpl
                 StartDocument sd = (StartDocument) event;
                 if (!sd.encodingSet()) { // encoding defined?
                     mWriter.writeStartDocument(sd.getVersion());
+                } else if (sd.standaloneSet()) {
+                    mWriter.writeStartDocument(sd.getVersion(), sd.getCharacterEncodingScheme(), sd.isStandalone());                    
                 } else {
                     mWriter.writeStartDocument(sd.getCharacterEncodingScheme(),
                                                sd.getVersion());
