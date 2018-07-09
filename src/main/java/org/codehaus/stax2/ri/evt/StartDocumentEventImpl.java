@@ -72,44 +72,53 @@ public class StartDocumentEventImpl
         mSystemId = "";
     }
 
+    @Override
     public boolean encodingSet() {
         return mEncodingSet;
     }
 
+    @Override
     public String getCharacterEncodingScheme() {
         return mEncodingScheme;
     }
 
+    @Override
     public String getSystemId() {
         return mSystemId;
     }
 
+    @Override
     public String getVersion() {
         return mVersion;
     }
 
+    @Override
     public boolean isStandalone() {
         return mIsStandalone;
     }
 
+    @Override
     public boolean standaloneSet() {
         return mStandaloneSet;
     }
 
     /*
-    ///////////////////////////////////////////
-    // Implementation of abstract base methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of abstract base methods
+    /**********************************************************************
      */
 
+    @Override
     public int getEventType() {
         return START_DOCUMENT;
     }
 
+    @Override
     public boolean isStartDocument() {
         return true;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -140,17 +149,19 @@ public class StartDocumentEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         w.writeStartDocument();
     }
 
     /*
-    ///////////////////////////////////////////
-    // Standard method impl
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Standard method impl
+    /**********************************************************************
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -168,7 +179,7 @@ public class StartDocumentEventImpl
             ;
     }
 
-
+    @Override
     public int hashCode()
     {
         int hash = 0;

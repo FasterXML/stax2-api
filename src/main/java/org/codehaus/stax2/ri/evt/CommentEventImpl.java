@@ -20,6 +20,7 @@ public class CommentEventImpl
         mContent = content;
     }
 
+    @Override
     public String getText()
     {
         return mContent;
@@ -31,12 +32,13 @@ public class CommentEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return COMMENT;
     }
 
-    public void writeAsEncodedUnicode(Writer w)
-        throws XMLStreamException
+    @Override
+    public void writeAsEncodedUnicode(Writer w) throws XMLStreamException
     {
         try {
             w.write("<!--");
@@ -47,6 +49,7 @@ public class CommentEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         w.writeComment(mContent);
@@ -58,6 +61,7 @@ public class CommentEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -68,8 +72,8 @@ public class CommentEventImpl
         return mContent.equals(other.getText());
     }
 
-    public int hashCode()
-    {
+    @Override
+    public int hashCode() {
         return mContent.hashCode();
     }
 }

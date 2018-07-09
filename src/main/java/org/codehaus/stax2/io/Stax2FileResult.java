@@ -21,8 +21,8 @@ public class Stax2FileResult
     /////////////////////////////////////////
      */
 
-    public Writer constructWriter()
-        throws IOException
+    @Override
+    public Writer constructWriter() throws IOException
     {
         String enc = getEncoding();
         if (enc != null && enc.length() > 0) {
@@ -32,8 +32,8 @@ public class Stax2FileResult
         return new FileWriter(mFile);
     }
 
-    public OutputStream constructOutputStream()
-        throws IOException
+    @Override
+    public OutputStream constructOutputStream() throws IOException
     {
         return new FileOutputStream(mFile);
     }

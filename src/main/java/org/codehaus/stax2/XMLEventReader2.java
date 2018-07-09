@@ -25,10 +25,10 @@ public interface XMLEventReader2
     public boolean hasNextEvent() throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Configuration
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Configuration
+    /**********************************************************************
+     */
 
     /**
      * Method similar to {@link javax.xml.stream.XMLInputFactory#isPropertySupported}, used
@@ -56,7 +56,7 @@ public interface XMLEventReader2
      * @return True, if the specified property was <b>succesfully</b>
      *    set to specified value; false if its value was not changed
      *
-     * @throws InvalidArgumentException if the property is not supported
+     * @throws IllegalArgumentException if the property is not supported
      *   (or recognized) by the stream reader implementation
      *
      * @since 3.0

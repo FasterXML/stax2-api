@@ -33,14 +33,14 @@ public class Stax2CharArraySource
     /////////////////////////////////////////
      */
 
-    public Reader constructReader()
-        throws IOException
+    @Override
+    public Reader constructReader() throws IOException
     {
         return new CharArrayReader(mBuffer, mStart, mLength);
     }
 
-    public InputStream constructInputStream()
-        throws IOException
+    @Override
+    public InputStream constructInputStream() throws IOException
     {
         /* No obvious/easy way; if caller really wants an InputStream, it
          * can get a Reader, add an encoders, and so on.

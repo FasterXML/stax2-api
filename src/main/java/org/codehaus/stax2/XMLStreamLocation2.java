@@ -14,26 +14,32 @@ public interface XMLStreamLocation2
      * instead of null, when no location information is available.
      */
     public final static XMLStreamLocation2 NOT_AVAILABLE = new XMLStreamLocation2() {
+        @Override
         public XMLStreamLocation2 getContext() {
             return null;
         }
 
+        @Override
         public int getCharacterOffset() {
             return -1;
         }
 
+        @Override
         public int getColumnNumber() {
             return -1;
         }
 
+        @Override
         public int getLineNumber() {
             return -1;
         }
 
+        @Override
         public String getPublicId() {
             return null;
         }
 
+        @Override
         public String getSystemId() {
             return null;
         }

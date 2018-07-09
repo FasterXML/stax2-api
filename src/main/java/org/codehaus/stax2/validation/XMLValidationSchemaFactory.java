@@ -32,7 +32,7 @@ public abstract class XMLValidationSchemaFactory
     public final static String INTERNAL_ID_SCHEMA_W3C = "w3c";
     public final static String INTERNAL_ID_SCHEMA_TREX = "trex";
 
-    final static HashMap sSchemaIds = new HashMap();
+    final static HashMap<String,String> sSchemaIds = new HashMap<String,String>();
     static {
         sSchemaIds.put(XMLValidationSchema.SCHEMA_ID_DTD, INTERNAL_ID_SCHEMA_DTD);
         sSchemaIds.put(XMLValidationSchema.SCHEMA_ID_RELAXNG, INTERNAL_ID_SCHEMA_RELAXNG);
@@ -177,7 +177,7 @@ public abstract class XMLValidationSchemaFactory
         // try to find services in CLASSPATH
         String path = SERVICE_DEFINITION_PATH + internalId;
         try {
-            Enumeration en;
+            Enumeration<?> en;
 
             if (classLoader == null) {
                 en = ClassLoader.getSystemResources(path);
@@ -296,7 +296,7 @@ public abstract class XMLValidationSchemaFactory
         throws FactoryConfigurationError
     {
         try {
-            Class factoryClass;
+            Class<?> factoryClass;
 
             if (cloader == null) {
                 factoryClass = Class.forName(clsName);

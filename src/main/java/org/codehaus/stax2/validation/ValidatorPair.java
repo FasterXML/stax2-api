@@ -44,21 +44,23 @@ public class ValidatorPair
      * Two choices here; could either return schema of the first child,
      * or return null. Let's do latter, do avoid accidental matches.
      */
-    public XMLValidationSchema getSchema()
-    {
+    @Override
+    public XMLValidationSchema getSchema() {
         return null;
     }
 
+    @Override
     public void validateElementStart(String localName, String uri,
-                                     String prefix)
+            String prefix)
         throws XMLStreamException
     {
         mFirst.validateElementStart(localName, uri, prefix);
         mSecond.validateElementStart(localName, uri, prefix);
     }
 
+    @Override
     public String validateAttribute(String localName, String uri,
-                                    String prefix, String value)
+            String prefix, String value)
         throws XMLStreamException
     {
         String retVal =  mFirst.validateAttribute(localName, uri, prefix,
@@ -69,10 +71,11 @@ public class ValidatorPair
         return mSecond.validateAttribute(localName, uri, prefix, value);
     }
 
+    @Override
     public String validateAttribute(String localName, String uri,
-                                    String prefix,
-                                    char[] valueChars, int valueStart,
-                                    int valueEnd)
+            String prefix,
+            char[] valueChars, int valueStart,
+            int valueEnd)
         throws XMLStreamException
     {
         String retVal =  mFirst.validateAttribute(localName, uri, prefix,
@@ -88,6 +91,7 @@ public class ValidatorPair
                                          valueChars, valueStart, valueEnd);
     }
 
+    @Override
     public int validateElementAndAttributes()
         throws XMLStreamException
     {
@@ -101,6 +105,7 @@ public class ValidatorPair
         return (textType1 < textType2) ? textType1 : textType2;
     }
 
+    @Override
     public int validateElementEnd(String localName, String uri, String prefix)
         throws XMLStreamException
     {
@@ -111,6 +116,7 @@ public class ValidatorPair
         return (textType1 < textType2) ? textType1 : textType2;
     }
 
+    @Override
     public void validateText(String text, boolean lastTextSegment)
         throws XMLStreamException
     {
@@ -118,6 +124,7 @@ public class ValidatorPair
         mSecond.validateText(text, lastTextSegment);
     }
 
+    @Override
     public void validateText(char[] cbuf, int textStart, int textEnd,
                              boolean lastTextSegment)
         throws XMLStreamException
@@ -126,6 +133,7 @@ public class ValidatorPair
         mSecond.validateText(cbuf, textStart, textEnd, lastTextSegment);
     }
 
+    @Override
     public void validationCompleted(boolean eod)
         throws XMLStreamException
     {
@@ -139,6 +147,7 @@ public class ValidatorPair
     ///////////////////////////////////////////////////
      */
 
+    @Override
     public String getAttributeType(int index)
     {
         String type = mFirst.getAttributeType(index);
@@ -156,6 +165,7 @@ public class ValidatorPair
         return type;
     }
 
+    @Override
     public int getIdAttrIndex()
     {
         int index = mFirst.getIdAttrIndex();
@@ -165,6 +175,7 @@ public class ValidatorPair
         return index;
     }
 
+    @Override
     public int getNotationAttrIndex()
     {
         int index = mFirst.getNotationAttrIndex();

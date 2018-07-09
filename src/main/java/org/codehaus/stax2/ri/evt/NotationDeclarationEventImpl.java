@@ -30,14 +30,17 @@ public class NotationDeclarationEventImpl
         mSystemId = sysId;
     }
 
+    @Override
     public String getName() {
         return mName;
     }
 
+    @Override
     public String getPublicId() {
         return mPublicId;
     }
 
+    @Override
     public String getSystemId() {
         return mSystemId;
     }
@@ -45,6 +48,7 @@ public class NotationDeclarationEventImpl
     /**
      * Empty base implementation: sub-classes should implement
      */
+    @Override
     public String getBaseURI()
     {
         return "";
@@ -56,10 +60,12 @@ public class NotationDeclarationEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return NOTATION_DECLARATION;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -91,6 +97,7 @@ public class NotationDeclarationEventImpl
      * choose to either skip silently (output nothing), or throw an
      * exception.
      */
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         /* Fail silently, or throw an exception? Let's do latter; at least
@@ -105,6 +112,7 @@ public class NotationDeclarationEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -121,6 +129,7 @@ public class NotationDeclarationEventImpl
             ;
     }
 
+    @Override
     public int hashCode()
     {
         int hash = 0;

@@ -27,13 +27,13 @@ public class Stax2URLSource
      *   of resolving a relative reference from content read from the
      *   resource.
      */
-    public URL getReference()
-    {
+    @Override
+    public URL getReference() {
         return mURL;
     }
 
-    public Reader constructReader()
-        throws IOException
+    @Override
+    public Reader constructReader() throws IOException
     {
         String enc = getEncoding();
         if (enc != null && enc.length() > 0) {
@@ -43,8 +43,8 @@ public class Stax2URLSource
         return new InputStreamReader(constructInputStream());
     }
 
-    public InputStream constructInputStream()
-        throws IOException
+    @Override
+    public InputStream constructInputStream() throws IOException
     {
         /* A simple optimization: if it's a file reference, can use
          * a more optimal one:

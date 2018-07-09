@@ -51,12 +51,15 @@ public class AttributeEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return ATTRIBUTE;
     }
 
+    @Override
     public boolean isAttribute() { return true; }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -79,6 +82,7 @@ public class AttributeEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         QName n = mName;
@@ -92,6 +96,7 @@ public class AttributeEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public String getDTDType() {
         /* !!! TBI: 07-Sep-2004, TSa: Need to figure out an efficient way
          *    to pass this info...
@@ -99,16 +104,19 @@ public class AttributeEventImpl
         return "CDATA";
     }
 
+    @Override
     public QName getName()
     {
         return mName;
     }
 
+    @Override
     public String getValue()
     {
         return mValue;
     }
 
+    @Override
     public boolean isSpecified()
     {
         return mWasSpecified;
@@ -120,6 +128,7 @@ public class AttributeEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -141,6 +150,7 @@ public class AttributeEventImpl
         return false;
     }
 
+    @Override
     public int hashCode()
     {
         /* Hmmh. Definitely need hashCode of name; but how about

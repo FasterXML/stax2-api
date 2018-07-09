@@ -14,7 +14,7 @@ import javax.xml.stream.XMLStreamReader;
  * recognize, and preferably support. There are also some profile-based
  * configuration methods which allow implementations to set proper goal-based
  * values for custom properties.
- *<br />
+ *<br>
  * NOTE: although actual values for the property names are
  * visible, implementations should try to use the symbolic constants
  * defined here instead, to avoid typos.
@@ -27,9 +27,9 @@ public abstract class XMLInputFactory2
     implements XMLStreamProperties
 {
     /*
-    ///////////////////////////////////////////////////////////
-    // We share some options with other factories
-    ///////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* We share some options with other factories
+    /**********************************************************************
      */
 
     //public final static String XSP_IMPLEMENTATION_NAME
@@ -41,9 +41,9 @@ public abstract class XMLInputFactory2
     //public final static String XSP_SUPPORT_XMLID
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Additional standard configuration properties
-    ///////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Additional standard configuration properties
+    /**********************************************************************
      */
 
     // // // Parsing settings
@@ -169,9 +169,9 @@ public abstract class XMLInputFactory2
     public final static String P_DTD_OVERRIDE = "org.codehaus.stax2.propDtdOverride";
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Life-cycle
-    ///////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Life-cycle
+    /**********************************************************************
      */
 
     protected XMLInputFactory2() {
@@ -214,9 +214,9 @@ public abstract class XMLInputFactory2
         throws XMLStreamException;
  
     /*
-    ///////////////////////////////////////////////////////////
-    // Configuring using profiles
-    ///////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Configuring using profiles
+    /**********************************************************************
      */
 
     /**

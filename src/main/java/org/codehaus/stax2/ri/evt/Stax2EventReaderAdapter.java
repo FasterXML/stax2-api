@@ -28,12 +28,12 @@ import org.codehaus.stax2.XMLEventReader2;
 public class Stax2EventReaderAdapter
     implements XMLEventReader2
 {
-    final XMLEventReader mReader;
+    final protected XMLEventReader mReader;
 
     /*
-    ////////////////////////////////////////////////////
-    // Life-cycle methods
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Life-cycle methods
+    /**********************************************************************
      */
 
     protected Stax2EventReaderAdapter(XMLEventReader er)
@@ -57,40 +57,47 @@ public class Stax2EventReaderAdapter
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLEventReader pass-through methods
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventReader pass-through methods
+    /**********************************************************************
      */
 
+    @Override
     public void close() throws XMLStreamException {
         mReader.close();
     }
 
+    @Override
     public String getElementText() throws XMLStreamException {
         return mReader.getElementText();
     }
 
+    @Override
     public Object getProperty(String name) {
         return mReader.getProperty(name);
     }
 
+    @Override
     public boolean hasNext() {
         return mReader.hasNext();
     }
 
-    public XMLEvent nextEvent() throws XMLStreamException
-    {
+    @Override
+    public XMLEvent nextEvent() throws XMLStreamException {
         return mReader.nextEvent();
     }
 
+    @Override
     public Object next() {
         return mReader.next();
     }
 
+    @Override
     public XMLEvent nextTag() throws XMLStreamException {
         return mReader.nextTag();
     }
 
+    @Override
     public XMLEvent peek() throws XMLStreamException {
         return mReader.peek();
     }
@@ -98,21 +105,24 @@ public class Stax2EventReaderAdapter
     /**
      * Note: only here because we implement Iterator interface.
      */
+    @Override
     public void remove() {
         mReader.remove();
     }
 
     /*
-    ////////////////////////////////////////////////////
-    // XMLEventReader2 implementation
-    ////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventReader2 implementation
+    /**********************************************************************
      */
 
+    @Override
     public boolean hasNextEvent() throws XMLStreamException
     {
         return (peek() != null);
     }
 
+    @Override
     public boolean isPropertySupported(String name)
     {
         /* No way to support properly via Stax1 interface... but
@@ -127,6 +137,7 @@ public class Stax2EventReaderAdapter
         return true;
     }
 
+    @Override
     public boolean setProperty(String name, Object value)
     {
         // No way to support via Stax1 interface

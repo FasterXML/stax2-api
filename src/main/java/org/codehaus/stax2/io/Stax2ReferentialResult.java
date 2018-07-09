@@ -20,7 +20,9 @@ public abstract class Stax2ReferentialResult
     /////////////////////////////////////////
      */
 
+    @Override
     public abstract Writer constructWriter() throws IOException;
 
+    @Override
     public abstract OutputStream constructOutputStream() throws IOException;
 }

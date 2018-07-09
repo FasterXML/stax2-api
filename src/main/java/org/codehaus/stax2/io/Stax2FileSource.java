@@ -10,16 +10,16 @@ import java.net.URL;
 public class Stax2FileSource
     extends Stax2ReferentialSource
 {
-    final File mFile;
+    final File _file;
 
     public Stax2FileSource(File f) {
-        mFile = f;
+        _file = f;
     }
 
     /*
-    /////////////////////////////////////////
-    // Implementation of the Public API
-    /////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of the Public API
+    /**********************************************************************
      */
 
     /**
@@ -27,6 +27,7 @@ public class Stax2FileSource
      *   of resolving a relative reference from content read from the
      *   resource.
      */
+    @Override
     public URL getReference()
     {
         /* !!! 13-May-2006, TSa: For Woodstox 4.0, consider converting
@@ -34,40 +35,40 @@ public class Stax2FileSource
          *   filename are properly quoted
          */
         try {
-            return mFile.toURL();
+            return _file.toURL();
         } catch (java.net.MalformedURLException e) {
             /* Hmmh. Signature doesn't allow IOException to be thrown. So,
              * let's use something close enough; this should not occur
              * often in practice.
              */
-            throw new IllegalArgumentException("(was "+e.getClass()+") Could not convert File '"+mFile.getPath()+"' to URL: "+e);
+            throw new IllegalArgumentException("(was "+e.getClass()+") Could not convert File '"+_file.getPath()+"' to URL: "+e);
         }
     }
 
-    public Reader constructReader()
-        throws IOException
+    @Override
+    public Reader constructReader() throws IOException
     {
         String enc = getEncoding();
         if (enc != null && enc.length() > 0) {
             return new InputStreamReader(constructInputStream(), enc);
         }
         // Sub-optimal; really shouldn't use the platform default encoding
-        return new FileReader(mFile);
+        return new FileReader(_file);
     }
 
-    public InputStream constructInputStream()
-        throws IOException
+    @Override
+    public InputStream constructInputStream() throws IOException
     {
-        return new FileInputStream(mFile);
+        return new FileInputStream(_file);
     }
 
     /*
-    /////////////////////////////////////////
-    // Additional API for this source
-    /////////////////////////////////////////
+    /**********************************************************************
+    /* Additional API for this source
+    /**********************************************************************
      */
 
     public File getFile() {
-        return mFile;
+        return _file;
     }
 }

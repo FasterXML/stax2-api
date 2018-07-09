@@ -66,12 +66,16 @@ public abstract class Stax2ReaderImpl
 
     // // // StAX2, per-reader configuration
 
+    @Deprecated
+    @Override
     public Object getFeature(String name)
     {
         // No features defined
         return null;
     }
 
+    @Deprecated
+    @Override
     public void setFeature(String name, Object value)
     {
         // No features defined
@@ -79,6 +83,7 @@ public abstract class Stax2ReaderImpl
 
     // NOTE: getProperty() defined in Stax 1.0 interface
 
+    @Override
     public boolean isPropertySupported(String name) {
         /* No way to cleanly implement this using just Stax 1.0
          * interface, so let's be conservative and decline any knowledge
@@ -87,6 +92,7 @@ public abstract class Stax2ReaderImpl
         return false;
     }
 
+    @Override
     public boolean setProperty(String name, Object value)
     {
         return false; // could throw an exception too
@@ -94,6 +100,7 @@ public abstract class Stax2ReaderImpl
 
     // // // StAX2, additional traversal methods
 
+    @Override
     public void skipElement() throws XMLStreamException
     {
         if (getEventType() != START_ELEMENT) {
@@ -115,6 +122,7 @@ public abstract class Stax2ReaderImpl
 
     // // // StAX2, additional attribute access
 
+    @Override
     public AttributeInfo getAttributeInfo() throws XMLStreamException
     {
         if (getEventType() != START_ELEMENT) {
@@ -125,6 +133,7 @@ public abstract class Stax2ReaderImpl
 
     // // // StAX2, Additional DTD access
 
+    @Override
     public DTDInfo getDTDInfo() throws XMLStreamException
     {
         if (getEventType() != DTD) {
@@ -138,12 +147,14 @@ public abstract class Stax2ReaderImpl
     /**
      * Location information is always accessible, for this reader.
      */
+    @Override
     public final LocationInfo getLocationInfo() {
         return this;
     }
 
     // // // StAX2, Pass-through text accessors
 
+    @Override
     public int getText(Writer w, boolean preserveContents)
         throws IOException, XMLStreamException
     {
@@ -163,12 +174,16 @@ public abstract class Stax2ReaderImpl
      * @return Number of open elements in the stack; 0 when parser is in
      *  prolog/epilog, 1 inside root element and so on.
      */
+    @Override
     public abstract int getDepth();
 
+    @Override
     public abstract boolean isEmptyElement() throws XMLStreamException;
 
+    @Override
     public abstract NamespaceContext getNonTransientNamespaceContext();
 
+    @Override
     public String getPrefixedName()
     {
         switch (getEventType()) {
@@ -198,11 +213,11 @@ public abstract class Stax2ReaderImpl
         throw new IllegalStateException("Current state not START_ELEMENT, END_ELEMENT, ENTITY_REFERENCE, PROCESSING_INSTRUCTION or DTD");
     }
 
+    @Override
     public void closeCompletely() throws XMLStreamException
     {
-        /* As usual, Stax 1.0 offers no generic way of doing just this.
-         * But let's at least call the lame basic close()
-         */
+        // As usual, Stax 1.0 offers no generic way of doing just this.
+        // But let's at least call the lame basic close()
         close();
     }
 
@@ -215,18 +230,21 @@ public abstract class Stax2ReaderImpl
     // Already part of XMLStreamReader
     //public int getAttributeCount();
 
+    @Override
     public int findAttributeIndex(String nsURI, String localName)
     {
         // !!! TBI
         return -1;
     }
 
+    @Override
     public int getIdAttributeIndex()
     {
         // !!! TBI
         return -1;
     }
 
+    @Override
     public int getNotationAttributeIndex()
     {
         // !!! TBI
@@ -239,18 +257,22 @@ public abstract class Stax2ReaderImpl
     ////////////////////////////////////////////////////
      */
 
+    @Override
     public Object getProcessedDTD() {
         return null;
     }
 
+    @Override
     public String getDTDRootName() {
         return null;
     }
 
+    @Override
     public String getDTDPublicId() {
         return null;
     }
 
+    @Override
     public String getDTDSystemId() {
         return null;
     }
@@ -259,12 +281,14 @@ public abstract class Stax2ReaderImpl
      * @return Internal subset portion of the DOCTYPE declaration, if any;
      *   empty String if none
      */
+    @Override
     public String getDTDInternalSubset() {
         return null;
     }
 
     // // StAX2, v2.0
 
+    @Override
     public DTDValidationSchema getProcessedDTDSchema() {
         return null;
     }
@@ -277,19 +301,23 @@ public abstract class Stax2ReaderImpl
 
     // // // First, the "raw" offset accessors:
 
+    @Override
     public long getStartingByteOffset() {
         return -1L;
     }
 
+    @Override
     public long getStartingCharOffset() {
         return 0;
     }
 
+    @Override
     public long getEndingByteOffset() throws XMLStreamException
     {
         return -1;
     }
 
+    @Override
     public long getEndingCharOffset() throws XMLStreamException
     {
         return -1;
@@ -297,10 +325,13 @@ public abstract class Stax2ReaderImpl
 
     // // // and then the object-based access methods:
 
+    @Override
     public abstract XMLStreamLocation2 getStartLocation();
 
+    @Override
     public abstract XMLStreamLocation2 getCurrentLocation();
 
+    @Override
     public abstract XMLStreamLocation2 getEndLocation()
         throws XMLStreamException;
 
@@ -310,6 +341,7 @@ public abstract class Stax2ReaderImpl
     ////////////////////////////////////////////////////
      */
 
+    @Override
     public XMLValidator validateAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
@@ -317,6 +349,7 @@ public abstract class Stax2ReaderImpl
         return null;
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
@@ -324,6 +357,7 @@ public abstract class Stax2ReaderImpl
         return null;
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidator validator)
         throws XMLStreamException
     {
@@ -331,6 +365,7 @@ public abstract class Stax2ReaderImpl
         return null;
     }
 
+    @Override
     public abstract ValidationProblemHandler setValidationProblemHandler(ValidationProblemHandler h);
 
     /*
@@ -339,6 +374,7 @@ public abstract class Stax2ReaderImpl
     ////////////////////////////////////////////////////////
      */
 
+    @Override
     public boolean getElementAsBoolean() throws XMLStreamException
     {
         ValueDecoderFactory.BooleanDecoder dec = _decoderFactory().getBooleanDecoder();
@@ -346,6 +382,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public int getElementAsInt() throws XMLStreamException
     {
         ValueDecoderFactory.IntDecoder dec = _decoderFactory().getIntDecoder();
@@ -353,6 +390,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public long getElementAsLong() throws XMLStreamException
     {
         ValueDecoderFactory.LongDecoder dec = _decoderFactory().getLongDecoder();
@@ -360,6 +398,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public float getElementAsFloat() throws XMLStreamException
     {
         ValueDecoderFactory.FloatDecoder dec = _decoderFactory().getFloatDecoder();
@@ -367,6 +406,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public double getElementAsDouble() throws XMLStreamException
     {
         ValueDecoderFactory.DoubleDecoder dec = _decoderFactory().getDoubleDecoder();
@@ -374,6 +414,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public BigInteger getElementAsInteger() throws XMLStreamException
     {
         ValueDecoderFactory.IntegerDecoder dec = _decoderFactory().getIntegerDecoder();
@@ -381,6 +422,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public BigDecimal getElementAsDecimal() throws XMLStreamException
     {
         ValueDecoderFactory.DecimalDecoder dec = _decoderFactory().getDecimalDecoder();
@@ -388,6 +430,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public QName getElementAsQName() throws XMLStreamException
     {
         ValueDecoderFactory.QNameDecoder dec = _decoderFactory().getQNameDecoder(getNamespaceContext());
@@ -396,14 +439,17 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public byte[] getElementAsBinary() throws XMLStreamException
     {
         return getElementAsBinary(Base64Variants.getDefaultVariant());
     }
 
     // !!! TODO: copy code from Stax2ReaderAdapter?
+    @Override
     public abstract byte[] getElementAsBinary(Base64Variant v) throws XMLStreamException;
 
+    @Override
     public void getElementAs(TypedValueDecoder tvd) throws XMLStreamException
     {
         String value = getElementText();
@@ -420,21 +466,25 @@ public abstract class Stax2ReaderImpl
     ////////////////////////////////////////////////////////
      */
 
+    @Override
     public int readElementAsIntArray(int[] value, int from, int length) throws XMLStreamException
     {
         return readElementAsArray(_decoderFactory().getIntArrayDecoder(value, from, length));
     }
 
+    @Override
     public int readElementAsLongArray(long[] value, int from, int length) throws XMLStreamException
     {
         return readElementAsArray(_decoderFactory().getLongArrayDecoder(value, from, length));
     }
 
+    @Override
     public int readElementAsFloatArray(float[] value, int from, int length) throws XMLStreamException
     {
         return readElementAsArray(_decoderFactory().getFloatArrayDecoder(value, from, length));
     }
 
+    @Override
     public int readElementAsDoubleArray(double[] value, int from, int length) throws XMLStreamException
     {
         return readElementAsArray(_decoderFactory().getDoubleArrayDecoder(value, from, length));
@@ -446,6 +496,7 @@ public abstract class Stax2ReaderImpl
      *<p>
      * !!! TODO: should be possible to implement completely
      */
+    @Override
     public abstract int readElementAsArray(TypedArrayDecoder dec)
         throws XMLStreamException;
 
@@ -455,6 +506,7 @@ public abstract class Stax2ReaderImpl
     ////////////////////////////////////////////////////////
      */
 
+    @Override
     public int readElementAsBinary(byte[] resultBuffer, int offset, int maxLength)
         throws XMLStreamException
     {
@@ -470,8 +522,10 @@ public abstract class Stax2ReaderImpl
     ///////////////////////////////////////////////////////////
      */
 
+    @Override
     public abstract int getAttributeIndex(String namespaceURI, String localName);
 
+    @Override
     public boolean getAttributeAsBoolean(int index) throws XMLStreamException
     {
         ValueDecoderFactory.BooleanDecoder dec = _decoderFactory().getBooleanDecoder();
@@ -479,6 +533,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public int getAttributeAsInt(int index) throws XMLStreamException
     {
         ValueDecoderFactory.IntDecoder dec = _decoderFactory().getIntDecoder();
@@ -486,6 +541,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public long getAttributeAsLong(int index) throws XMLStreamException
     {
         ValueDecoderFactory.LongDecoder dec = _decoderFactory().getLongDecoder();
@@ -493,6 +549,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public float getAttributeAsFloat(int index) throws XMLStreamException
     {
         ValueDecoderFactory.FloatDecoder dec = _decoderFactory().getFloatDecoder();
@@ -500,6 +557,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public double getAttributeAsDouble(int index) throws XMLStreamException
     {
         ValueDecoderFactory.DoubleDecoder dec = _decoderFactory().getDoubleDecoder();
@@ -507,6 +565,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public BigInteger getAttributeAsInteger(int index) throws XMLStreamException
     {
         ValueDecoderFactory.IntegerDecoder dec = _decoderFactory().getIntegerDecoder();
@@ -514,6 +573,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public BigDecimal getAttributeAsDecimal(int index) throws XMLStreamException
     {
         ValueDecoderFactory.DecimalDecoder dec = _decoderFactory().getDecimalDecoder();
@@ -521,6 +581,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public QName getAttributeAsQName(int index) throws XMLStreamException
     {
         ValueDecoderFactory.QNameDecoder dec = _decoderFactory().getQNameDecoder(getNamespaceContext());
@@ -529,6 +590,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValue();
     }
 
+    @Override
     public void getAttributeAs(int index, TypedValueDecoder tvd) throws XMLStreamException
     {
         String value = getAttributeValue(index);
@@ -539,6 +601,7 @@ public abstract class Stax2ReaderImpl
         }
     }
 
+    @Override
     public int[] getAttributeAsIntArray(int index) throws XMLStreamException
     {
         ValueDecoderFactory.IntArrayDecoder dec = _decoderFactory().getIntArrayDecoder();
@@ -546,6 +609,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValues();
     }
 
+    @Override
     public long[] getAttributeAsLongArray(int index) throws XMLStreamException
     {
         ValueDecoderFactory.LongArrayDecoder dec = _decoderFactory().getLongArrayDecoder();
@@ -553,6 +617,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValues();
     }
 
+    @Override
     public float[] getAttributeAsFloatArray(int index) throws XMLStreamException
     {
         ValueDecoderFactory.FloatArrayDecoder dec = _decoderFactory().getFloatArrayDecoder();
@@ -560,6 +625,7 @@ public abstract class Stax2ReaderImpl
         return dec.getValues();
     }
 
+    @Override
     public double[] getAttributeAsDoubleArray(int index) throws XMLStreamException
     {
         ValueDecoderFactory.DoubleArrayDecoder dec = _decoderFactory().getDoubleArrayDecoder();
@@ -572,8 +638,10 @@ public abstract class Stax2ReaderImpl
      *<p>
      * !!! TODO: should be possible to implement completely
      */
+    @Override
     public abstract int getAttributeAsArray(int index, TypedArrayDecoder tad) throws XMLStreamException;
 
+    @Override
     public byte[] getAttributeAsBinary(int index) throws XMLStreamException
     {
         return getAttributeAsBinary(Base64Variants.getDefaultVariant(), index);

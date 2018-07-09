@@ -20,11 +20,12 @@ public class EmptyNamespaceContext
     public static EmptyNamespaceContext getInstance() { return sInstance; }
 
     /*
-    /////////////////////////////////////////////
-    // NamespaceContext API
-    /////////////////////////////////////////////
+    /**********************************************************************
+    /* NamespaceContext API
+    /**********************************************************************
      */
 
+    @Override
     public final String getNamespaceURI(String prefix)
     {
         /* First the known offenders; invalid args, 2 predefined xml namespace
@@ -44,7 +45,8 @@ public class EmptyNamespaceContext
         return null;
     }
 
-    public final String getPrefix(String nsURI)
+    @Override
+    public String getPrefix(String nsURI)
     {
         /* First the known offenders; invalid args, 2 predefined xml namespace
          * prefixes
@@ -61,7 +63,8 @@ public class EmptyNamespaceContext
         return null;
     }
 
-    public final Iterator getPrefixes(String nsURI)
+    @Override
+    public Iterator<String> getPrefixes(String nsURI)
     {
         /* First the known offenders; invalid args, 2 predefined xml namespace
          * prefixes
@@ -70,12 +73,11 @@ public class EmptyNamespaceContext
             throw new IllegalArgumentException("Illegal to pass null/empty prefix as argument.");
         }
         if (nsURI.equals(XMLConstants.XML_NS_URI)) {
-            return new SingletonIterator(XMLConstants.XML_NS_PREFIX);
+            return SingletonIterator.create(XMLConstants.XML_NS_PREFIX);
         }
         if (nsURI.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI)) {
-            return new SingletonIterator(XMLConstants.XMLNS_ATTRIBUTE);
+            return SingletonIterator.create(XMLConstants.XMLNS_ATTRIBUTE);
         }
-
         return EmptyIterator.getInstance();
     }
 }

@@ -25,10 +25,10 @@ public interface XMLStreamWriter2
             Validatable
 {
     /*
-    ///////////////////////////////////////////////////////////
-    // Configuration
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Configuration
+    /**********************************************************************
+     */
 
     /**
      * Method similar to {@link javax.xml.stream.XMLOutputFactory#isPropertySupported}, used
@@ -54,16 +54,16 @@ public interface XMLStreamWriter2
      * @return True, if the specified property was <b>succesfully</b>
      *    set to specified value; false if its value was not changed
      *
-     * @throws InvalidArgumentException if the property is not supported
+     * @throws IllegalArgumentException if the property is not supported
      *   (or recognized) by the stream writer implementation
      */
     public boolean setProperty(String name, Object value);
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Other accessors, mutators
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Other accessors, mutators
+    /**********************************************************************
+     */
 
     /**
      * Method that should return current output location, if the writer
@@ -88,10 +88,10 @@ public interface XMLStreamWriter2
     public String getEncoding();
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Write methods base interface is missing
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Write methods base interface is missing
+    /**********************************************************************
+     */
 
     public void writeCData(char[] text, int start, int len)
         throws XMLStreamException;
@@ -140,10 +140,10 @@ public interface XMLStreamWriter2
         throws XMLStreamException;
     
     /*
-    ///////////////////////////////////////////////////////////
-    // Pass-through methods
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Pass-through methods
+    /**********************************************************************
+     */
 
     /**
      * Method that writes specified content as is, without encoding or
@@ -160,8 +160,7 @@ public interface XMLStreamWriter2
      * it can not be reliably validated. Because of this, validator(s)
      * attached to the writer will NOT be informed about writes.
      */
-    public void writeRaw(String text)
-        throws XMLStreamException;
+    public void writeRaw(String text) throws XMLStreamException;
 
     /**
      * Method that writes specified content as is, without encoding or
@@ -221,10 +220,10 @@ public interface XMLStreamWriter2
         throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////////////////////
-    // Output handling
-    ///////////////////////////////////////////////////////////
-    */
+    /**********************************************************************
+    /* Output handling
+    /**********************************************************************
+     */
 
     /**
      * Method similar to
@@ -237,6 +236,5 @@ public interface XMLStreamWriter2
      * it (as is the case for destinations it manages where calling
      * application has no access)
      */
-    public void closeCompletely()
-        throws XMLStreamException;
+    public void closeCompletely() throws XMLStreamException;
 }

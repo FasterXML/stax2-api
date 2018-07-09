@@ -103,7 +103,7 @@ public interface TypedXMLStreamWriter
      * callers should write output in chunks divisible by 3 (natural
      * atomic unit of base64 output, which avoids padding) to
      * maximize interoperability.
-     * </p>
+     * 
      *<p>
      * Note: base64 variant defaults to {@link Base64Variants#MIME}.
      *
@@ -120,12 +120,12 @@ public interface TypedXMLStreamWriter
      * representation of a int array is defined by the following
      * XML schema type:
      * <pre>
-     *    &lt;xs:simpleType name="intArray">
-     *       &lt;xs:list itemType="xs:int"/>
-     *    &lt;/xs:simpleType></pre>
+     *    &lt;xs:simpleType name="intArray"&gt;
+     *       &lt;xs:list itemType="xs:int"/&gt;
+     *    &lt;/xs:simpleType&gt;</pre>
      * whose lexical space is a list of space-separated ints.
      * This method can be called multiple times to write the 
-     * array in chunks.</p>
+     * array in chunks.
      *
      * @param value   The array from which to write the ints.
      * @param from    The index in the array from which writing starts.
@@ -200,7 +200,7 @@ public interface TypedXMLStreamWriter
     /**
      * <p>Write a byte array attribute. The lexical
      * representation of a byte array is defined by the
-     * <a href="http://www.w3.org/TR/xmlschema-2/#base64Binary">XML Schema base64Binary</a> data type.</p>
+     * <a href="http://www.w3.org/TR/xmlschema-2/#base64Binary">XML Schema base64Binary</a> data type.
      *<p>
      * Note: base64 variant defaults to {@link Base64Variants#MIME}.
      *
@@ -218,10 +218,10 @@ public interface TypedXMLStreamWriter
      * representation of a int array is defined by the following
      * XML schema type:
      * <pre>
-     *    &lt;xs:simpleType name="intArray">
-     *       &lt;xs:list itemType="xs:int"/>
-     *    &lt;/xs:simpleType></pre>
-     * whose lexical space is a list of space-separated ints.</p>
+     *    &lt;xs:simpleType name="intArray"&gt;
+     *       &lt;xs:list itemType="xs:int"/&gt;
+     *    &lt;/xs:simpleType&gt;</pre>
+     * whose lexical space is a list of space-separated ints.
      *
      * @param prefix  The attribute's prefix.
      * @param namespaceURI  The attribute's URI.

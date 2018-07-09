@@ -28,30 +28,35 @@ public class EntityReferenceEventImpl
         mDecl = new EntityDeclarationEventImpl(loc, name);
     }
 
+    @Override
     public EntityDeclaration getDeclaration()
     {
         return mDecl;
     }
 
+    @Override
     public String getName()
     {
         return mDecl.getName();
     }
 
     /*
-    ///////////////////////////////////////////
-    // Implementation of abstract base methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of abstract base methods
+    /**********************************************************************
      */
 
+    @Override
     public int getEventType() {
         return ENTITY_REFERENCE;
     }
 
+    @Override
     public boolean isEntityReference() {
         return true;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -64,17 +69,19 @@ public class EntityReferenceEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         w.writeEntityRef(getName());
     }
 
     /*
-    ///////////////////////////////////////////
-    // Standard method impl
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Standard method impl
+    /**********************************************************************
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -86,6 +93,7 @@ public class EntityReferenceEventImpl
         return getName().equals(other.getName());
     }
 
+    @Override
     public int hashCode()
     {
         return getName().hashCode();

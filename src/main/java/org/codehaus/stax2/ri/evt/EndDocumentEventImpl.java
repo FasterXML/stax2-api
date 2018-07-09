@@ -22,20 +22,24 @@ public class EndDocumentEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return END_DOCUMENT;
     }
 
+    @Override
     public boolean isEndDocument() {
         return true;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
         // Nothing to output
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         w.writeEndDocument();
@@ -47,6 +51,7 @@ public class EndDocumentEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -54,8 +59,8 @@ public class EndDocumentEventImpl
         return (o instanceof EndDocument);
     }
 
-    public int hashCode()
-    {
+    @Override
+    public int hashCode() {
         return END_DOCUMENT;
     }
 }

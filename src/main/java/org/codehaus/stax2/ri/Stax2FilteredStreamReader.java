@@ -28,12 +28,12 @@ public class Stax2FilteredStreamReader
     //////////////////////////////////////////////////////
      */
 
-    public int next()
-        throws XMLStreamException
+    @Override
+    public int next() throws XMLStreamException
     {
         int type;
         do {
-            type = mDelegate2.next();
+            type = _delegate2.next();
             if (mFilter.accept(this)) {
                 break;
             }
@@ -42,13 +42,13 @@ public class Stax2FilteredStreamReader
         return type;
     }
 
-    public int nextTag()
-        throws XMLStreamException
+    @Override
+    public int nextTag() throws XMLStreamException
     {
         int type;
         // Can be implemented very much like next()
         while (true) {
-            type = mDelegate2.nextTag();
+            type = _delegate2.nextTag();
             if (mFilter.accept(this)) {
                 break;
             }

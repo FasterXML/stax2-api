@@ -23,7 +23,12 @@ public abstract class BaseEventImpl
     /**
      * Location where token started; exact definition may depends
      * on event type.
+     *<p>
+     * TODO: remove direct dependencies to this by sub-classes; rename
+     * 
+     * @deprecated Call {@link #getLocation()} instead.
      */
+    @Deprecated // 
     protected final Location mLocation;
 
     protected BaseEventImpl(Location loc)
@@ -32,113 +37,133 @@ public abstract class BaseEventImpl
     }
 
     /*
-    //////////////////////////////////////////////
-    // Skeleton XMLEvent API
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* Skeleton XMLEvent API
+    /**********************************************************************
      */
 
+    @Override
     public Characters asCharacters() {
         return (Characters) this;
     }
 
+    @Override
     public EndElement asEndElement() {
         return (EndElement) this;
     }
 
+    @Override
     public StartElement asStartElement() {
         return (StartElement) this;
     }
 
+    @Override
     public abstract int getEventType();
 
+    @Override
     public Location getLocation() {
         return mLocation;
     }
 
+    @Override
     public QName getSchemaType() {
         return null;
     }
 
+    @Override
     public boolean isAttribute()
     {
         return false;
     }
 
+    @Override
     public boolean isCharacters()
     {
         return false;
     }
 
+    @Override
     public boolean isEndDocument()
     {
         return false;
     }
 
+    @Override
     public boolean isEndElement()
     {
         return false;
     }
 
+    @Override
     public boolean isEntityReference()
     {
         return false;
     }
 
+    @Override
     public boolean isNamespace()
     {
         return false;
     }
 
+    @Override
     public boolean isProcessingInstruction()
     {
         return false;
     }
 
+    @Override
     public boolean isStartDocument()
     {
         return false;
     }
 
+    @Override
     public boolean isStartElement()
     {
         return false;
     }
 
+    @Override
     public abstract void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException;
 
     /*
-    //////////////////////////////////////////////
-    // XMLEvent2 (StAX2)
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEvent2 (StAX2)
+    /**********************************************************************
      */
 
+    @Override
     public abstract void writeUsing(XMLStreamWriter2 w) throws XMLStreamException;
 
     /*
-    ///////////////////////////////////////////
-    // Overridden standard methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Overridden standard methods
+    /**********************************************************************
      */
 
     /**
      * Declared abstract to force redefinition by sub-classes
      */
+    @Override
     public abstract boolean equals(Object o);
 
     /**
      * Declared abstract to force redefinition by sub-classes
      */
+    @Override
     public abstract int hashCode();
 
+    @Override
     public String toString() {
         return "[Stax Event #"+getEventType()+"]";
     }
 
     /*
-    //////////////////////////////////////////////
-    // Helper methods
-    //////////////////////////////////////////////
+    /**********************************************************************
+    /* Helper methods
+    /**********************************************************************
      */
 
     protected void throwFromIOE(IOException ioe)
@@ -160,7 +185,7 @@ public abstract class BaseEventImpl
         return (s2 != null) && s1.equals(s2);
     }
 
-    protected static boolean iteratedEquals(Iterator it1, Iterator it2)
+    protected static boolean iteratedEquals(Iterator<?> it1, Iterator<?> it2)
     {
         if (it1 == null || it2 == null) { // if one is null, both have to be
             return (it1 == it2);
@@ -180,7 +205,7 @@ public abstract class BaseEventImpl
         return true;
     }
 
-    protected static int addHash(Iterator it, int baseHash)
+    protected static int addHash(Iterator<?> it, int baseHash)
     {
         int hash = baseHash;
         if (it != null) {

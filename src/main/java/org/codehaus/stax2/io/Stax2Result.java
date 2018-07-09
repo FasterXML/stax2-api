@@ -50,10 +50,12 @@ public abstract class Stax2Result
     /////////////////////////////////////////
      */
 
+    @Override
     public String getSystemId() {
         return mSystemId;
     }
 
+    @Override
     public void setSystemId(String id) {
         mSystemId = id;
     }

@@ -26,59 +26,59 @@ public class StartElementEventImpl
 {
     // // // Basic configuration
 
-    protected final QName mName;
+    protected final QName _name;
 
-    protected final ArrayList mAttrs;
+    protected final ArrayList<Attribute> _attrs;
 
-    protected final ArrayList mNsDecls;
+    protected final ArrayList<Namespace> _nsDecls;
 
     /**
      * Enclosing namespace context
      */
-    protected NamespaceContext mParentNsCtxt;
+    protected NamespaceContext _parentNsCtxt;
 
     // // // Lazily constructed components
 
-    NamespaceContext mActualNsCtxt = null;
+    NamespaceContext _actualNsCtxt = null;
 
     /*
-    /////////////////////////////////////////////
-    // Life cycle
-    /////////////////////////////////////////////
+    /**********************************************************************
+    /* Life cycle
+    /**********************************************************************
      */
 
     protected StartElementEventImpl(Location loc, QName name,
-                                    ArrayList attrs, ArrayList nsDecls,
+                                    ArrayList<Attribute> attrs, ArrayList<Namespace> nsDecls,
                                     NamespaceContext parentNsCtxt)
     {
         super(loc);
-        mName = name;
-        mAttrs = attrs;
-        mNsDecls = nsDecls;
-        mParentNsCtxt = (parentNsCtxt == null) ?
+        _name = name;
+        _attrs = attrs;
+        _nsDecls = nsDecls;
+        _parentNsCtxt = (parentNsCtxt == null) ?
             EmptyNamespaceContext.getInstance() : parentNsCtxt;
     }
 
     public static StartElementEventImpl construct(Location loc, QName name,
-                                                  Iterator attrIt, Iterator nsDeclIt,
+                                                  Iterator<?> attrIt, Iterator<?> nsDeclIt,
                                                   NamespaceContext nsCtxt)
     {
-        ArrayList attrs;
+        ArrayList<Attribute> attrs;
         if (attrIt == null || !attrIt.hasNext()) {
             attrs = null;
         } else {
-            attrs = new ArrayList();
+            attrs = new ArrayList<Attribute>();
             do {
                 // Cast is only done for early catching of incorrect types
                 attrs.add((Attribute) attrIt.next());
             } while (attrIt.hasNext());
         }
 
-        ArrayList nsDecls;
+        ArrayList<Namespace> nsDecls;
         if (nsDeclIt == null || !nsDeclIt.hasNext()) {
             nsDecls = null;
         } else {
-            nsDecls = new ArrayList();
+            nsDecls = new ArrayList<Namespace>();
             do {
                 nsDecls.add((Namespace) nsDeclIt.next()); // cast to catch type problems early
             } while (nsDeclIt.hasNext());
@@ -87,47 +87,51 @@ public class StartElementEventImpl
     }
 
     /*
-    /////////////////////////////////////////////////////
-    // Implementation of abstract base methods, overrides
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of abstract base methods, overrides
+    /**********************************************************************
      */
 
+    @Override
     public StartElement asStartElement() { // overriden to save a cast
         return this;
     }
 
+    @Override
     public int getEventType() {
         return START_ELEMENT;
     }
 
+    @Override
     public boolean isStartElement() {
         return true;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
         try {
             w.write('<');
-            String prefix = mName.getPrefix();
+            String prefix = _name.getPrefix();
             if (prefix != null && prefix.length() > 0) {
                 w.write(prefix);
                 w.write(':');
             }
-            w.write(mName.getLocalPart());
+            w.write(_name.getLocalPart());
 
             // Any namespaces?
-            if (mNsDecls != null) {
-                for (int i = 0, len = mNsDecls.size(); i < len; ++i) {
+            if (_nsDecls != null) {
+                for (int i = 0, len = _nsDecls.size(); i < len; ++i) {
                     w.write(' ');
-                    ((Namespace) mNsDecls.get(i)).writeAsEncodedUnicode(w);
+                    ((Namespace) _nsDecls.get(i)).writeAsEncodedUnicode(w);
                 }
             }
 
             // How about attrs?
-            if (mAttrs != null) {
-                for (int i = 0, len = mAttrs.size(); i < len; ++i) {
-                    Attribute attr = (Attribute) mAttrs.get(i);
+            if (_attrs != null) {
+                for (int i = 0, len = _attrs.size(); i < len; ++i) {
+                    Attribute attr = (Attribute) _attrs.get(i);
                     // No point in adding default attributes?
                     if (attr.isSpecified()) {
                         w.write(' ');
@@ -142,16 +146,17 @@ public class StartElementEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 sw) throws XMLStreamException
     {
-        QName n = mName;
+        QName n = _name;
         sw.writeStartElement(n.getPrefix(), n.getLocalPart(),
                             n.getNamespaceURI());
 
         // Any namespaces?
-        if (mNsDecls != null) {
-            for (int i = 0, len = mNsDecls.size(); i < len; ++i) {
-                Namespace ns = (Namespace) mNsDecls.get(i);
+        if (_nsDecls != null) {
+            for (int i = 0, len = _nsDecls.size(); i < len; ++i) {
+                Namespace ns = (Namespace) _nsDecls.get(i);
                 String prefix = ns.getPrefix();
                 String uri = ns.getNamespaceURI();
                 if (prefix == null || prefix.length() == 0) {
@@ -163,9 +168,9 @@ public class StartElementEventImpl
         }
 
         // How about attrs?
-        if (mAttrs != null) {
-            for (int i = 0, len = mAttrs.size(); i < len; ++i) {
-                Attribute attr = (Attribute) mAttrs.get(i);
+        if (_attrs != null) {
+            for (int i = 0, len = _attrs.size(); i < len; ++i) {
+                Attribute attr = (Attribute) _attrs.get(i);
                 // No point in adding default attributes?
                 if (attr.isSpecified()) {
                     QName name = attr.getName();
@@ -176,41 +181,47 @@ public class StartElementEventImpl
     }
 
     /*
-    /////////////////////////////////////////////
-    // Public API
-    /////////////////////////////////////////////
+    /**********************************************************************
+    /* Public API
+    /**********************************************************************
      */
 
+    @Override
     public final QName getName() {
-        return mName;
+        return _name;
     }
 
-    public Iterator getNamespaces() 
+    @Override
+    public Iterator<Namespace> getNamespaces() 
     {
-        return (mNsDecls == null) ?
-            EmptyIterator.getInstance() : mNsDecls.iterator();
+        if (_nsDecls == null) {
+            return EmptyIterator.getInstance();
+        }
+        return _nsDecls.iterator();
     }
 
+    @Override
     public NamespaceContext getNamespaceContext()
     {
-        if (mActualNsCtxt == null) {
-            if (mNsDecls == null) {
-                mActualNsCtxt = mParentNsCtxt;
+        if (_actualNsCtxt == null) {
+            if (_nsDecls == null) {
+                _actualNsCtxt = _parentNsCtxt;
             } else {
-                mActualNsCtxt = MergedNsContext.construct(mParentNsCtxt, mNsDecls);
+                _actualNsCtxt = MergedNsContext.construct(_parentNsCtxt, _nsDecls);
             }
         }
-        return mActualNsCtxt;
+        return _actualNsCtxt;
     }
 
+    @Override
     public String getNamespaceURI(String prefix)
     {
-        if (mNsDecls != null) {
+        if (_nsDecls != null) {
             if (prefix == null) {
                 prefix = "";
             }
-            for (int i = 0, len = mNsDecls.size(); i < len; ++i) {
-                Namespace ns = (Namespace) mNsDecls.get(i);
+            for (int i = 0, len = _nsDecls.size(); i < len; ++i) {
+                Namespace ns = (Namespace) _nsDecls.get(i);
                 String thisPrefix = ns.getPrefix();
                 if (thisPrefix == null) {
                     thisPrefix = "";
@@ -224,19 +235,20 @@ public class StartElementEventImpl
         return null;
     }
 
+    @Override
     public Attribute getAttributeByName(QName nameIn)
     {
-        if (mAttrs == null) {
+        if (_attrs == null) {
             return null;
         }
 
         String ln = nameIn.getLocalPart();
         String uri = nameIn.getNamespaceURI();
-        int len = mAttrs.size();
+        int len = _attrs.size();
 
         boolean notInNs = (uri == null || uri.length() == 0);
         for (int i = 0; i < len; ++i) {
-            Attribute attr = (Attribute) mAttrs.get(i);
+            Attribute attr = (Attribute) _attrs.get(i);
             QName name = attr.getName();
             if (name.getLocalPart().equals(ln)) {
                 String thisUri = name.getNamespaceURI();
@@ -254,20 +266,22 @@ public class StartElementEventImpl
         return null;
     }
 
-    public Iterator getAttributes()
+    @Override
+    public Iterator<Attribute> getAttributes()
     {
-        if (mAttrs == null) {
+        if (_attrs == null) {
             return EmptyIterator.getInstance();
         }
-        return mAttrs.iterator();
+        return _attrs.iterator();
     }
 
     /*
-    ///////////////////////////////////////////
-    // Standard method impl
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Standard method impl
+    /**********************************************************************
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -278,7 +292,7 @@ public class StartElementEventImpl
         StartElement other = (StartElement) o;
 
         // First things first: names must match
-        if (mName.equals(other.getName())) {
+        if (_name.equals(other.getName())) {
             /* Rest is much trickier. I guess the easiest way is to
              * just blindly iterate through ns decls and attributes.
              * The main issue is whether ordering should matter; it will,
@@ -292,9 +306,10 @@ public class StartElementEventImpl
         return false;
     }
 
+    @Override
     public int hashCode()
     {
-        int hash = mName.hashCode();
+        int hash = _name.hashCode();
         hash = addHash(getNamespaces(), hash);
         hash = addHash(getAttributes(), hash);
         return hash;

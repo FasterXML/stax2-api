@@ -7,6 +7,8 @@ import java.util.*;
 
 import javax.xml.stream.*;
 import javax.xml.stream.events.DTD;
+import javax.xml.stream.events.EntityDeclaration;
+import javax.xml.stream.events.NotationDeclaration;
 
 import org.codehaus.stax2.XMLStreamWriter2;
 import org.codehaus.stax2.evt.DTD2;
@@ -22,20 +24,20 @@ public class DTDEventImpl
     extends BaseEventImpl
     implements DTD2
 {
-    final String mRootName;
+    final protected String mRootName;
 
-    final String mSystemId;
+    final protected String mSystemId;
 
-    final String mPublicId;
+    final protected String mPublicId;
 
-    final String mInternalSubset;
+    final protected String mInternalSubset;
 
-    final Object mDTD;
+    final protected Object mDTD;
 
     /*
-    /////////////////////////////////////////////////////
-    // Lazily constructed objects
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Lazily constructed objects
+    /**********************************************************************
      */
 
     /**
@@ -44,12 +46,12 @@ public class DTDEventImpl
      * older StAX interfaces), may be the only piece that's actually
      * passed.
      */
-    String mFullText = null;
+    protected String mFullText = null;
 
     /*
-    /////////////////////////////////////////////////////
-    // Constuctors
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Constructors
+    /**********************************************************************
      */
 
     public DTDEventImpl(Location loc, String rootName,
@@ -80,11 +82,12 @@ public class DTDEventImpl
     }
 
     /*
-    /////////////////////////////////////////////////////
-    // Accessors
-    /////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Accessors
+    /**********************************************************************
      */
 
+    @Override
     public String getDocumentTypeDeclaration()
     {
         try {
@@ -94,33 +97,38 @@ public class DTDEventImpl
         }
     }
 
-    public List getEntities()
+    @Override
+    public List<EntityDeclaration> getEntities()
     {
         // !!! TODO: create stax2 abstraction to allow accessing this
         return null;
     }
 
-    public List getNotations()
+    @Override
+    public List<NotationDeclaration> getNotations()
     {
         // !!! TODO: create stax2 abstraction to allow accessing this
         return null;
     }
 
+    @Override
     public Object getProcessedDTD()
     {
         return mDTD;
     }
 
     /*
-    ///////////////////////////////////////////
-    // Implementation of abstract base methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Implementation of abstract base methods
+    /**********************************************************************
      */
 
+    @Override
     public int getEventType() {
         return DTD;
     }
 
+    @Override
     public void writeAsEncodedUnicode(Writer w)
         throws XMLStreamException
     {
@@ -160,6 +168,7 @@ public class DTDEventImpl
         }
     }
 
+    @Override
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         if (mRootName != null) {
@@ -172,33 +181,38 @@ public class DTDEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Extended interface (DTD2)
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Extended interface (DTD2)
+    /**********************************************************************
      */
 
+    @Override
     public String getRootName() {
         return mRootName;
     }
 
+    @Override
     public String getSystemId() {
         return mSystemId;
     }
 
+    @Override
     public String getPublicId() {
         return mPublicId;
     }
 
+    @Override
     public String getInternalSubset() {
         return mInternalSubset;
     }
 
     /*
-    ///////////////////////////////////////////
-    // Standard method impl
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Standard method impl
+    /**********************************************************************
      */
 
+    @Override
     public boolean equals(Object o)
     {
         if (o == this) return true;
@@ -207,17 +221,15 @@ public class DTDEventImpl
 
         DTD other = (DTD) o;
 
-        /* Hmmh. Comparison for this event get very
-         * tricky, very fast, if one tries to do it correctly
-         * (partly due to Stax2 incompleteness, but not just
-         * because of that)... let's actually try to minimize
-         * work here
+        /* Hmmh. Comparison for this event get very tricky, very fast, if one
+         * tries to do it correctly (partly due to Stax2 incompleteness, but not just
+         * because of that)... let's actually try to minimize work here
          */
         return stringsWithNullsEqual(getDocumentTypeDeclaration(),
                                      other.getDocumentTypeDeclaration());
     }
 
-
+    @Override
     public int hashCode()
     {
         int hash = 0;
@@ -233,9 +245,9 @@ public class DTDEventImpl
     }
 
     /*
-    ///////////////////////////////////////////
-    // Internal methods
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Internal methods
+    /**********************************************************************
      */
 
     protected String doGetDocumentTypeDeclaration()

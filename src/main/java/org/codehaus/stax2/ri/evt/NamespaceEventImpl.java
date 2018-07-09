@@ -56,14 +56,17 @@ public class NamespaceEventImpl
         return new NamespaceEventImpl(loc, nsPrefix, nsURI);
     }
 
+    @Override
     public String getNamespaceURI() {
         return mURI;
     }
 
+    @Override
     public String getPrefix() {
         return mPrefix;
     }
 
+    @Override
     public boolean isDefaultNamespaceDeclaration() {
         return (mPrefix.length() == 0);
     }
@@ -74,10 +77,12 @@ public class NamespaceEventImpl
     ///////////////////////////////////////////
      */
 
+    @Override
     public int getEventType() {
         return NAMESPACE;
     }
 
+    @Override
     public boolean isNamespace() {
         return true;
     }

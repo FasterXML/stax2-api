@@ -29,26 +29,31 @@ public class Stax2LocationAdapter
 
     // // // Basic Stax 1.0 implementation
 
+    @Override
     public int getCharacterOffset()
     {
         return mWrappedLocation.getCharacterOffset();
     }
 
+    @Override
     public int getColumnNumber()
     {
         return mWrappedLocation.getColumnNumber();
     }
 
+    @Override
     public int getLineNumber()
     {
         return mWrappedLocation.getLineNumber();
     }
 
+    @Override
     public String getPublicId()
     {
         return mWrappedLocation.getPublicId();
     }
 
+    @Override
     public String getSystemId()
     {
         return mWrappedLocation.getSystemId();
@@ -56,6 +61,7 @@ public class Stax2LocationAdapter
 
     // // // And stax2 additions
 
+    @Override
     public XMLStreamLocation2 getContext()
     {
         if (mParentLocation == null) {

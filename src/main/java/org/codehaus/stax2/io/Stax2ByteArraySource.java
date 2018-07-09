@@ -38,22 +38,21 @@ public class Stax2ByteArraySource
     /**
      * Note: if encoding is not explicitly defined, UTF-8 is assumed.
      */
-    public Reader constructReader()
-        throws IOException
+    @Override
+    public Reader constructReader() throws IOException
     {
         String enc = getEncoding();
         InputStream in = constructInputStream();
         if (enc == null || enc.length() == 0) {
-	    /* 11-Nov-2008, TSa: Used to rely on platform default encoding, which
-	     *   doesn't make sense. XML assumes UTF-8 anyway.
-	     */
-	    enc = DEFAULT_ENCODING;
-	}
-	return new InputStreamReader(in, enc);
+            // 11-Nov-2008, TSa: Used to rely on platform default encoding, which
+            // doesn't make sense. XML assumes UTF-8 anyway.
+            enc = DEFAULT_ENCODING;
+        }
+        return new InputStreamReader(in, enc);
     }
 
-    public InputStream constructInputStream()
-        throws IOException
+    @Override
+    public InputStream constructInputStream() throws IOException
     {
         return new ByteArrayInputStream(mBuffer, mStart, mLength);
     }

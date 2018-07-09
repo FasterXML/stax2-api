@@ -9,7 +9,6 @@ import javax.xml.stream.events.*;
 
 import org.codehaus.stax2.evt.XMLEventFactory2;
 import org.codehaus.stax2.evt.DTD2;
-
 import org.codehaus.stax2.ri.evt.*;
 
 /**
@@ -18,6 +17,10 @@ import org.codehaus.stax2.ri.evt.*;
  * It can be used as a building block for concrete implementations:
  * the minimal requirement is to implement <code>createQName</code>
  * methods.
+ *<p>
+ * Note that due to underlying Stax factory being non-generic (it was specified
+ * for JDK 1.4, pre-generic), no generic typing can be added to various
+ * {@link java.util.Iterator}s in signatures.
  *
  * @author Tatu Saloranta
  *
@@ -31,9 +34,9 @@ public abstract class Stax2EventFactoryImpl
     public Stax2EventFactoryImpl() { }
 
     /*
-    /////////////////////////////////////////////////////////////
-    // XMLEventFactory API
-    /////////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventFactory API
+    /**********************************************************************
      */
 
     @Override
@@ -82,9 +85,10 @@ public abstract class Stax2EventFactoryImpl
         return new EndDocumentEventImpl(mLocation);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" }) // due to Stax's non-generic-ness
     @Override
     public EndElement createEndElement(QName name, Iterator namespaces) {
-        return new EndElementEventImpl(mLocation, name, namespaces);
+        return new EndElementEventImpl(mLocation, name, (Iterator<Namespace>) namespaces);
     }
 
     @Override
@@ -93,9 +97,9 @@ public abstract class Stax2EventFactoryImpl
         return createEndElement(createQName(nsURI, localName, prefix), null);
     }
 
+    @SuppressWarnings("rawtypes") // due to Stax's non-generic-ness
     @Override
-    public EndElement createEndElement(String prefix, String nsURI,
-                                       String localName, Iterator ns)
+    public EndElement createEndElement(String prefix, String nsURI, String localName, Iterator ns)
     {
         return createEndElement(createQName(nsURI, localName, prefix), ns);
     }
@@ -151,6 +155,7 @@ public abstract class Stax2EventFactoryImpl
         return new StartDocumentEventImpl(mLocation, encoding, version, true, standalone);
     }
 
+    @SuppressWarnings("rawtypes") // due to Stax's non-generic-ness
     @Override
     public StartElement createStartElement(QName name, Iterator attr, Iterator ns) {
         return createStartElement(name, attr, ns, null);
@@ -162,6 +167,7 @@ public abstract class Stax2EventFactoryImpl
                                   null, null, null);
     }
 
+    @SuppressWarnings("rawtypes") // due to Stax's non-generic-ness
     @Override
     public StartElement createStartElement(String prefix, String nsURI,
                                            String localName, Iterator attr,
@@ -171,6 +177,7 @@ public abstract class Stax2EventFactoryImpl
                                   null);
     }
 
+    @SuppressWarnings("rawtypes") // due to Stax's non-generic-ness
     @Override
     public StartElement createStartElement(String prefix, String nsURI,
                                            String localName, Iterator attr,
@@ -187,9 +194,9 @@ public abstract class Stax2EventFactoryImpl
     }
 
     /*
-    /////////////////////////////////////////////////////////////
-    // XMLEventFactory2 methods
-    /////////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventFactory2 methods
+    /**********************************************************************
      */
 
     @Override
@@ -208,9 +215,9 @@ public abstract class Stax2EventFactoryImpl
     }
 
     /*
-    /////////////////////////////////////////////////////////////
-    // Helper methods, overridable
-    /////////////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Helper methods, overridable
+    /**********************************************************************
      */
 
     protected abstract QName createQName(String nsURI, String localName);

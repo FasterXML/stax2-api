@@ -29,11 +29,14 @@ public abstract class Stax2BlockSource
      * since they are in-memory data structures. Because of this, the
      * base implementation just returns null.
      */
+    @Override
     public URL getReference() {
         return null;
     }
 
+    @Override
     public abstract Reader constructReader() throws IOException;
 
+    @Override
     public abstract InputStream constructInputStream() throws IOException;
 }

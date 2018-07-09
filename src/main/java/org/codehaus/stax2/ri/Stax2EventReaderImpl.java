@@ -82,9 +82,9 @@ public abstract class Stax2EventReaderImpl
     protected final static int ERR_NEXTTAG_WRONG_TYPE = 4;
 
     /*
-    ///////////////////////////////////////////
-    // Configuration
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Configuration
+    /**********************************************************************
      */
 
     protected final XMLEventAllocator mAllocator;
@@ -92,9 +92,9 @@ public abstract class Stax2EventReaderImpl
     protected final XMLStreamReader2 mReader;
 
     /*
-    ///////////////////////////////////////////
-    // State
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* State
+    /**********************************************************************
      */
 
     /**
@@ -124,9 +124,9 @@ public abstract class Stax2EventReaderImpl
     protected int mPrePeekEvent = START_DOCUMENT;
 
     /*
-    ///////////////////////////////////////////
-    // Construction
-    ///////////////////////////////////////////
+    /**********************************************************************
+    /* Construction
+    /**********************************************************************
      */
 
     protected Stax2EventReaderImpl(XMLEventAllocator a, XMLStreamReader2 r)
@@ -136,13 +136,15 @@ public abstract class Stax2EventReaderImpl
     }
 
     /*
-    //////////////////////////////////////////////////////
-    // Abstract methods sub-classes have to implement
-    //////////////////////////////////////////////////////
+    /**********************************************************************
+    /* Abstract methods sub-classes have to implement
+    /**********************************************************************
      */
 
+    @Override
     public abstract boolean isPropertySupported(String name);
 
+    @Override
     public abstract boolean setProperty(String name, Object value);
 
     /**
@@ -159,19 +161,19 @@ public abstract class Stax2EventReaderImpl
     protected abstract String getErrorDesc(int errorType, int eventType);
 
     /*
-    //////////////////////////////////////////////////////
-    // XMLEventReader API
-    //////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventReader API
+    /**********************************************************************
      */
 
-    public void close()
-        throws XMLStreamException
+    @Override
+    public void close() throws XMLStreamException
     {
         mReader.close();
     }
 
-    public String getElementText()
-        throws XMLStreamException
+    @Override
+    public String getElementText() throws XMLStreamException
     {
         /* Simple, if no peeking occured: can just forward this to the
          * underlying parser
@@ -227,16 +229,18 @@ public abstract class Stax2EventReaderImpl
         return (str == null) ? "" : str;
     }
 
+    @Override
     public Object getProperty(String name) {
         return mReader.getProperty(name);
     }
 
+    @Override
     public boolean hasNext() {
         return (mState != STATE_END_OF_INPUT);
     }
 
-    public XMLEvent nextEvent()
-        throws XMLStreamException
+    @Override
+    public XMLEvent nextEvent() throws XMLStreamException
     {
         if (mState == STATE_END_OF_INPUT) {
             throwEndOfInput();
@@ -255,6 +259,7 @@ public abstract class Stax2EventReaderImpl
         return createNextEvent(true, mReader.next());
     }
 
+    @Override
     public Object next() {
         try {
             return nextEvent();
@@ -264,8 +269,8 @@ public abstract class Stax2EventReaderImpl
         }
     }
 
-    public XMLEvent nextTag()
-        throws XMLStreamException
+    @Override
+    public XMLEvent nextTag() throws XMLStreamException
     {
         // If we have peeked something, need to process it
         if (mPeekedEvent != null) {
@@ -336,7 +341,7 @@ public abstract class Stax2EventReaderImpl
                     continue;
                 }
                 reportProblem(findErrorDesc(ERR_NEXTTAG_NON_WS_TEXT, next));
-		break; // just to keep Jikes happy...
+                break; // just to keep Jikes happy...
 
             case START_ELEMENT:
             case END_ELEMENT:
@@ -348,8 +353,8 @@ public abstract class Stax2EventReaderImpl
         }
     }
 
-    public XMLEvent peek()
-        throws XMLStreamException
+    @Override
+    public XMLEvent peek() throws XMLStreamException
     {
         if (mPeekedEvent == null) {
             if (mState == STATE_END_OF_INPUT) {
@@ -374,14 +379,15 @@ public abstract class Stax2EventReaderImpl
      * Note: only here because we implement Iterator interface. Will not
      * work, don't bother calling it.
      */
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("Can not remove events from XMLEventReader.");
     }
 
     /*
-    //////////////////////////////////////////////////////
-    // XMLEventReader2 API
-    //////////////////////////////////////////////////////
+    /**********************************************************************
+    /* XMLEventReader2 API
+    /**********************************************************************
      */
 
     /**
@@ -392,16 +398,16 @@ public abstract class Stax2EventReaderImpl
      * It's still declared, in case in future there is need to throw
      * such an exception.
      */
-    public boolean hasNextEvent()
-        throws XMLStreamException
+    @Override
+    public boolean hasNextEvent() throws XMLStreamException
     {
         return (mState != STATE_END_OF_INPUT);
     }
 
     /*
-    ///////////////////////////////////////////////
-    // Overridable factory methods
-    ///////////////////////////////////////////////
+    /**********************************************************************
+    /* Overridable factory methods
+    /**********************************************************************
      */
 
     protected XMLEvent createNextEvent(boolean checkEOD, int type)
@@ -414,22 +420,27 @@ public abstract class Stax2EventReaderImpl
             }
             return evt;
         } catch (RuntimeException rex) {
-            /* 29-Mar-2008, TSa: Due to some problems with Stax API
-             *  (lack of 'throws XMLStreamException' in signature of
-             *  XMLStreamReader.getText(), for one) it is possible
-             *  we will get a wrapped XMLStreamException. If so,
-             *  we should be able to unwrap it.
-             */
-            Throwable t = rex.getCause();
-            while (t != null) {
-                if (t instanceof XMLStreamException) {
-                    throw (XMLStreamException) t;
-                }
-                t = t.getCause();
-            }
-            // Nope, need to re-throw as is
-            throw rex;
+            throw _checkUnwrap(rex);
         }
+    }
+
+    protected XMLStreamException _checkUnwrap(RuntimeException rex)
+    {
+        /* 29-Mar-2008, TSa: Due to some problems with Stax API
+         *  (lack of 'throws XMLStreamException' in signature of
+         *  XMLStreamReader.getText(), for one) it is possible
+         *  we will get a wrapped XMLStreamException. If so,
+         *  we should be able to unwrap it.
+         */
+        Throwable t = rex.getCause();
+        while (t != null) {
+            if (t instanceof XMLStreamException) {
+                return (XMLStreamException) t;
+            }
+            t = t.getCause();
+        }
+        // Nope, need to re-throw as is
+        throw rex;
     }
 
     /**
@@ -443,9 +454,9 @@ public abstract class Stax2EventReaderImpl
     }
 
     /*
-    ///////////////////////////////////////////////
-    // Overridable error reporting methods
-    ///////////////////////////////////////////////
+    /**********************************************************************
+    /* Overridable error reporting methods
+    /**********************************************************************
      */
 
     private void throwEndOfInput()
@@ -454,10 +465,9 @@ public abstract class Stax2EventReaderImpl
     }
 
     protected void throwUnchecked(XMLStreamException sex)
-    { 
-        /* Wrapped root cause? Let's only unwrap one layer; one that
-         * must have been used to expose the problem (if any)
-         */
+    {
+        // Wrapped root cause? Let's only unwrap one layer; one that
+        // must have been used to expose the problem (if any)
         Throwable t = (sex.getNestedException() == null) ? sex : sex.getNestedException();
         // Unchecked? Can re-throw as is
         if (t instanceof RuntimeException) {
@@ -486,9 +496,9 @@ public abstract class Stax2EventReaderImpl
     }
 
     /*
-    ///////////////////////////////////////////////
-    // Package methods for sub-classes
-    ///////////////////////////////////////////////
+    /**********************************************************************
+    /* Package methods for sub-classes
+    /**********************************************************************
      */
 
     protected XMLStreamReader getStreamReader()
@@ -497,9 +507,9 @@ public abstract class Stax2EventReaderImpl
     }
 
     /*
-    ///////////////////////////////////////////////
-    // Other internal methods
-    ///////////////////////////////////////////////
+    /**********************************************************************
+    /* Other internal methods
+    /**********************************************************************
      */
 
     /**

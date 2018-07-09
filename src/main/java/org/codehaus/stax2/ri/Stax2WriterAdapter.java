@@ -65,9 +65,9 @@ public class Stax2WriterAdapter
     protected final boolean mNsRepairing;
 
     /*
-    ////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     // Life-cycle methods
-    ////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
      */
 
     protected Stax2WriterAdapter(XMLStreamWriter sw)
@@ -95,84 +95,98 @@ public class Stax2WriterAdapter
     }
 
     /*
-    /////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     // TypedXMLStreamWriter2 implementation
     // (Typed Access API, Stax v3.0)
-    /////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
      */
 
     // // // Typed element content write methods
 
+    @Override
     public void writeBoolean(boolean b) throws XMLStreamException
     {
         mDelegate.writeCharacters(b ? "true" : "false");
     }
 
+    @Override
     public void writeInt(int value) throws XMLStreamException
     {
         mDelegate.writeCharacters(String.valueOf(value));
     }
 
+    @Override
     public void writeLong(long value) throws XMLStreamException
     {
         mDelegate.writeCharacters(String.valueOf(value));
     }
 
+    @Override
     public void writeFloat(float value) throws XMLStreamException
     {
         mDelegate.writeCharacters(String.valueOf(value));
     }
 
+    @Override
     public void writeDouble(double value) throws XMLStreamException
     {
         mDelegate.writeCharacters(String.valueOf(value));
     }
 
+    @Override
     public void writeInteger(BigInteger value) throws XMLStreamException
     {
         mDelegate.writeCharacters(value.toString());
     }
 
+    @Override
     public void writeDecimal(BigDecimal value) throws XMLStreamException
     {
         mDelegate.writeCharacters(value.toString());
     }
 
+    @Override
     public void writeQName(QName name) throws XMLStreamException
     {
         mDelegate.writeCharacters(serializeQNameValue(name));
     }
 
+    @Override
     public void writeIntArray(int[] value, int from, int length)
         throws XMLStreamException
     {
         mDelegate.writeCharacters(getValueEncoder().encodeAsString(value, from, length));
     }
 
+    @Override
     public void writeLongArray(long[] value, int from, int length)
         throws XMLStreamException
     {
         mDelegate.writeCharacters(getValueEncoder().encodeAsString(value, from, length));
     }
 
+    @Override
     public void writeFloatArray(float[] value, int from, int length)
         throws XMLStreamException
     {
         mDelegate.writeCharacters(getValueEncoder().encodeAsString(value, from, length));
     }
 
+    @Override
     public void writeDoubleArray(double[] value, int from, int length)
         throws XMLStreamException
     {
         mDelegate.writeCharacters(getValueEncoder().encodeAsString(value, from, length));
     }
 
+    @Override
     public void writeBinary(Base64Variant v, byte[] value, int from, int length)
         throws XMLStreamException
     {
         mDelegate.writeCharacters(getValueEncoder().encodeAsString(v, value, from, length));
     }
 
+    @Override
     public void writeBinary(byte[] value, int from, int length)
         throws XMLStreamException
     {
@@ -181,75 +195,89 @@ public class Stax2WriterAdapter
 
     // // // Typed attribute value write methods
 
+    @Override
     public void writeBooleanAttribute(String prefix, String nsURI, String localName, boolean b) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName, b ? "true" : "false");
     }
 
+    @Override
     public void writeIntAttribute(String prefix, String nsURI, String localName, int value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName, String.valueOf(value));
     }
 
+    @Override
     public void writeLongAttribute(String prefix, String nsURI, String localName, long value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName, String.valueOf(value));
     }
 
+    @Override
     public void writeFloatAttribute(String prefix, String nsURI, String localName, float value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName, String.valueOf(value));
     }
 
+    @Override
     public void writeDoubleAttribute(String prefix, String nsURI, String localName, double value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName, String.valueOf(value));
     }
 
+    @Override
     public void writeIntegerAttribute(String prefix, String nsURI, String localName, BigInteger value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName, value.toString());
     }
 
+    @Override
     public void writeDecimalAttribute(String prefix, String nsURI, String localName, BigDecimal value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName, value.toString());
     }
 
+    @Override
     public void writeQNameAttribute(String prefix, String nsURI, String localName, QName name) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName, serializeQNameValue(name));
     }
 
+    @Override
     public void writeIntArrayAttribute(String prefix, String nsURI, String localName, int[] value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName,
                                  getValueEncoder().encodeAsString(value, 0, value.length));
     }
 
+    @Override
     public void writeLongArrayAttribute(String prefix, String nsURI, String localName, long[] value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName,
                                  getValueEncoder().encodeAsString(value, 0, value.length));
     }
 
+    @Override
     public void writeFloatArrayAttribute(String prefix, String nsURI, String localName, float[] value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName,
                                  getValueEncoder().encodeAsString(value, 0, value.length));
     }
 
+    @Override
     public void writeDoubleArrayAttribute(String prefix, String nsURI, String localName, double[] value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName,
                                  getValueEncoder().encodeAsString(value, 0, value.length));
     }
 
+    @Override
     public void writeBinaryAttribute(String prefix, String nsURI, String localName, byte[] value) throws XMLStreamException
     {
         writeBinaryAttribute(Base64Variants.getDefaultVariant(), prefix, nsURI, localName, value);
     }
 
+    @Override
     public void writeBinaryAttribute(Base64Variant v, String prefix, String nsURI, String localName, byte[] value) throws XMLStreamException
     {
         mDelegate.writeAttribute(prefix, nsURI, localName,
@@ -257,42 +285,47 @@ public class Stax2WriterAdapter
     }
 
     /*
-    ////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     // XMLStreamWriter2 (StAX2) implementation
-    ////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
      */
 
+    @Override
     public boolean isPropertySupported(String name)
     {
-        /* No real clean way to check this, so let's just fake by
-         * claiming nothing is supported
-         */
+        // No real clean way to check this, so let's just fake by
+        // claiming nothing is supported
         return false;
     }
 
+    @Override
     public boolean setProperty(String name, Object value)
     {
         throw new IllegalArgumentException("No settable property '"+name+"'");
     }
 
+    @Override
     public XMLStreamLocation2 getLocation()
     {
         // No easy way to keep track of it, without impl support
         return null;
     }
 
+    @Override
     public String getEncoding()
     {
         // We may have been able to infer it... if so:
         return mEncoding;
     }
 
+    @Override
     public void writeCData(char[] text, int start, int len)
         throws XMLStreamException
     {
         writeCData(new String(text, start, len));
     }
 
+    @Override
     public void writeDTD(String rootName, String systemId, String publicId,
                          String internalSubset)
         throws XMLStreamException
@@ -324,6 +357,7 @@ public class Stax2WriterAdapter
         writeDTD(sb.toString());
     }
 
+    @Override
     public void writeFullEndElement()
         throws XMLStreamException
     {
@@ -335,6 +369,7 @@ public class Stax2WriterAdapter
         mDelegate.writeEndElement();
     }
 
+    @Override
     public void writeSpace(String text)
         throws XMLStreamException
     {
@@ -346,6 +381,7 @@ public class Stax2WriterAdapter
         writeRaw(text);
     }
 
+    @Override
     public void writeSpace(char[] text, int offset, int length)
         throws XMLStreamException
     {
@@ -353,6 +389,7 @@ public class Stax2WriterAdapter
         writeRaw(text, offset, length);
     }
 
+    @Override
     public void writeStartDocument(String version, String encoding,
                                    boolean standAlone)
         throws XMLStreamException
@@ -360,19 +397,21 @@ public class Stax2WriterAdapter
         // No good way to do it, so let's do what we can...
         writeStartDocument(encoding, version);
     }
-    
+
     /*
-    ///////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     // Stax2, Pass-through methods
-    ///////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     */
 
+    @Override
     public void writeRaw(String text)
         throws XMLStreamException
     {
         writeRaw(text, 0, text.length());
     }
 
+    @Override
     public void writeRaw(String text, int offset, int len)
         throws XMLStreamException
     {
@@ -380,12 +419,14 @@ public class Stax2WriterAdapter
         throw new UnsupportedOperationException("Not implemented");
     }
 
+    @Override
     public void writeRaw(char[] text, int offset, int length)
         throws XMLStreamException
     {
         writeRaw(new String(text, offset, length));
     }
 
+    @Override
     public void copyEventFromReader(XMLStreamReader2 sr, boolean preserveEventData)
         throws XMLStreamException
     {
@@ -478,11 +519,12 @@ public class Stax2WriterAdapter
     }
 
     /*
-    ///////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     // Stax2, output handling
-    ///////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     */
 
+    @Override
     public void closeCompletely() throws XMLStreamException
     {
         /* 06-Nov-2008, TSa: alas, there is no way to properly implement
@@ -493,11 +535,12 @@ public class Stax2WriterAdapter
     }
 
     /*
-    ///////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     // Stax2, validation
-    ///////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     */
 
+    @Override
     public XMLValidator validateAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
@@ -505,18 +548,21 @@ public class Stax2WriterAdapter
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidationSchema schema)
         throws XMLStreamException
     {
         return null;
     }
 
+    @Override
     public XMLValidator stopValidatingAgainst(XMLValidator validator)
         throws XMLStreamException
     {
         return null;
     }
 
+    @Override
     public ValidationProblemHandler setValidationProblemHandler(ValidationProblemHandler h)
     {
         /* Not a real problem: although we can't do anything with it
@@ -526,9 +572,9 @@ public class Stax2WriterAdapter
     }
 
     /*
-    ///////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     // Helper methods
-    ///////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     */
 
     protected void copyStartElement(XMLStreamReader sr)
