@@ -4,7 +4,11 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-4.1 (not yet released)
+4.2 (not yet released)
+
+- Increase visibility of some of methods of `Stax2EventReaderImpl`
+
+4.1 (28-Mar-2018)
 
 - Add `Automatic-Module-Name` for Java 9
 - Upgrade JDK baseline requirement Java 6 (from Java 5);

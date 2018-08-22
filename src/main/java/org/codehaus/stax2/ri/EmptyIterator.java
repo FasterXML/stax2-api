@@ -15,7 +15,7 @@ public final class EmptyIterator
 
     @SuppressWarnings("unchecked")
     public static <T> Iterator<T> getInstance() { return (Iterator<T>) sInstance; }
-    
+
     @Override
     public boolean hasNext() { return false; }
     

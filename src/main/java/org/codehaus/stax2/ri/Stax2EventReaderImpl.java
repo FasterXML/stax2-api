@@ -97,13 +97,14 @@ public abstract class Stax2EventReaderImpl
     /**********************************************************************
      */
 
+    // 22-Aug-2018, tatu: was `private` pre-4.2
     /**
      * Event that has been peeked, ie. loaded without call to
      * {@link #nextEvent}; will be returned and cleared by
      * call to {@link #nextEvent} (or, returned again if peeked
      * again)
      */
-    private XMLEvent mPeekedEvent = null;
+    protected XMLEvent mPeekedEvent = null;
 
     /**
      * High-level state indicator, with currently three values: 
@@ -252,7 +253,7 @@ public abstract class Stax2EventReaderImpl
             XMLEvent evt = mPeekedEvent;
             mPeekedEvent = null;
             if (evt.isEndDocument()) {
-                mState = STATE_END_OF_INPUT;
+                updateStateEndDocument();
             }
             return evt;
         }
@@ -328,10 +329,6 @@ public abstract class Stax2EventReaderImpl
             case END_DOCUMENT:
                 return null;
             case SPACE:
-                /* !!! 07-Dec-2004, TSa: Specs are mum about Comments and PIs.
-                 *  But why would they not be skipped just like what
-                 *  the stream reader does?
-                 */
             case COMMENT:
             case PROCESSING_INSTRUCTION:
                 continue;
@@ -384,6 +381,17 @@ public abstract class Stax2EventReaderImpl
         throw new UnsupportedOperationException("Can not remove events from XMLEventReader.");
     }
 
+    /**
+     * Method called when we are about to return <code>END_DOCUMENT</code> event.
+     * Usually this should change state to <code>STATE_END_OF_INPUT</code>, but
+     * may vary for some alternative read modes (like multi-document)
+     *
+     * @since 4.2
+     */
+    protected void updateStateEndDocument() throws XMLStreamException {
+        mState = STATE_END_OF_INPUT;
+    }
+
     /*
     /**********************************************************************
     /* XMLEventReader2 API
@@ -416,7 +424,7 @@ public abstract class Stax2EventReaderImpl
         try {
             XMLEvent evt = mAllocator.allocate(mReader);
             if (checkEOD && type == END_DOCUMENT) {
-                mState = STATE_END_OF_INPUT;
+                updateStateEndDocument();
             }
             return evt;
         } catch (RuntimeException rex) {
@@ -459,7 +467,8 @@ public abstract class Stax2EventReaderImpl
     /**********************************************************************
      */
 
-    private void throwEndOfInput()
+    // note: `private` before 4.2
+    protected void throwEndOfInput()
     {
         throw new NoSuchElementException();
     }
@@ -512,12 +521,13 @@ public abstract class Stax2EventReaderImpl
     /**********************************************************************
      */
 
+    // note: `private` before 4.2
     /**
      * Method used to locate error message description to use.
      * Calls sub-classes <code>getErrorDesc()</code> first, and only
      * if no message found, uses default messages defined here.
      */
-    private final String findErrorDesc(int errorType, int currEvent)
+    protected final String findErrorDesc(int errorType, int currEvent)
     {
         String msg = getErrorDesc(errorType, currEvent);
         if (msg != null) {
