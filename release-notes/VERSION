@@ -4,8 +4,9 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-4.2 (not yet released)
+4.2 (13-Mar-2019)
 
+#15: Add Java 9+ module info using Moditect
 - Increase visibility of some of methods of `Stax2EventReaderImpl`
 
 4.1 (28-Mar-2018)
