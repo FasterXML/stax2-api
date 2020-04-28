@@ -18,10 +18,6 @@ Stax2 API is implemented natively by following Stax XML implementations:
 In addition, Stax2 API contains wrapper implementations that can be used to support most of API on
 regular Stax implementations like Sun SJSXP (default Stax implementation bundled with JDK 1.6 and 1.7).
 
-## License
-
-API is licensed under standard BSD license, which is compatible with all Free and Open Software (OSS) licenses.
-
 ## Java package
 
 API classes are in package `org.codehaus.stax2`.
@@ -41,3 +37,9 @@ Maven dependency is defined as:
     </dependency>
 
 Jars can be found from [Central Maven repo](http://repo1.maven.org/maven2/org/codehaus/woodstox/stax2-api/).
+
+## License and Copyright
+
+Copyright (c) 2018 FasterXML LLC <info@fasterxml.com>
+
+This source code is licensed under standard BSD license, which is compatible with all Free and Open Software (OSS) licenses.
