@@ -33,13 +33,13 @@ Maven dependency is defined as:
     <dependency>
       <groupId>org.codehaus.woodstox</groupId>
       <artifactId>stax2-api</artifactId>
-      <version>3.1.4</version>
+      <version>4.2</version>
     </dependency>
 
 Jars can be found from [Central Maven repo](http://repo1.maven.org/maven2/org/codehaus/woodstox/stax2-api/).
 
 ## License and Copyright
 
-Copyright (c) 2018 FasterXML LLC <info@fasterxml.com>
+Copyright (c) 2008 FasterXML LLC <info@fasterxml.com>
 
 This source code is licensed under standard BSD license, which is compatible with all Free and Open Software (OSS) licenses.
