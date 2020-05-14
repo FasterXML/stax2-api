@@ -4,12 +4,12 @@
   <parent>
       <groupId>com.fasterxml</groupId>
       <artifactId>oss-parent</artifactId>
-      <version>35</version>
+      <version>38</version>
   </parent>
   <groupId>org.codehaus.woodstox</groupId>
   <artifactId>stax2-api</artifactId>
   <name>Stax2 API</name>
-  <version>4.3-SNAPSHOT</version>
+  <version>4.2.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <description>tax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.
   </description>
