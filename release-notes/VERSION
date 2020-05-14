@@ -4,7 +4,7 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-4.2.1 (not released yet)
+4.2.1 (14-May-2020)
 
 #12: Fix to XML declaration write when `standaloneSet` is specified
  (suggested by Klaus B)
