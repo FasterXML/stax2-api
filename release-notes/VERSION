@@ -4,6 +4,10 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
+4.2.2 (not yet released)
+
+- Update parent (oss-parent) 38->41
+
 4.2.1 (14-May-2020)
 
 #12: Fix to XML declaration write when `standaloneSet` is specified
