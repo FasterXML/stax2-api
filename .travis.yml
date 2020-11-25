@@ -1,5 +1,9 @@
 language: java
 
+arch:
+  - AMD64
+  - ppc64le
+
 # 20-Mar-2019, tatu: While targets JDK 6, build now requires JDK 8
 jdk:
   - openjdk8
