@@ -120,9 +120,7 @@ public abstract class XMLValidationSchemaFactory
     public static XMLValidationSchemaFactory newInstance(String schemaType, ClassLoader classLoader)
         throws FactoryConfigurationError
     {
-        /* First, let's check and map schema type to the shorter internal
-         * id:
-         */
+        // Let's check and map schema type to the shorter internal id:
         String internalId = (String) sSchemaIds.get(schemaType);
         if (internalId == null) {
             throw new FactoryConfigurationError("Unrecognized schema type (id '"+schemaType+"')");
@@ -131,9 +129,7 @@ public abstract class XMLValidationSchemaFactory
         String propertyId = SYSTEM_PROPERTY_FOR_IMPL + internalId;
         SecurityException secEx = null;
 
-        /* First, let's see if there's a system property (overrides other
-         * settings)
-         */
+        // First, let's see if there's a system property (overrides other settings)
         try {
             String clsName = System.getProperty(propertyId);
             if (clsName != null && clsName.length() > 0) {
@@ -156,9 +152,18 @@ public abstract class XMLValidationSchemaFactory
             f = new File(f, "lib");
             f = new File(f, JAXP_PROP_FILENAME);
             if (f.exists()) {
+                Properties props = new Properties();
                 try {
-                    Properties props = new Properties();
-                    props.load(new FileInputStream(f));
+                    FileInputStream in = new FileInputStream(f);
+                    // TODO: 15-Jan-2020, tatu -- when upgrading baseline to Java 7+,
+                    // use try-with-resource instead
+                    try {
+                        props.load(in);
+                    } finally {
+                        try {
+                            in.close();
+                        } catch (IOException e) { }
+                    }
                     String clsName = props.getProperty(propertyId);
                     if (clsName != null && clsName.length() > 0) {
                         return createNewInstance(classLoader, clsName);
