@@ -11,7 +11,7 @@
   <name>Stax2 API</name>
   <version>4.2.2-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  <description>tax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.
+  <description>Stax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.
   </description>
   <url>http://github.com/FasterXML/stax2-api</url>
   <organization>
