@@ -6,7 +6,8 @@ Project: Stax2 API
 
 4.2.2 (not yet released)
 
-- Update parent (oss-parent) 38->41
+#23: Update `pom.xml` with more accurate LICENSE definition
+- Update parent (oss-parent) 38->55
 
 4.2.1 (14-May-2020)
 
