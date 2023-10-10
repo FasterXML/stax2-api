@@ -4,7 +4,7 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-4.2.2 (not yet released)
+4.2.2 (10-Oct-2023)
 
 #23: Update `pom.xml` with more accurate LICENSE definition
 - Update parent (oss-parent) 38->55
