@@ -1,6 +1,6 @@
 # Overview
 
-Stax2 API is an extension to standard [Stax](http://en.wikipedia.org/wiki/StAX) API ("STandard Api for Xml procesing"),
+Stax2 API is an extension to standard [Stax](http://en.wikipedia.org/wiki/StAX) API ("the STandard Api for Xml processing"),
 pull-parser API of JDK, added in JDK 6.
 
 ## Status
@@ -15,7 +15,7 @@ Stax2 API is implemented natively by following Stax XML implementations:
  * [Aalto](../../../aalto-xml) (performance-oriented, also non-blocking/async)
  * [Woodstox](../../../woodstox) (full-featured, most compliant XML package on Java platform)
 
-In addition, Stax2 API contains wrapper implementations that can be used to support most of API on
+In addition, Stax2 API contains wrapper implementations that can be used to support most of the API on
 regular Stax implementations like Sun SJSXP (default Stax implementation bundled with JDK 1.6 and 1.7).
 
 ## Java package
@@ -23,7 +23,7 @@ regular Stax implementations like Sun SJSXP (default Stax implementation bundled
 API classes are in package `org.codehaus.stax2`.
 
 Stax2 API also contains partial Reference Implementation of many of API classes, under
-`org.codehaus.stax2.ri`: intention is to make it as painless as possible for Java Stax parser
+`org.codehaus.stax2.ri`: intention is to make it as painless as possible for Java Stax parsers
 to implement full Stax2 support.
 
 ## Usage
