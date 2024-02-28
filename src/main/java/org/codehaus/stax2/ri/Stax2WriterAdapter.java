@@ -333,7 +333,7 @@ public class Stax2WriterAdapter
         /* This may or may not work... depending on how well underlying
          * implementation follows stax 1.0 spec (it should work)
          */
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<!DOCTYPE");
         sb.append(rootName);
         if (systemId != null) {

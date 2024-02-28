@@ -61,8 +61,7 @@ public class SimpleValueEncoder
         if (enc.isCompleted()) { // fitted in completely?
             return new String(mBuffer, 0, last);
         }
-        // !!! TODO: with Java 5, use StringBuilder instead
-        StringBuffer sb = new StringBuffer(mBuffer.length << 1);
+        StringBuilder sb = new StringBuilder(mBuffer.length << 1);
         sb.append(mBuffer, 0, last);
         do {
             last = enc.encodeMore(mBuffer, 0, mBuffer.length);

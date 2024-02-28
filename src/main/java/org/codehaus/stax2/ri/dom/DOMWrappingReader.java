@@ -1978,7 +1978,7 @@ public abstract class DOMWrappingReader
                 if (prefix == null) {
                     return _internName(ln);
                 }
-                StringBuffer sb = new StringBuffer(ln.length() + 1 + prefix.length());
+                StringBuilder sb = new StringBuilder(ln.length() + 1 + prefix.length());
                 sb.append(prefix);
                 sb.append(':');
                 sb.append(ln);
