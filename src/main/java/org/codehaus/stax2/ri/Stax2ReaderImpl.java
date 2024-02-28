@@ -196,7 +196,7 @@ public abstract class Stax2ReaderImpl
                 if (prefix == null) {
                     return ln;
                 }
-                StringBuffer sb = new StringBuffer(ln.length() + 1 + prefix.length());
+                StringBuilder sb = new StringBuilder(ln.length() + 1 + prefix.length());
                 sb.append(prefix);
                 sb.append(':');
                 sb.append(ln);
