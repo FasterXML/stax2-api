@@ -4,6 +4,11 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
+Not yet released
+
+#25: Use `StringBuilder` instead of `StringBuffer`
+ (suggested by @hduelme)
+
 4.2.2 (10-Oct-2023)
 
 #23: Update `pom.xml` with more accurate LICENSE definition
