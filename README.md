@@ -33,7 +33,7 @@ Maven dependency is defined as:
     <dependency>
       <groupId>org.codehaus.woodstox</groupId>
       <artifactId>stax2-api</artifactId>
-      <version>4.2</version>
+      <version>4.2.2</version>
     </dependency>
 
 Jars can be found from [Central Maven repo](http://repo1.maven.org/maven2/org/codehaus/woodstox/stax2-api/).
