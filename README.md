@@ -42,4 +42,4 @@ Jars can be found from [Central Maven repo](http://repo1.maven.org/maven2/org/co
 
 Copyright (c) 2008 FasterXML LLC <info@fasterxml.com>
 
-This source code is licensed under standard BSD license, which is compatible with all Free and Open Software (OSS) licenses.
+This source code is licensed under standard Apache 2.0 license, which is an OSI and FSF approved Free Software license. 
