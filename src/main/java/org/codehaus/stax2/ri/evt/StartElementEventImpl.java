@@ -124,14 +124,14 @@ public class StartElementEventImpl
             if (_nsDecls != null) {
                 for (int i = 0, len = _nsDecls.size(); i < len; ++i) {
                     w.write(' ');
-                    ((Namespace) _nsDecls.get(i)).writeAsEncodedUnicode(w);
+                    _nsDecls.get(i).writeAsEncodedUnicode(w);
                 }
             }
 
             // How about attrs?
             if (_attrs != null) {
                 for (int i = 0, len = _attrs.size(); i < len; ++i) {
-                    Attribute attr = (Attribute) _attrs.get(i);
+                    Attribute attr = _attrs.get(i);
                     // No point in adding default attributes?
                     if (attr.isSpecified()) {
                         w.write(' ');
@@ -156,7 +156,7 @@ public class StartElementEventImpl
         // Any namespaces?
         if (_nsDecls != null) {
             for (int i = 0, len = _nsDecls.size(); i < len; ++i) {
-                Namespace ns = (Namespace) _nsDecls.get(i);
+                Namespace ns = _nsDecls.get(i);
                 String prefix = ns.getPrefix();
                 String uri = ns.getNamespaceURI();
                 if (prefix == null || prefix.length() == 0) {
@@ -170,7 +170,7 @@ public class StartElementEventImpl
         // How about attrs?
         if (_attrs != null) {
             for (int i = 0, len = _attrs.size(); i < len; ++i) {
-                Attribute attr = (Attribute) _attrs.get(i);
+                Attribute attr = _attrs.get(i);
                 // No point in adding default attributes?
                 if (attr.isSpecified()) {
                     QName name = attr.getName();
@@ -221,7 +221,7 @@ public class StartElementEventImpl
                 prefix = "";
             }
             for (int i = 0, len = _nsDecls.size(); i < len; ++i) {
-                Namespace ns = (Namespace) _nsDecls.get(i);
+                Namespace ns = _nsDecls.get(i);
                 String thisPrefix = ns.getPrefix();
                 if (thisPrefix == null) {
                     thisPrefix = "";
@@ -248,7 +248,7 @@ public class StartElementEventImpl
 
         boolean notInNs = (uri == null || uri.length() == 0);
         for (int i = 0; i < len; ++i) {
-            Attribute attr = (Attribute) _attrs.get(i);
+            Attribute attr = _attrs.get(i);
             QName name = attr.getName();
             if (name.getLocalPart().equals(ln)) {
                 String thisUri = name.getNamespaceURI();

@@ -657,7 +657,7 @@ public abstract class DOMWrappingReader
             handleIllegalNsIndex(index);
         }
         // Note: _nsDeclList entries have been appropriately intern()ed if need be
-        return (String) _nsDeclList.get(index + index);
+        return _nsDeclList.get(index + index);
     }
 
     @Override
@@ -683,7 +683,7 @@ public abstract class DOMWrappingReader
             handleIllegalNsIndex(index);
         }
         // Note: _nsDeclList entries have been appropriately intern()ed if need be
-        return (String) _nsDeclList.get(index + index + 1);
+        return _nsDeclList.get(index + index + 1);
     }
 
     // Note: implemented as part of NamespaceContext
