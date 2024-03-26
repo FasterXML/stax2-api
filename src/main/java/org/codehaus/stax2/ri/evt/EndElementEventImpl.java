@@ -61,7 +61,7 @@ public class EndElementEventImpl
                  * not strictly required, but helps in preventing later
                  * problems
                  */
-                l.add((Namespace) namespaces.next());
+                l.add(namespaces.next());
             }
             mNamespaces = l;
         }
