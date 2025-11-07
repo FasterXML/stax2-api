@@ -16,8 +16,9 @@ jobs:
     runs-on: 'ubuntu-latest'
     strategy:
       fail-fast: false
+      # 07-Nov-2025, tatu: If Java 6 baseline, cannot build on post-Java-8
       matrix:
-        java_version: ['8', '17', '25']
+        java_version: ['8']
     steps:
     - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
     - name: Set up JDK
