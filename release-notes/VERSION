@@ -8,6 +8,8 @@ Not yet released
 
 #25: Use `StringBuilder` instead of `StringBuffer`
  (suggested by @hduelme)
+#27: Remove redundant casts
+ (suggested by @hduelme)
 - Use Maven wrapper for builds
 - Update parent (oss-parent) 55->68
 
