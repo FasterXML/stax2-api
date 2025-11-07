@@ -121,7 +121,7 @@ public abstract class XMLValidationSchemaFactory
         throws FactoryConfigurationError
     {
         // Let's check and map schema type to the shorter internal id:
-        String internalId = (String) sSchemaIds.get(schemaType);
+        String internalId = sSchemaIds.get(schemaType);
         if (internalId == null) {
             throw new FactoryConfigurationError("Unrecognized schema type (id '"+schemaType+"')");
         }
