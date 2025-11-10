@@ -10,6 +10,8 @@ Not yet released
  (suggested by @hduelme)
 #27: Remove redundant casts
  (suggested by @hduelme)
+#28: Use newer `BigDecimal` api to avoid extra `String` allocation
+ (contributed by @winfriedgerlach)
 #29: Cleanup: reorder modifiers to comply with JLS; remove redundant casts
  (contributed by @winfriedgerlach)
 - Use Maven wrapper for builds
