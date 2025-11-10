@@ -178,14 +178,14 @@ public final class ValueDecoderFactory
     public abstract static class DecoderBase
         extends TypedValueDecoder
     {
-        final static long L_BILLION = 1000000000;
+        static final long L_BILLION = 1000000000;
 
-        final static long L_MAX_INT = (long) Integer.MAX_VALUE;
+        static final long L_MAX_INT = Integer.MAX_VALUE;
 
-        final static long L_MIN_INT = (long) Integer.MIN_VALUE;
+        static final long L_MIN_INT = Integer.MIN_VALUE;
 
-        final static BigInteger BD_MIN_LONG = BigInteger.valueOf(Long.MIN_VALUE);
-        final static BigInteger BD_MAX_LONG = BigInteger.valueOf(Long.MAX_VALUE);
+        static final BigInteger BD_MIN_LONG = BigInteger.valueOf(Long.MIN_VALUE);
+        static final BigInteger BD_MAX_LONG = BigInteger.valueOf(Long.MAX_VALUE);
         
         /**
          * Pointer to the next character to check, within lexical value
@@ -319,7 +319,7 @@ public final class ValueDecoderFactory
          *
          * @return Parsed integer value
          */
-        protected final static int parseInt(char[] digitChars, int start, int end)
+        protected static final int parseInt(char[] digitChars, int start, int end)
         {
             /* This looks ugly, but appears to be the fastest way
              * (based on perf testing, profiling)
@@ -352,7 +352,7 @@ public final class ValueDecoderFactory
             return num;
         }
 
-        protected final static int parseInt(int num, char[] digitChars, int start, int end)
+        protected static final int parseInt(int num, char[] digitChars, int start, int end)
         {
             num = (num * 10) + (digitChars[start] - '0');
             if (++start < end) {
@@ -379,7 +379,7 @@ public final class ValueDecoderFactory
             return num;
         }
         
-        protected final static int parseInt(String digitChars, int start, int end)
+        protected static final int parseInt(String digitChars, int start, int end)
         {
             int num = digitChars.charAt(start) - '0';
             if (++start < end) {
@@ -409,7 +409,7 @@ public final class ValueDecoderFactory
             return num;
         }
         
-        protected final static int parseInt(int num, String digitChars, int start, int end)
+        protected static final int parseInt(int num, String digitChars, int start, int end)
         {
             num = (num * 10) + (digitChars.charAt(start) - '0');
             if (++start < end) {
@@ -436,20 +436,20 @@ public final class ValueDecoderFactory
             return num;
         }
         
-        protected final static long parseLong(char[] digitChars, int start, int end)
+        protected static final long parseLong(char[] digitChars, int start, int end)
         {
             // Note: caller must ensure length is [10, 18]
             int start2 = end-9;
             long val = parseInt(digitChars, start, start2) * L_BILLION;
-            return val + (long) parseInt(digitChars, start2, end);
+            return val + parseInt(digitChars, start2, end);
         }
         
-        protected final static long parseLong(String digitChars, int start, int end)
+        protected static final long parseLong(String digitChars, int start, int end)
         {
             // Note: caller must ensure length is [10, 18]
             int start2 = end-9;
             long val = parseInt(digitChars, start, start2) * L_BILLION;
-            return val + (long) parseInt(digitChars, start2, end);
+            return val + parseInt(digitChars, start2, end);
         }
 
         /*
@@ -492,7 +492,7 @@ public final class ValueDecoderFactory
     /////////////////////////////////////////////////////
     */
 
-    public final static class BooleanDecoder
+    public static final class BooleanDecoder
         extends DecoderBase
     {
         protected boolean mValue;
@@ -579,7 +579,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class IntDecoder
+    public static final class IntDecoder
         extends DecoderBase
     {
         protected int mValue;
@@ -627,7 +627,7 @@ public final class ValueDecoderFactory
                     base += L_BILLION;
                 }
                 int i = parseInt(lexical, ptr, ptr+charsLeft);
-                long l = base + (long) i;
+                long l = base + i;
                 if (neg) {
                     l = -l;
                     if (l >= L_MIN_INT) {
@@ -682,7 +682,7 @@ public final class ValueDecoderFactory
                     base += L_BILLION;
                 }
                 int i = parseInt(lexical, ptr, ptr+charsLeft);
-                long l = base + (long) i;
+                long l = base + i;
                 if (neg) {
                     l = -l;
                     if (l >= L_MIN_INT) {
@@ -700,7 +700,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class LongDecoder
+    public static final class LongDecoder
         extends DecoderBase
     {
         protected long mValue;
@@ -731,7 +731,7 @@ public final class ValueDecoderFactory
             // Quick check for short (single-digit) values:
             int charsLeft = end-ptr;
             if (charsLeft == 0) {
-                mValue = (long) (neg ? -nr : nr);
+                mValue = (neg ? -nr : nr);
                 return;
             }
             verifyDigits(lexical, ptr, end);
@@ -739,7 +739,7 @@ public final class ValueDecoderFactory
             // Can parse more cheaply, if it's really just an int...
             if (charsLeft <= 8) { // no overflow
                 int i = parseInt(nr, lexical, ptr, ptr+charsLeft);
-                mValue = (long) (neg ? -i : i);
+                mValue = (neg ? -i : i);
                 return;
             }
             // At this point, let's just push back the first digit... simpler
@@ -777,7 +777,7 @@ public final class ValueDecoderFactory
             // Quick check for short (single-digit) values:
             int charsLeft = end-ptr;
             if (charsLeft == 0) {
-                mValue = (long) (neg ? -nr : nr);
+                mValue = (neg ? -nr : nr);
                 return;
             }
             verifyDigits(lexical, start, end, ptr);
@@ -823,7 +823,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class FloatDecoder
+    public static final class FloatDecoder
         extends DecoderBase
     {
         protected float mValue;
@@ -915,7 +915,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class DoubleDecoder
+    public static final class DoubleDecoder
         extends DecoderBase
     {
         protected double mValue;
@@ -1013,7 +1013,7 @@ public final class ValueDecoderFactory
     /////////////////////////////////////////////////////
     */
 
-    public final static class IntegerDecoder
+    public static final class IntegerDecoder
         extends DecoderBase
     {
         protected BigInteger mValue;
@@ -1047,7 +1047,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class DecimalDecoder
+    public static final class DecimalDecoder
         extends DecoderBase
     {
         protected BigDecimal mValue;
@@ -1086,7 +1086,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class QNameDecoder
+    public static final class QNameDecoder
         extends DecoderBase
     {
         final NamespaceContext mNsCtxt;
@@ -1141,7 +1141,7 @@ public final class ValueDecoderFactory
         protected QName resolveQName(String prefix, String localName)
             throws IllegalArgumentException
         {
-            if (prefix.length() == 0 || localName.length() == 0) {
+            if (prefix.isEmpty() || localName.isEmpty()) {
                 // either prefix or local name is empty String, illegal
                 throw constructInvalidValue(prefix+":"+localName);
             }
@@ -1150,7 +1150,7 @@ public final class ValueDecoderFactory
              * namespace' has empty URI)
              */
             String uri = mNsCtxt.getNamespaceURI(prefix);
-            if (uri == null || uri.length() == 0) {
+            if (uri == null || uri.isEmpty()) {
                 throw new IllegalArgumentException("Value \""+lexicalDesc(prefix+":"+localName)+"\" not a valid QName: prefix '"+prefix+"' not bound to a namespace");
             }
             return new QName(uri, localName, prefix);
@@ -1177,13 +1177,13 @@ public final class ValueDecoderFactory
          * Let's use some modest array size for allocating initial
          * result buffer
          */
-        protected final static int INITIAL_RESULT_BUFFER_SIZE = 40;
+        protected static final int INITIAL_RESULT_BUFFER_SIZE = 40;
         
         /**
          * When expanding 'small' result buffers, we will expand
          * size by bigger factor than for larger ones.
          */
-        protected final static int SMALL_RESULT_BUFFER_SIZE = 4000;
+        protected static final int SMALL_RESULT_BUFFER_SIZE = 4000;
 
         protected int mStart;
 
@@ -1223,7 +1223,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class IntArrayDecoder
+    public static final class IntArrayDecoder
         extends BaseArrayDecoder
     {
         int[] mResult;
@@ -1291,7 +1291,7 @@ public final class ValueDecoderFactory
 
     }
 
-    public final static class LongArrayDecoder
+    public static final class LongArrayDecoder
         extends BaseArrayDecoder
     {
         long[] mResult;
@@ -1349,7 +1349,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class FloatArrayDecoder
+    public static final class FloatArrayDecoder
         extends BaseArrayDecoder
     {
         float[] mResult;
@@ -1407,7 +1407,7 @@ public final class ValueDecoderFactory
         }
     }
 
-    public final static class DoubleArrayDecoder
+    public static final class DoubleArrayDecoder
         extends BaseArrayDecoder
     {
         double[] mResult;
