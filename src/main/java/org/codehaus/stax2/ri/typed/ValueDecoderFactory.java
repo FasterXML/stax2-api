@@ -428,7 +428,7 @@ public final class ValueDecoderFactory
                                         num = (num * 10) + (digitChars.charAt(start) - '0');
                                     }
                                 }
-                        }
+                            }
                         }
                     }
                 }
