@@ -41,8 +41,9 @@
 
   <properties>
       <!-- 1.6 baseline for 4.0 (earlier only required 1.5) -->
-      <javac.src.version>1.6</javac.src.version>
-      <javac.target.version>1.6</javac.target.version>
+      <!-- 4.3 finally increases to Java 8 -->
+      <javac.src.version>8</javac.src.version>
+      <javac.target.version>8</javac.target.version>
 
       <!-- 4.1 adds "Automatic-Module-Name" for JDK 9 -->
       <jdk.module.name>org.codehaus.stax2</jdk.module.name>
@@ -61,8 +62,8 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <configuration>
-            <source>1.6</source>
-            <target>1.6</target>
+            <source>8</source>
+            <target>8</target>
             <encoding>UTF-8</encoding>
             <links>
               <link>https://docs.oracle.com/javase/8/docs/api/</link>
@@ -142,51 +143,4 @@ org.codehaus.stax2
 	</plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>moditect</id>
-      <properties>
-        <!-- Not only do we need JDK 9+, must target later JDK too -->
-        <java.version>1.9</java.version>
-	<javac.src.version>1.9</javac.src.version>
-	<javac.target.version>1.9</javac.target.version>
-        <version.plugin.bundle>4.1.0</version.plugin.bundle>
-      </properties>
-      <build>
-	<plugins>
-	  <plugin>
-	    <groupId>org.moditect</groupId>
-	    <artifactId>moditect-maven-plugin</artifactId>
-	    <executions>
-	      <execution>
-		<id>generate-module-info</id>
-		<phase>generate-sources</phase>
-		<goals>
-		  <goal>generate-module-info</goal>
-		</goals>
-		<configuration>
-		  <modules>
-		    <module>
-		      <artifact>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>${project.artifactId}</artifactId>
-			<!-- 08-Mar-2019, tatu: Alas, due to JDK bug
-			     https://bugs.openjdk.java.net/browse/JDK-8207162
-			     this won't work...
-			     
-			<version>5.2.0</version>
-			     -->
-                        <version>${project.version}</version>
-		      </artifact>
-		    </module>
-		  </modules>
-		</configuration>
-	      </execution>
-	    </executions>
-	  </plugin>
-	</plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
