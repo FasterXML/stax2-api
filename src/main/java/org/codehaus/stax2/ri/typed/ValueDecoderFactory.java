@@ -428,7 +428,7 @@ public final class ValueDecoderFactory
                                         num = (num * 10) + (digitChars.charAt(start) - '0');
                                     }
                                 }
-                        }
+                            }
                         }
                     }
                 }
@@ -1255,7 +1255,7 @@ public final class ValueDecoderFactory
             int oldLen = old.length;
             int newSize = calcNewSize(oldLen);
             mResult = new int[newSize];
-            System.arraycopy(old, mStart, mResult, 0, oldLen);
+            System.arraycopy(old, mStart, mResult, 0, mCount);
             mStart = 0;
             mEnd = newSize;
         }
@@ -1315,7 +1315,7 @@ public final class ValueDecoderFactory
             int oldLen = old.length;
             int newSize = calcNewSize(oldLen);
             mResult = new long[newSize];
-            System.arraycopy(old, mStart, mResult, 0, oldLen);
+            System.arraycopy(old, mStart, mResult, 0, mCount);
             mStart = 0;
             mEnd = newSize;
         }
@@ -1373,7 +1373,7 @@ public final class ValueDecoderFactory
             int oldLen = old.length;
             int newSize = calcNewSize(oldLen);
             mResult = new float[newSize];
-            System.arraycopy(old, mStart, mResult, 0, oldLen);
+            System.arraycopy(old, mStart, mResult, 0, mCount);
             mStart = 0;
             mEnd = newSize;
         }
@@ -1431,7 +1431,7 @@ public final class ValueDecoderFactory
             int oldLen = old.length;
             int newSize = calcNewSize(oldLen);
             mResult = new double[newSize];
-            System.arraycopy(old, mStart, mResult, 0, oldLen);
+            System.arraycopy(old, mStart, mResult, 0, mCount);
             mStart = 0;
             mEnd = newSize;
         }
