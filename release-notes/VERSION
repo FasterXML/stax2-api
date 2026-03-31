@@ -14,6 +14,8 @@ Not yet released
  (contributed by @winfriedgerlach)
 #29: Cleanup: reorder modifiers to comply with JLS; remove redundant casts
  (contributed by @winfriedgerlach)
+#33: `ArrayDecoders` can run into `ArrayIndexOutOfBoundsException` when start != 0
+ (contributed by @winfriedgerlach)
 - Use Maven wrapper for builds
 - Update parent (oss-parent) 55->68
 
