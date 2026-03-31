@@ -4,7 +4,7 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-Not yet released
+4.3.0 (not yet released)
 
 #25: Use `StringBuilder` instead of `StringBuffer`
  (suggested by @hduelme)
