@@ -4,7 +4,11 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-4.3.0 (not yet released)
+4.3.1 (not yet released)
+
+- Branch "master" renamed as "main"
+
+4.3.0 (31-Mar-2026)
 
 #25: Use `StringBuilder` instead of `StringBuffer`
  (suggested by @hduelme)
