@@ -16,6 +16,7 @@ Project: Stax2 API
  (contributed by @winfriedgerlach)
 #33: `ArrayDecoders` can run into `ArrayIndexOutOfBoundsException` when start != 0
  (contributed by @winfriedgerlach)
+#34: Change JDK baseline to 8 (from JDK 6)
 - Use Maven wrapper for builds
 - Update parent (oss-parent) 55->68
 
