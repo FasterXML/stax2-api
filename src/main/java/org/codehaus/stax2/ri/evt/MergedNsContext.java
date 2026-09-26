@@ -1,5 +1,7 @@
 package org.codehaus.stax2.ri.evt;
 
+import org.codehaus.stax2.ri.EmptyIterator;
+
 import java.util.*;
 
 import javax.xml.XMLConstants;
@@ -129,8 +131,7 @@ public class MergedNsContext
 
         // Any local bindings?
         ArrayList<String> l = null;
-        for (int i = 0, len = _namespaces.size(); i < len; ++i) {
-            Namespace ns = _namespaces.get(i);
+        for (Namespace ns : _namespaces) {
             if (nsURI.equals(ns.getNamespaceURI())) {
                 l = addToList(l, ns.getPrefix());
             }
@@ -158,7 +159,7 @@ public class MergedNsContext
             l = addToList(l, XMLConstants.XMLNS_ATTRIBUTE);
         }
 
-        return null;
+        return l == null ? EmptyIterator.getInstance() : l.iterator();
     }
 
     /*
