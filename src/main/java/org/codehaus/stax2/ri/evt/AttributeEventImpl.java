@@ -86,8 +86,8 @@ public class AttributeEventImpl
     public void writeUsing(XMLStreamWriter2 w) throws XMLStreamException
     {
         QName n = mName;
-        w.writeAttribute(n.getPrefix(), n.getLocalPart(),
-                         n.getNamespaceURI(), mValue);
+        w.writeAttribute(n.getPrefix(), n.getNamespaceURI(),
+                         n.getLocalPart(), mValue);
     }
 
     /*
