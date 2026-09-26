@@ -264,6 +264,9 @@ public final class Stax2Util
                     int len = block.length;
                     System.arraycopy(block, 0, result, offset, len);
                     offset += len;
+                    // not reused, so let go; would otherwise stay reachable as long
+                    // as the owning reader, until the slot happens to be overwritten
+                    mBlocks[i] = null;
                 }
             }
             System.arraycopy(lastBlock, 0, result, offset, lastLen);
