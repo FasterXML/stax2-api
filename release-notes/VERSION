@@ -12,6 +12,8 @@ Project: Stax2 API
  (contributed by @winfriedgerlach)
 #44: Free memory after `Stax2Util.ByteAggregator.aggregateAll()`
  (contributed by @winfriedgerlach)
+#45: Fix swapped arguments in `AttributeEventImpl.writeUsing()`
+ (contributed by @winfriedgerlach)
 - Branch "master" renamed as "main"
 
 4.3.0 (31-Mar-2026)
