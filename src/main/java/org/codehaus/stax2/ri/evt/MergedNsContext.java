@@ -6,6 +6,8 @@ import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.events.Namespace;
 
+import org.codehaus.stax2.ri.EmptyIterator;
+
 /**
  * Helper class used to combine an enclosing namespace context with
  * a list of namespace declarations contained, to result in a single
@@ -129,8 +131,7 @@ public class MergedNsContext
 
         // Any local bindings?
         ArrayList<String> l = null;
-        for (int i = 0, len = _namespaces.size(); i < len; ++i) {
-            Namespace ns = _namespaces.get(i);
+        for (Namespace ns : _namespaces) {
             if (nsURI.equals(ns.getNamespaceURI())) {
                 l = addToList(l, ns.getPrefix());
             }
@@ -144,21 +145,22 @@ public class MergedNsContext
                 // But is it masked?
                 String uri2 = getNamespaceURI(p2);
                 if (uri2.equals(nsURI)) {
-                    // No masking, we are good:
-                    l = addToList(l, p2);
+                    // No masking, we are good (but may already have it, if re-bound locally)
+                    l = addIfMissing(l, p2);
                 }
             }
         }
 
         // Ok, but how about pre-defined ones (for xml, xmlns)?
+        // (parent context may have already reported these)
         if (nsURI.equals(XMLConstants.XML_NS_URI)) {
-            l = addToList(l, XMLConstants.XML_NS_PREFIX);
+            l = addIfMissing(l, XMLConstants.XML_NS_PREFIX);
         }
         if (nsURI.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI)) {
-            l = addToList(l, XMLConstants.XMLNS_ATTRIBUTE);
+            l = addIfMissing(l, XMLConstants.XMLNS_ATTRIBUTE);
         }
 
-        return null;
+        return l == null ? EmptyIterator.getInstance() : l.iterator();
     }
 
     /*
@@ -174,5 +176,13 @@ public class MergedNsContext
         }
         l.add(value);
         return l;
+    }
+
+    private <T> ArrayList<T> addIfMissing(ArrayList<T> l, T value)
+    {
+        if (l != null && l.contains(value)) {
+            return l;
+        }
+        return addToList(l, value);
     }
 }
