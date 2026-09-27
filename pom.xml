@@ -49,6 +49,15 @@
       <jdk.module.name>org.codehaus.stax2</jdk.module.name>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${version.junit5}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
         <plugin>
