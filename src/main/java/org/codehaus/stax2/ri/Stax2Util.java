@@ -264,7 +264,13 @@ public final class Stax2Util
                     int len = block.length;
                     System.arraycopy(block, 0, result, offset, len);
                     offset += len;
+                    // not reused, so let go; would otherwise stay reachable as long
+                    // as the owning reader, until the slot happens to be overwritten
+                    mBlocks[i] = null;
                 }
+                // blocks released: reset state to match
+                mBlockCount = 0;
+                mTotalLen = 0;
             }
             System.arraycopy(lastBlock, 0, result, offset, lastLen);
             // can reuse the last block: should be the biggest one we've handed
