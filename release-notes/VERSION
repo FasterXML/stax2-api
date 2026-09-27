@@ -8,6 +8,8 @@ Project: Stax2 API
 
 #41: Fix `ValueEncoderFactory.getScalarEncoder()` fails for long values
  (contributed by @winfriedgerlach)
+#43: Avoid copying lists in `Stax2EventAllocatorImpl`
+ (contributed by @winfriedgerlach)
 - Branch "master" renamed as "main"
 
 4.3.0 (31-Mar-2026)
