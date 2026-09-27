@@ -268,7 +268,8 @@ public final class Stax2Util
                     // as the owning reader, until the slot happens to be overwritten
                     mBlocks[i] = null;
                 }
-                mBlockCount = 0; // just for safety
+                // blocks released: reset state to match
+                mBlockCount = 0;
                 mTotalLen = 0;
             }
             System.arraycopy(lastBlock, 0, result, offset, lastLen);

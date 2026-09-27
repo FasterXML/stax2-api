@@ -8,7 +8,7 @@ Project: Stax2 API
 
 #43: Avoid copying lists in `Stax2EventAllocatorImpl`
  (contributed by @winfriedgerlach)
-#44: Free memory after `StaxUtil.aggregateAll()`
+#44: Free memory after `Stax2Util.ByteAggregator.aggregateAll()`
  (contributed by @winfriedgerlach)
 - Branch "master" renamed as "main"
 
