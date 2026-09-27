@@ -19,6 +19,7 @@ Project: Stax2 API
 #49: Fix `Base64Variant.decodeBase64Byte()` crashes with `ArrayIndexOutOfBoundsException` on non-ASCII input
  (contributed by @winfriedgerlach)
 - Branch "master" renamed as "main"
+- Update parent (oss-parent) 68->80
 
 4.3.0 (31-Mar-2026)
 
