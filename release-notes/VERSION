@@ -17,6 +17,7 @@ Project: Stax2 API
 #47: `MergedNsContext.getPrefixes()` returns null instead of result
  (contributed by @winfriedgerlach)
 - Branch "master" renamed as "main"
+- Update parent (oss-parent) 68->80
 
 4.3.0 (31-Mar-2026)
 
