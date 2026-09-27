@@ -67,7 +67,7 @@ public class StartElementEventImpl
         if (attrIt == null || !attrIt.hasNext()) {
             attrs = null;
         } else {
-            attrs = new ArrayList<Attribute>();
+            attrs = new ArrayList<>();
             do {
                 // Cast is only done for early catching of incorrect types
                 attrs.add((Attribute) attrIt.next());
@@ -78,7 +78,7 @@ public class StartElementEventImpl
         if (nsDeclIt == null || !nsDeclIt.hasNext()) {
             nsDecls = null;
         } else {
-            nsDecls = new ArrayList<Namespace>();
+            nsDecls = new ArrayList<>();
             do {
                 nsDecls.add((Namespace) nsDeclIt.next()); // cast to catch type problems early
             } while (nsDeclIt.hasNext());
