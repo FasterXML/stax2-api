@@ -49,7 +49,7 @@ public final class ValueEncoderFactory
     public ScalarEncoder getScalarEncoder(String value)
     {
         // Short or long?
-        if (value.length() > AsciiValueEncoder.MIN_CHARS_WITHOUT_FLUSH) { // short
+        if (value.length() <= AsciiValueEncoder.MIN_CHARS_WITHOUT_FLUSH) { // short
             if (_tokenEncoder == null) {
                 _tokenEncoder = new TokenEncoder();
             }
@@ -226,11 +226,11 @@ public final class ValueEncoderFactory
             int left = _value.length() - _offset;
             int free = end-ptr;
             if (free >= left) { // completed, simple
-                _value.getChars(_offset, left, buffer, ptr);
+                _value.getChars(_offset, _offset+left, buffer, ptr);
                 _value = null;
                 return (ptr+left);
             }
-            _value.getChars(_offset, free, buffer, ptr);
+            _value.getChars(_offset, _offset+free, buffer, ptr);
             _offset += free;
             return end;
         }
