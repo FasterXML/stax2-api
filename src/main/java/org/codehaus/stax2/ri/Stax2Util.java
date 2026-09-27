@@ -268,6 +268,7 @@ public final class Stax2Util
                     // as the owning reader, until the slot happens to be overwritten
                     mBlocks[i] = null;
                 }
+                mBlockCount = 0; // just for safety
             }
             System.arraycopy(lastBlock, 0, result, offset, lastLen);
             // can reuse the last block: should be the biggest one we've handed
