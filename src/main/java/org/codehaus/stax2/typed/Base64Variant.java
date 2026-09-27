@@ -209,7 +209,7 @@ public final class Base64Variant
 
     public int decodeBase64Byte(byte b)
     {
-        int ch = (int) b;
+        int ch = b & 0xFF;
         return (ch <= 127) ? _asciiToBase64[ch] : BASE64_VALUE_INVALID;
     }
 

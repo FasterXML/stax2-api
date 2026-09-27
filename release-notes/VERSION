@@ -16,6 +16,8 @@ Project: Stax2 API
  (contributed by @winfriedgerlach)
 #47: `MergedNsContext.getPrefixes()` returns null instead of result
  (contributed by @winfriedgerlach)
+#49: Fix `Base64Variant.decodeBase64Byte()` crashes with `ArrayIndexOutOfBoundsException` on non-ASCII input
+ (contributed by @winfriedgerlach)
 - Branch "master" renamed as "main"
 - Update parent (oss-parent) 68->80
 
