@@ -15,7 +15,6 @@ import javax.xml.stream.util.XMLEventAllocator;
 import javax.xml.stream.util.XMLEventConsumer;
 
 import org.codehaus.stax2.*;
-import org.codehaus.stax2.ri.EmptyIterator;
 
 /**
  * Base implementation of {@link XMLEventAllocator}, to be
@@ -163,36 +162,34 @@ public class Stax2EventAllocatorImpl
             nsCtxt = ((XMLStreamReader2) r).getNonTransientNamespaceContext();
         }
 
-        List<Attribute> attrs;
+        ArrayList<Attribute> attrs;
         {
             int attrCount = r.getAttributeCount();
             if (attrCount < 1) {
                 attrs = null;
             } else {
-                attrs = new ArrayList<Attribute>(attrCount);
+                attrs = new ArrayList<>(attrCount);
                 for (int i = 0; i < attrCount; ++i) {
                     QName aname = r.getAttributeName(i);
                     attrs.add(new AttributeEventImpl(loc, aname, r.getAttributeValue(i), r.isAttributeSpecified(i)));
                 }
             }
         }
-        List<Namespace> ns;
+        ArrayList<Namespace> ns;
         {
             int nsCount = r.getNamespaceCount();
             if (nsCount < 1) {
                 ns = null;
             } else {
-                ns = new ArrayList<Namespace>(nsCount);
+                ns = new ArrayList<>(nsCount);
                 for (int i = 0; i < nsCount; ++i) {
                     ns.add(NamespaceEventImpl.constructNamespace(loc, r.getNamespacePrefix(i), r.getNamespaceURI(i)));
                 }
             }
         }
-        
-        return StartElementEventImpl.construct
-            (loc, r.getName(), 
-             ((attrs == null) ? EmptyIterator.getInstance() : attrs.iterator()),
-             ((ns == null) ? EmptyIterator.getInstance() : ns.iterator()),
-             nsCtxt);
+
+        // Lists are freshly built and exactly sized, so hand them over as-is
+        // instead of going through construct(), which would copy them again
+        return new StartElementEventImpl(loc, r.getName(), attrs, ns, nsCtxt);
     }
 }
