@@ -1016,6 +1016,11 @@ public final class ValueDecoderFactory
     public static final class IntegerDecoder
         extends DecoderBase
     {
+        /**
+         * Max. number of digits for which values are parsed as a {@code long} first (any 18-digit number fits in one)
+         */
+        private static final int MAX_LONG_DIGITS = 18;
+
         protected BigInteger mValue;
 
         public IntegerDecoder() { }
@@ -1028,6 +1033,9 @@ public final class ValueDecoderFactory
         @Override
         public void decode(String lexical) throws IllegalArgumentException
         {
+            if (decodeAsLong(lexical)) {
+                return;
+            }
             try {
                 mValue = new BigInteger(lexical);
             } catch (NumberFormatException nex) {
@@ -1038,12 +1046,77 @@ public final class ValueDecoderFactory
         @Override
         public void decode(char[] lexical, int start, int end) throws IllegalArgumentException
         {
+            if (decodeAsLong(lexical, start, end)) {
+                return;
+            }
             String lexicalStr = new String(lexical, start, (end-start));
             try {
                 mValue = new BigInteger(lexicalStr);
             } catch (NumberFormatException nex) {
                 throw constructInvalidValue(lexicalStr);
             }
+        }
+
+        /**
+         * Fast path for the common case of an optional sign followed by at
+         * most {@link #MAX_LONG_DIGITS} (ASCII) digits: such values fit in
+         * a {@code long}, avoiding construction of a String and the general
+         * {@link BigInteger} parser. Anything else is left to
+         * {@link BigInteger}, including reporting of invalid values.
+         *
+         * @return True if the value was decoded; false if not handled
+         */
+        private boolean decodeAsLong(String lexical)
+        {
+            final int end = lexical.length();
+            int ptr = 0;
+            boolean neg = false;
+            if (end > 0) {
+                char ch = lexical.charAt(0);
+                if (ch == '-' || ch == '+') {
+                    neg = (ch == '-');
+                    ++ptr;
+                }
+            }
+            if (ptr == end || (end - ptr) > MAX_LONG_DIGITS) {
+                return false;
+            }
+            long value = 0L;
+            for (; ptr < end; ++ptr) {
+                int digit = lexical.charAt(ptr) - '0';
+                if (digit < 0 || digit > 9) {
+                    return false;
+                }
+                value = (value * 10) + digit;
+            }
+            mValue = BigInteger.valueOf(neg ? -value : value);
+            return true;
+        }
+
+        private boolean decodeAsLong(char[] lexical, int start, final int end)
+        {
+            int ptr = start;
+            boolean neg = false;
+            if (ptr < end) {
+                char ch = lexical[ptr];
+                if (ch == '-' || ch == '+') {
+                    neg = (ch == '-');
+                    ++ptr;
+                }
+            }
+            if (ptr == end || (end - ptr) > MAX_LONG_DIGITS) {
+                return false;
+            }
+            long value = 0L;
+            for (; ptr < end; ++ptr) {
+                int digit = lexical[ptr] - '0';
+                if (digit < 0 || digit > 9) {
+                    return false;
+                }
+                value = (value * 10) + digit;
+            }
+            mValue = BigInteger.valueOf(neg ? -value : value);
+            return true;
         }
     }
 
