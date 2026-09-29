@@ -4,6 +4,11 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
+(not yet released)
+
+#53 Fast path for BigDecimal decoding
+ (contributed by @winfriedgerlach)
+
 4.3.1 (27-Sep-2026)
 
 #41: Fix `ValueEncoderFactory.getScalarEncoder()` fails for long values
