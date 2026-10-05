@@ -4,6 +4,12 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
+Unreleased (in development)
+
+#56: Fix `DOMWrappingReader.getTextCharacters() fails on last segment
+ (contributed by @winfriedgerlach)
+
+
 4.3.1 (27-Sep-2026)
 
 #41: Fix `ValueEncoderFactory.getScalarEncoder()` fails for long values
