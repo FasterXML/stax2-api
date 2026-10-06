@@ -739,10 +739,10 @@ public abstract class DOMWrappingReader
             reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
         }
         String text = getText();
-        // can only copy what is left after sourceStart
-        int left = text.length() - sourceStart;
-        if (len > left) {
-            len = left;
+        // can only copy what is remaining after sourceStart
+        int remainingTextLen = text.length() - sourceStart;
+        if (len > remainingTextLen) {
+            len = remainingTextLen;
         }
         text.getChars(sourceStart, sourceStart+len, target, targetStart);
         return len;

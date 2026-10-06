@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * read text in segments.
  *<p>
  * Covers the requested length, which used to be limited to the full text
- * length instead of what is left after the source offset (so reading the
+ * length instead of what is remaining after the source offset (so reading the
  * last segment failed unless all of it fit in the first).
  */
 class DOMWrappingReaderTest
@@ -52,7 +52,7 @@ class DOMWrappingReaderTest
     {
         XMLStreamReader2 sr = readerAtText("<root>"+TEXT+"</root>");
         char[] buf = "..........".toCharArray();
-        // only "hij" left of the 5 requested
+        // only "hij" remaining of the 5 requested
         assertEquals(3, sr.getTextCharacters(7, buf, 2, 5));
         assertEquals("..hij.....", new String(buf));
     }
