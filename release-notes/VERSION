@@ -4,6 +4,8 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
+4.3.2 (not yet released)
+
 4.3.1 (27-Sep-2026)
 
 #41: Fix `ValueEncoderFactory.getScalarEncoder()` fails for long values
