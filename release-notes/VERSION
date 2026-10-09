@@ -4,8 +4,10 @@ Project: Stax2 API
 = Releases
 ------------------------------------------------------------------------
 
-Unreleased (in development)
+4.3.2 (not yet released)
 
+#51: Fast path for BigInteger decoding
+ (contributed by @winfriedgerlach)
 #56: Fix `DOMWrappingReader.getTextCharacters() fails on last segment
  (contributed by @winfriedgerlach)
 
