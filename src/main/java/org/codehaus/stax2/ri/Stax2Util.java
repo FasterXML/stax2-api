@@ -109,10 +109,7 @@ public final class Stax2Util
     {
         private String mText = null;
 
-        /* !!! JDK 1.5: when we can upgrade to Java 5, can convert
-         *  to using <code>StringBuilder</code> instead.
-         */
-        private StringBuffer mBuilder = null;
+        private StringBuilder mBuilder = null;
 
         public TextBuffer() { }
 
@@ -128,7 +125,7 @@ public final class Stax2Util
             if (len > 0) {
                 // Any prior text?
                 if (mText != null) {
-                    mBuilder = new StringBuffer(mText.length() + len);
+                    mBuilder = new StringBuilder(mText.length() + len);
                     mBuilder.append(mText);
                     mText = null;
                 }
