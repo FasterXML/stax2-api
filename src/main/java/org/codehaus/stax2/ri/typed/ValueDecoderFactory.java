@@ -186,6 +186,24 @@ public final class ValueDecoderFactory
 
         static final BigInteger BD_MIN_LONG = BigInteger.valueOf(Long.MIN_VALUE);
         static final BigInteger BD_MAX_LONG = BigInteger.valueOf(Long.MAX_VALUE);
+
+        /**
+         * Value returned by {@code tryParseLong} for values it does not handle
+         * (it is never returned for handled values, as {@link Long#MIN_VALUE}
+         * itself is not handled)
+         *
+         * @since 4.3.2
+         */
+        protected static final long NOT_A_LONG = Long.MIN_VALUE;
+
+        /**
+         * Max. number of digits (after leading zeroes) {@code tryParseLong}
+         * handles: same as for {@link Long#MAX_VALUE}
+         */
+        static final int MAX_LONG_DIGITS = 19;
+
+        static final long MAX_LONG_DIV_10 = Long.MAX_VALUE / 10;
+        static final int MAX_LONG_LAST_DIGIT = (int) (Long.MAX_VALUE % 10);
         
         /**
          * Pointer to the next character to check, within lexical value
@@ -450,6 +468,101 @@ public final class ValueDecoderFactory
             int start2 = end-9;
             long val = parseInt(digitChars, start, start2) * L_BILLION;
             return val + parseInt(digitChars, start2, end);
+        }
+
+        /**
+         * Non-throwing variant of {@code long} parsing, for decoders that
+         * have a more general (and slower) fallback: handles an optional sign
+         * followed by ASCII digits (leading zeroes are skipped), for any value
+         * that fits in a {@code long} except for {@link Long#MIN_VALUE}.
+         * Anything else, including invalid values, is left to the caller.
+         *
+         * @return Parsed value, or {@link #NOT_A_LONG} if value was not handled
+         *
+         * @since 4.3.2
+         */
+        protected static final long tryParseLong(String lexical, int ptr, final int end)
+        {
+            if (ptr >= end) {
+                return NOT_A_LONG;
+            }
+            char ch = lexical.charAt(ptr);
+            final boolean neg = (ch == '-');
+            if (neg || ch == '+') {
+                if (++ptr == end) {
+                    return NOT_A_LONG;
+                }
+            }
+            // Skip leading zeroes (but not the last digit, for value zero)
+            final int last = end-1;
+            while (ptr < last && lexical.charAt(ptr) == '0') {
+                ++ptr;
+            }
+            if ((end - ptr) > MAX_LONG_DIGITS) {
+                return NOT_A_LONG;
+            }
+            long value = 0L;
+            for (; ptr < last; ++ptr) {
+                int digit = lexical.charAt(ptr) - '0';
+                if (digit < 0 || digit > 9) {
+                    return NOT_A_LONG;
+                }
+                value = (value * 10) + digit;
+            }
+            return lastLongDigit(value, lexical.charAt(last) - '0', neg);
+        }
+
+        /**
+         * @see #tryParseLong(String, int, int)
+         *
+         * @since 4.3.2
+         */
+        protected static final long tryParseLong(char[] lexical, int ptr, final int end)
+        {
+            if (ptr >= end) {
+                return NOT_A_LONG;
+            }
+            char ch = lexical[ptr];
+            final boolean neg = (ch == '-');
+            if (neg || ch == '+') {
+                if (++ptr == end) {
+                    return NOT_A_LONG;
+                }
+            }
+            // Skip leading zeroes (but not the last digit, for value zero)
+            final int last = end-1;
+            while (ptr < last && lexical[ptr] == '0') {
+                ++ptr;
+            }
+            if ((end - ptr) > MAX_LONG_DIGITS) {
+                return NOT_A_LONG;
+            }
+            long value = 0L;
+            for (; ptr < last; ++ptr) {
+                int digit = lexical[ptr] - '0';
+                if (digit < 0 || digit > 9) {
+                    return NOT_A_LONG;
+                }
+                value = (value * 10) + digit;
+            }
+            return lastLongDigit(value, lexical[last] - '0', neg);
+        }
+
+        /**
+         * Helper method for {@code tryParseLong}: appends the last digit,
+         * which is the only one that can overflow (with up to 19 digits)
+         */
+        private static long lastLongDigit(long value, int digit, boolean neg)
+        {
+            if (digit < 0 || digit > 9) {
+                return NOT_A_LONG;
+            }
+            if (value >= MAX_LONG_DIV_10
+                    && (value > MAX_LONG_DIV_10 || digit > MAX_LONG_LAST_DIGIT)) {
+                return NOT_A_LONG;
+            }
+            value = (value * 10) + digit;
+            return neg ? -value : value;
         }
 
         /*
@@ -1028,6 +1141,13 @@ public final class ValueDecoderFactory
         @Override
         public void decode(String lexical) throws IllegalArgumentException
         {
+            // Fast path for values that fit in a long; anything else (including
+            // reporting of invalid values) is left to BigInteger
+            long l = tryParseLong(lexical, 0, lexical.length());
+            if (l != NOT_A_LONG) {
+                mValue = BigInteger.valueOf(l);
+                return;
+            }
             try {
                 mValue = new BigInteger(lexical);
             } catch (NumberFormatException nex) {
@@ -1038,6 +1158,11 @@ public final class ValueDecoderFactory
         @Override
         public void decode(char[] lexical, int start, int end) throws IllegalArgumentException
         {
+            long l = tryParseLong(lexical, start, end);
+            if (l != NOT_A_LONG) {
+                mValue = BigInteger.valueOf(l);
+                return;
+            }
             String lexicalStr = new String(lexical, start, (end-start));
             try {
                 mValue = new BigInteger(lexicalStr);
