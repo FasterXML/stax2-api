@@ -191,6 +191,8 @@ public final class ValueDecoderFactory
          * Value returned by {@code tryParseLong} for values it does not handle
          * (it is never returned for handled values, as {@link Long#MIN_VALUE}
          * itself is not handled)
+         *
+         * @since 4.3.2
          */
         protected static final long NOT_A_LONG = Long.MIN_VALUE;
 
@@ -476,6 +478,8 @@ public final class ValueDecoderFactory
          * Anything else, including invalid values, is left to the caller.
          *
          * @return Parsed value, or {@link #NOT_A_LONG} if value was not handled
+         *
+         * @since 4.3.2
          */
         protected static final long tryParseLong(String lexical, int ptr, final int end)
         {
@@ -508,6 +512,11 @@ public final class ValueDecoderFactory
             return lastLongDigit(value, lexical.charAt(last) - '0', neg);
         }
 
+        /**
+         * @see #tryParseLong(String, int, int)
+         *
+         * @since 4.3.2
+         */
         protected static final long tryParseLong(char[] lexical, int ptr, final int end)
         {
             if (ptr >= end) {
