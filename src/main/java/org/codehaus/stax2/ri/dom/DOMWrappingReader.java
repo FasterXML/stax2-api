@@ -733,9 +733,18 @@ public abstract class DOMWrappingReader
     }
 
     /**
-     * Shared by the text accessors, which check the state themselves first.
+     * Returns the text of the current textual event: coalesced text if there
+     * is any, otherwise value of the current node. Does not check the state;
+     * callers ({@link #getText()}, {@link #getTextLength()} and both
+     * {@code getTextCharacters()} methods) do that first.
+     *<p>
+     * Subclasses may override this to change the text all of those methods return.
+     *
+     * @return Text of the current event
+     *
+     * @since 4.3.2
      */
-    private String _currentText()
+    protected String _currentText()
     {
         return (_coalescedText != null) ? _coalescedText : _currNode.getNodeValue();
     }
