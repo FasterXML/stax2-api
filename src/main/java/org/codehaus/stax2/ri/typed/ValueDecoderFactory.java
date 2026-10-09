@@ -1175,12 +1175,6 @@ public final class ValueDecoderFactory
     public static final class DecimalDecoder
         extends DecoderBase
     {
-        /**
-         * Maximum number of digits for which values are parsed as a {@code long} unscaled value first
-         * (any 18-digit number fits in one)
-         */
-        private static final int MAX_LONG_DIGITS = 18;
-
         protected BigDecimal mValue;
 
         public DecimalDecoder() { }
@@ -1193,7 +1187,11 @@ public final class ValueDecoderFactory
         @Override
         public void decode(String lexical) throws IllegalArgumentException
         {
-            if (decodeAsLong(lexical)) {
+            // Fast path for values with a long unscaled value; anything else
+            // (including reporting of invalid values) is left to BigDecimal
+            BigDecimal d = tryParseDecimal(lexical, 0, lexical.length());
+            if (d != null) {
+                mValue = d;
                 return;
             }
             try {
@@ -1206,7 +1204,9 @@ public final class ValueDecoderFactory
         @Override
         public void decode(char[] lexical, int start, int end) throws IllegalArgumentException
         {
-            if (decodeAsLong(lexical, start, end)) {
+            BigDecimal d = tryParseDecimal(lexical, start, end);
+            if (d != null) {
+                mValue = d;
                 return;
             }
             int len = end-start;
@@ -1218,90 +1218,93 @@ public final class ValueDecoderFactory
         }
 
         /**
-         * Fast path for the common case of an optional sign followed by at
-         * most {@link #MAX_LONG_DIGITS} (ASCII) digits, with an optional
-         * decimal point among them and no exponent: such values are built
-         * from a {@code long} unscaled value and a scale, which are the same
-         * as {@link BigDecimal} would produce. Anything else is left to
-         * {@link BigDecimal}, including reporting of invalid values.
+         * Fast path for the common case of an optional sign followed by
+         * ASCII digits, with an optional decimal point among them and no
+         * exponent, for which the unscaled value fits in a {@code long}
+         * (leading zeroes do not count; {@link Long#MIN_VALUE} is not handled):
+         * such values are built from a {@code long} unscaled value and a scale,
+         * which are the same as {@link BigDecimal} would produce.
+         * Anything else, including invalid values, is left to the caller.
          *
-         * @return True if the value was decoded; false if not handled
+         * @return Parsed value, or {@code null} if value was not handled
+         *
+         * @since 4.3.2
          */
-        private boolean decodeAsLong(String lexical)
+        protected static BigDecimal tryParseDecimal(String lexical, int ptr, final int end)
         {
-            final int end = lexical.length();
-            // Longer than sign, point and all digits: can not be handled
-            if (end > MAX_LONG_DIGITS + 2) {
-                return false;
+            if (ptr >= end) {
+                return null;
             }
-            int ptr = 0;
-            boolean neg = false;
-            if (end > 0) {
-                char ch = lexical.charAt(0);
-                if (ch == '-' || ch == '+') {
-                    neg = (ch == '-');
-                    ++ptr;
-                }
+            char ch = lexical.charAt(ptr);
+            final boolean neg = (ch == '-');
+            if (neg || ch == '+') {
+                ++ptr;
             }
             long value = 0L;
-            int digits = 0;
+            boolean gotDigit = false;
             int pointIx = -1;
             for (; ptr < end; ++ptr) {
-                char ch = lexical.charAt(ptr);
+                ch = lexical.charAt(ptr);
                 int digit = ch - '0';
                 if (digit >= 0 && digit <= 9) {
-                    // may overflow with too many digits; value not used then
+                    if (value >= MAX_LONG_DIV_10
+                            && (value > MAX_LONG_DIV_10 || digit > MAX_LONG_LAST_DIGIT)) {
+                        return null;
+                    }
                     value = (value * 10) + digit;
-                    ++digits;
+                    gotDigit = true;
                 } else if (ch == '.' && pointIx < 0) {
                     pointIx = ptr;
                 } else {
-                    return false;
+                    return null;
                 }
             }
-            if (digits == 0 || digits > MAX_LONG_DIGITS) {
-                return false;
+            if (!gotDigit) {
+                return null;
             }
             int scale = (pointIx < 0) ? 0 : (end - pointIx - 1);
-            mValue = BigDecimal.valueOf(neg ? -value : value, scale);
-            return true;
+            return BigDecimal.valueOf(neg ? -value : value, scale);
         }
 
-        private boolean decodeAsLong(char[] lexical, int start, final int end)
+        /**
+         * @see #tryParseDecimal(String, int, int)
+         *
+         * @since 4.3.2
+         */
+        protected static BigDecimal tryParseDecimal(char[] lexical, int ptr, final int end)
         {
-            if ((end - start) > MAX_LONG_DIGITS + 2) {
-                return false;
+            if (ptr >= end) {
+                return null;
             }
-            int ptr = start;
-            boolean neg = false;
-            if (ptr < end) {
-                char ch = lexical[ptr];
-                if (ch == '-' || ch == '+') {
-                    neg = (ch == '-');
-                    ++ptr;
-                }
+            char ch = lexical[ptr];
+            final boolean neg = (ch == '-');
+            if (neg || ch == '+') {
+                ++ptr;
             }
             long value = 0L;
-            int digits = 0;
+            boolean gotDigit = false;
             int pointIx = -1;
             for (; ptr < end; ++ptr) {
-                char ch = lexical[ptr];
+                ch = lexical[ptr];
                 int digit = ch - '0';
                 if (digit >= 0 && digit <= 9) {
+                    if (value >= MAX_LONG_DIV_10
+                            && (value > MAX_LONG_DIV_10 || digit > MAX_LONG_LAST_DIGIT)) {
+                        return null;
+                    }
                     value = (value * 10) + digit;
-                    ++digits;
+                    gotDigit = true;
                 } else if (ch == '.' && pointIx < 0) {
                     pointIx = ptr;
                 } else {
-                    return false;
+                    return null;
                 }
             }
-            if (digits == 0 || digits > MAX_LONG_DIGITS) {
-                return false;
+            if (!gotDigit) {
+                return null;
             }
             int scale = (pointIx < 0) ? 0 : (end - pointIx - 1);
-            mValue = BigDecimal.valueOf(neg ? -value : value, scale);
-            return true;
+            return BigDecimal.valueOf(neg ? -value : value, scale);
         }
     }
 
