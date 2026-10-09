@@ -15,7 +15,6 @@ import org.codehaus.stax2.typed.Base64Variants;
 import org.codehaus.stax2.typed.TypedArrayDecoder;
 import org.codehaus.stax2.typed.TypedValueDecoder;
 import org.codehaus.stax2.typed.TypedXMLStreamException;
-import org.codehaus.stax2.ri.Stax2Util;
 import org.codehaus.stax2.ri.typed.StringBase64Decoder;
 import org.codehaus.stax2.ri.typed.ValueDecoderFactory;
 
@@ -127,6 +126,30 @@ public class Stax2ReaderAdapter
         }
 
         int type = super.next();
+        if (type == XMLStreamConstants.START_ELEMENT) {
+            ++_depth;
+        } else if (type == XMLStreamConstants.END_ELEMENT) {
+            --_depth;
+        }
+        return type;
+    }
+
+    /**
+     * Needs to be overridden along with {@link #next}, since the default
+     * implementation calls {@code nextTag()} of the wrapped reader directly,
+     * bypassing the chunked decode check and depth tracking done there.
+     */
+    @Override
+    public int nextTag() throws XMLStreamException
+    {
+        // As with next(): if in the middle of chunked decode, just end it
+        if (_typedContent != null) {
+            _typedContent = null;
+            return XMLStreamConstants.END_ELEMENT;
+        }
+
+        // Tags are all we can get; anything skipped does not affect depth
+        int type = super.nextTag();
         if (type == XMLStreamConstants.START_ELEMENT) {
             ++_depth;
         } else if (type == XMLStreamConstants.END_ELEMENT) {
