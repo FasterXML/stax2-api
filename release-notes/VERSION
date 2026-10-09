@@ -10,7 +10,7 @@ Project: Stax2 API
  (contributed by @winfriedgerlach)
 #53: Fast path for BigDecimal decoding
  (contributed by @winfriedgerlach)
-#56: Fix `DOMWrappingReader.getTextCharacters() fails on last segment
+#56: Fix `DOMWrappingReader.getTextCharacters()` fails on last segment
  (contributed by @winfriedgerlach)
 
 4.3.1 (27-Sep-2026)

@@ -738,11 +738,24 @@ public abstract class DOMWrappingReader
         if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
             reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
         }
-        String text = getText();
+        // as per StAX javadocs, check arguments against the target before limiting
+        // to the text: any negative argument has its sign bit set, and with
+        // non-negative ones the subtraction cannot overflow (and also catches
+        // targetStart past the end of target)
+        if ((sourceStart | targetStart | len) < 0 || len > target.length - targetStart) {
+            throw new IndexOutOfBoundsException("Invalid arguments: sourceStart="+sourceStart
+                    +", targetStart="+targetStart+", length="+len+" (target length "+target.length+")");
+        }
+        // state already checked above, so no need to go through getText()
+        String text = (_coalescedText != null) ? _coalescedText : _currNode.getNodeValue();
         // can only copy what is remaining after sourceStart
-        int remainingTextLen = text.length() - sourceStart;
-        if (len > remainingTextLen) {
-            len = remainingTextLen;
+        int remaining = text.length() - sourceStart;
+        if (len > remaining) {
+            // none if at or past the end (String.getChars() would reject the latter)
+            if (remaining <= 0) {
+                return 0;
+            }
+            len = remaining;
         }
         text.getChars(sourceStart, sourceStart+len, target, targetStart);
         return len;

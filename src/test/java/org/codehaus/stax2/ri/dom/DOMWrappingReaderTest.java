@@ -16,6 +16,8 @@ import org.xml.sax.InputSource;
 import org.codehaus.stax2.XMLStreamReader2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for {@link DOMWrappingReader#getTextCharacters(int, char[], int, int)},
@@ -26,35 +28,76 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * length instead of what is remaining after the source offset (so reading the
  * last segment failed unless all of it fit in the first).
  */
-class DOMWrappingReaderTest
+public class DOMWrappingReaderTest
 {
     private final static String TEXT = "abcdefghij";
 
     // Shorter, dividing evenly or not, as long as and longer than TEXT
     @ParameterizedTest
     @ValueSource(ints = { 1, 3, 5, 10, 16 })
-    void readInSegments(int chunk) throws Exception
+    public void testReadInSegments(int chunk) throws Exception
     {
-        XMLStreamReader2 sr = readerAtText("<root>"+TEXT+"</root>");
-        char[] buf = new char[chunk];
-        StringBuilder sb = new StringBuilder();
-        int count;
-        // as per StAX javadocs: no more text once fewer than requested are copied
-        do {
-            count = sr.getTextCharacters(sb.length(), buf, 0, chunk);
-            sb.append(buf, 0, count);
-        } while (count == chunk);
-        assertEquals(TEXT, sb.toString());
+        XMLStreamReader2 sr = readerAt("<root>"+TEXT+"</root>", false,
+                XMLStreamConstants.CHARACTERS);
+        assertEquals(TEXT, readInSegments(sr, chunk));
+    }
+
+    // Text and CDATA merged into one event
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 3, 5, 10, 16 })
+    public void testReadCoalescedInSegments(int chunk) throws Exception
+    {
+        XMLStreamReader2 sr = readerAt("<root>abc<![CDATA[def]]>ghij</root>", true,
+                XMLStreamConstants.CHARACTERS);
+        assertEquals(TEXT, readInSegments(sr, chunk));
     }
 
     @Test
-    void copyToTargetOffset() throws Exception
+    public void testReadOtherTextualEventsInSegments() throws Exception
     {
-        XMLStreamReader2 sr = readerAtText("<root>"+TEXT+"</root>");
+        assertEquals(TEXT, readInSegments(readerAt("<root><![CDATA["+TEXT+"]]></root>", false,
+                XMLStreamConstants.CDATA), 3));
+        assertEquals(TEXT, readInSegments(readerAt("<root><!--"+TEXT+"--></root>", false,
+                XMLStreamConstants.COMMENT), 3));
+    }
+
+    @Test
+    public void testCopyToTargetOffset() throws Exception
+    {
+        XMLStreamReader2 sr = readerAtText();
         char[] buf = "..........".toCharArray();
         // only "hij" remaining of the 5 requested
         assertEquals(3, sr.getTextCharacters(7, buf, 2, 5));
         assertEquals("..hij.....", new String(buf));
+    }
+
+    @Test
+    public void testSourceStartAtOrPastEnd() throws Exception
+    {
+        XMLStreamReader2 sr = readerAtText();
+        char[] buf = new char[5];
+        assertEquals(0, sr.getTextCharacters(10, buf, 0, 5));
+        assertEquals(0, sr.getTextCharacters(11, buf, 0, 5));
+        assertEquals(0, sr.getTextCharacters(12, buf, 0, 0));
+        assertEquals(0, sr.getTextCharacters(Integer.MAX_VALUE, buf, 0, 5));
+    }
+
+    @Test
+    public void testInvalidArguments() throws Exception
+    {
+        XMLStreamReader2 sr = readerAtText();
+        char[] buf = new char[5];
+        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(-1, buf, 0, 5));
+        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(Integer.MIN_VALUE, buf, 0, 5));
+        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, -1, 5));
+        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, 6, 0));
+        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, 0, -1));
+        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, 1, Integer.MAX_VALUE));
+        // target too small for requested length, even if remaining text would fit
+        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(8, buf, 0, 20));
+        // but filling target up to its end is fine
+        assertEquals(5, sr.getTextCharacters(0, buf, 0, 5));
+        assertEquals(0, sr.getTextCharacters(0, buf, 5, 0));
     }
 
     /*
@@ -63,14 +106,41 @@ class DOMWrappingReaderTest
     ///////////////////////////////////////////
      */
 
-    private static XMLStreamReader2 readerAtText(String xml) throws Exception
+    private static String readInSegments(XMLStreamReader2 sr, int chunk) throws Exception
+    {
+        char[] buf = new char[chunk];
+        StringBuilder sb = new StringBuilder();
+        // guard against a regression that never returns fewer than requested
+        final int maxCalls = TEXT.length() + 2;
+        int count;
+        int calls = 0;
+        // as per StAX javadocs: no more text once fewer than requested are copied
+        do {
+            if (++calls > maxCalls) {
+                fail("No end of text after "+maxCalls+" calls; got: \""+sb+"\"");
+            }
+            count = sr.getTextCharacters(sb.length(), buf, 0, chunk);
+            sb.append(buf, 0, count);
+        } while (count == chunk);
+        return sb.toString();
+    }
+
+    private static XMLStreamReader2 readerAtText() throws Exception
+    {
+        return readerAt("<root>"+TEXT+"</root>", false, XMLStreamConstants.CHARACTERS);
+    }
+
+    private static XMLStreamReader2 readerAt(String xml, boolean coalescing, int textEvent)
+        throws Exception
     {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
+        // keep CDATA sections as separate nodes so that coalescing has something to merge
+        dbf.setCoalescing(false);
         XMLStreamReader2 sr = new DOMReader(new DOMSource(dbf.newDocumentBuilder()
-                .parse(new InputSource(new StringReader(xml)))));
+                .parse(new InputSource(new StringReader(xml)))), coalescing);
         assertEquals(XMLStreamConstants.START_ELEMENT, sr.next());
-        assertEquals(XMLStreamConstants.CHARACTERS, sr.next());
+        assertEquals(textEvent, sr.next());
         return sr;
     }
 
@@ -79,8 +149,8 @@ class DOMWrappingReaderTest
      */
     static class DOMReader extends DOMWrappingReader
     {
-        DOMReader(DOMSource src) throws XMLStreamException {
-            super(src, true, false);
+        DOMReader(DOMSource src, boolean coalescing) throws XMLStreamException {
+            super(src, true, coalescing);
         }
 
         @Override
