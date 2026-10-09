@@ -716,31 +716,55 @@ public abstract class DOMWrappingReader
     @Override
     public String getText()
     {
-        if (_coalescedText != null) {
-            return _coalescedText;
-        }
-        if (((1 << _currEvent) & MASK_GET_TEXT) == 0) {
+        if (_coalescedText == null
+                && ((1 << _currEvent) & MASK_GET_TEXT) == 0) {
             reportWrongState(ERR_STATE_NOT_TEXTUAL);
         }
-        return _currNode.getNodeValue();
+        return _currentText();
     }
 
     @Override
     public char[] getTextCharacters()
     {
-        String text = getText();
-        return text.toCharArray();
+        _checkTextXxxState();
+        return _currentText().toCharArray();
+    }
+
+    /**
+     * Returns the text of the current textual event: coalesced text if there
+     * is any, otherwise value of the current node. Does not check the state;
+     * callers ({@link #getText()}, {@link #getTextLength()} and both
+     * {@code getTextCharacters()} methods) do that first.
+     *<p>
+     * Subclasses may override this to change the text all of those methods return.
+     *
+     * @return Text of the current event
+     *
+     * @since 4.3.2
+     */
+    protected String _currentText()
+    {
+        return (_coalescedText != null) ? _coalescedText : _currNode.getNodeValue();
     }
 
     @Override
     public int getTextCharacters(int sourceStart, char[] target, int targetStart, int len)
     {
-        if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
-            reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
+        _checkTextXxxState();
+        // any negative argument has its sign bit set; too small a target is caught
+        // by getChars() (like Woodstox and Aalto, len may exceed what remains)
+        if ((sourceStart | targetStart | len) < 0) {
+            throw new IndexOutOfBoundsException("Invalid arguments: sourceStart="+sourceStart
+                    +", targetStart="+targetStart+", length="+len);
         }
-        String text = getText();
-        if (len > text.length()) {
-            len = text.length();
+        String text = _currentText();
+        int remaining = text.length() - sourceStart;
+        if (len > remaining) {
+            // nothing left if at or past the end (getChars() would reject the latter)
+            if (remaining <= 0) {
+                return 0;
+            }
+            len = remaining;
         }
         text.getChars(sourceStart, sourceStart+len, target, targetStart);
         return len;
@@ -749,19 +773,22 @@ public abstract class DOMWrappingReader
     @Override
     public int getTextLength()
     {
-        if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
-            reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
-        }
-        return getText().length();
+        _checkTextXxxState();
+        return _currentText().length();
     }
 
     @Override
     public int getTextStart()
     {
+        _checkTextXxxState();
+        return 0;
+    }
+
+    private void _checkTextXxxState()
+    {
         if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
             reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
         }
-        return 0;
     }
 
     @Override
