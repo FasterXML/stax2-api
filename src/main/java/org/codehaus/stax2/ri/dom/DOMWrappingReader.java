@@ -726,9 +726,7 @@ public abstract class DOMWrappingReader
     @Override
     public char[] getTextCharacters()
     {
-        if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
-            reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
-        }
+        _checkTextXxxState();
         return _currentText().toCharArray();
     }
 
@@ -752,21 +750,17 @@ public abstract class DOMWrappingReader
     @Override
     public int getTextCharacters(int sourceStart, char[] target, int targetStart, int len)
     {
-        if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
-            reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
-        }
-        // any negative argument has its sign bit set. Length is NOT checked against
-        // the target before limiting to the text, same as Woodstox and Aalto do;
-        // copying still fails if the target is too small for what is copied
+        _checkTextXxxState();
+        // any negative argument has its sign bit set; too small a target is caught
+        // by getChars() (like Woodstox and Aalto, len may exceed what remains)
         if ((sourceStart | targetStart | len) < 0) {
             throw new IndexOutOfBoundsException("Invalid arguments: sourceStart="+sourceStart
                     +", targetStart="+targetStart+", length="+len);
         }
         String text = _currentText();
-        // can only copy what is remaining after sourceStart
         int remaining = text.length() - sourceStart;
         if (len > remaining) {
-            // none if at or past the end (String.getChars() would reject the latter)
+            // nothing left if at or past the end (getChars() would reject the latter)
             if (remaining <= 0) {
                 return 0;
             }
@@ -779,19 +773,22 @@ public abstract class DOMWrappingReader
     @Override
     public int getTextLength()
     {
-        if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
-            reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
-        }
+        _checkTextXxxState();
         return _currentText().length();
     }
 
     @Override
     public int getTextStart()
     {
+        _checkTextXxxState();
+        return 0;
+    }
+
+    private void _checkTextXxxState()
+    {
         if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
             reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
         }
-        return 0;
     }
 
     @Override
