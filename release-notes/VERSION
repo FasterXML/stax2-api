@@ -8,6 +8,8 @@ Project: Stax2 API
 
 #51: Fast path for BigInteger decoding
  (contributed by @winfriedgerlach)
+#53: Fast path for BigDecimal decoding
+ (contributed by @winfriedgerlach)
 
 4.3.1 (27-Sep-2026)
 
