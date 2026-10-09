@@ -716,20 +716,28 @@ public abstract class DOMWrappingReader
     @Override
     public String getText()
     {
-        if (_coalescedText != null) {
-            return _coalescedText;
-        }
-        if (((1 << _currEvent) & MASK_GET_TEXT) == 0) {
+        if (_coalescedText == null
+                && ((1 << _currEvent) & MASK_GET_TEXT) == 0) {
             reportWrongState(ERR_STATE_NOT_TEXTUAL);
         }
-        return _currNode.getNodeValue();
+        return _currentText();
     }
 
     @Override
     public char[] getTextCharacters()
     {
-        String text = getText();
-        return text.toCharArray();
+        if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
+            reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
+        }
+        return _currentText().toCharArray();
+    }
+
+    /**
+     * Shared by the text accessors, which check the state themselves first.
+     */
+    private String _currentText()
+    {
+        return (_coalescedText != null) ? _coalescedText : _currNode.getNodeValue();
     }
 
     @Override
@@ -738,16 +746,14 @@ public abstract class DOMWrappingReader
         if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
             reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
         }
-        // as per StAX javadocs, check arguments against the target before limiting
-        // to the text: any negative argument has its sign bit set, and with
-        // non-negative ones the subtraction cannot overflow (and also catches
-        // targetStart past the end of target)
-        if ((sourceStart | targetStart | len) < 0 || len > target.length - targetStart) {
+        // any negative argument has its sign bit set. Length is NOT checked against
+        // the target before limiting to the text, same as Woodstox and Aalto do;
+        // copying still fails if the target is too small for what is copied
+        if ((sourceStart | targetStart | len) < 0) {
             throw new IndexOutOfBoundsException("Invalid arguments: sourceStart="+sourceStart
-                    +", targetStart="+targetStart+", length="+len+" (target length "+target.length+")");
+                    +", targetStart="+targetStart+", length="+len);
         }
-        // state already checked above, so no need to go through getText()
-        String text = (_coalescedText != null) ? _coalescedText : _currNode.getNodeValue();
+        String text = _currentText();
         // can only copy what is remaining after sourceStart
         int remaining = text.length() - sourceStart;
         if (len > remaining) {
@@ -767,7 +773,7 @@ public abstract class DOMWrappingReader
         if (((1 << _currEvent) & MASK_GET_TEXT_XXX) == 0) {
             reportWrongState(ERR_STATE_NOT_TEXTUAL_XXX);
         }
-        return getText().length();
+        return _currentText().length();
     }
 
     @Override

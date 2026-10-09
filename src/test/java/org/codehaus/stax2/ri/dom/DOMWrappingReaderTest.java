@@ -92,12 +92,40 @@ public class DOMWrappingReaderTest
         assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, -1, 5));
         assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, 6, 0));
         assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, 0, -1));
+        // target too small for what remains to be copied
         assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, 1, Integer.MAX_VALUE));
-        // target too small for requested length, even if remaining text would fit
-        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(8, buf, 0, 20));
+        assertThrows(IndexOutOfBoundsException.class, () -> sr.getTextCharacters(0, buf, 0, 6));
         // but filling target up to its end is fine
         assertEquals(5, sr.getTextCharacters(0, buf, 0, 5));
         assertEquals(0, sr.getTextCharacters(0, buf, 5, 0));
+    }
+
+    // DTD has no text accessible as characters (its node value is null)
+    @Test
+    public void testNoArgTextCharactersWrongState() throws Exception
+    {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+        XMLStreamReader2 sr = new DOMReader(new DOMSource(dbf.newDocumentBuilder()
+                .parse(new InputSource(new StringReader("<!DOCTYPE root><root>"+TEXT+"</root>")))),
+                false);
+        assertEquals(XMLStreamConstants.DTD, sr.next());
+        assertThrows(IllegalStateException.class, () -> sr.getTextCharacters());
+
+        assertEquals(TEXT, new String(readerAtText().getTextCharacters()));
+    }
+
+    // Like Woodstox and Aalto: requested length may exceed target, as long as
+    // what remains of the text fits
+    @Test
+    public void testLengthLimitedToRemainingText() throws Exception
+    {
+        XMLStreamReader2 sr = readerAtText();
+        char[] buf = new char[5];
+        assertEquals(2, sr.getTextCharacters(8, buf, 0, 20));
+        assertEquals("ij", new String(buf, 0, 2));
+        assertEquals(3, sr.getTextCharacters(7, buf, 2, Integer.MAX_VALUE));
+        assertEquals("ijhij", new String(buf));
     }
 
     /*
