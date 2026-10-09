@@ -6,6 +6,8 @@ Project: Stax2 API
 
 4.3.3 (not yet released)
 
+#58: `TextBuffer` switch to `StringBuilder` for better performance
+ (contributed by @winfriedgerlach)
 #60: `Stax2ReaderAdapter.nextTag()` skips the adapter's own state handling
  (contributed by @winfriedgerlach)
 
