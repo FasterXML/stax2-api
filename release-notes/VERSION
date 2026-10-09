@@ -6,7 +6,7 @@ Project: Stax2 API
 
 4.3.2 (not yet released)
 
-#51 Fast path for BigInteger decoding
+#51: Fast path for BigInteger decoding
  (contributed by @winfriedgerlach)
 
 4.3.1 (27-Sep-2026)
